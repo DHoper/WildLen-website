@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useUserStore } from '@/stores/user.ts'
-import { useLoadingStore } from '@/stores/loading.ts'
+import { useUserStore } from '@/stores/user'
+import { useLoadingStore } from '@/stores/loading'
 
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
@@ -10,7 +10,7 @@ import Articles from '@/views/Articles.vue'
 import Explore from '@/views/Explore.vue'
 import Gallery from '@/views/Gallery.vue'
 import Community from '@/views/Community.vue'
-import PhotoPost from '@/views/Gallery/PhotoPost.vue'
+import PhotoPost from '@/views/Gallery/Post.vue'
 import CommunityPost from '@/views/Community/CommunityPost.vue'
 
 const router = createRouter({
@@ -42,8 +42,8 @@ const router = createRouter({
       component: Register,
       name: 'Register',
       beforeEnter: (to, from, next) => {
-        if (to || from) {
-        }
+        // if (to || from) {
+        // }
         const userStore = useUserStore()
         if (userStore.isLogin) {
           next({ name: 'Articles' })
@@ -73,7 +73,8 @@ const router = createRouter({
         {
           path: ':id',
           name: 'Article',
-          component: () => import('@/views/Articles/Article.vue')
+          component: () => import('@/views/Articles/Article.vue'),
+          props: true
         }
       ]
     },
@@ -123,7 +124,7 @@ const router = createRouter({
         {
           path: 'createPost',
           name: 'CommunityCreatePost',
-          component: () => import('@/views/Community/CommunityCreatePost.vue'),
+          component: () => import('@/views/Community/CreatePost.vue'),
           meta: { requiresAuth: true }
         },
         {
@@ -138,9 +139,23 @@ const router = createRouter({
           component: () => import('@/views/Community/CreatePostPreview.vue'),
           props: true,
           meta: { requiresAuth: true }
-        }
+        },
+        {
+          path: 'createVote',
+          name: 'CreateVote',
+          component: () => import('@/views/Community/CreateVote.vue'),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'vote/:id',
+          name: 'Vote',
+          component: () => import('@/views/Community/CommunityVote.vue'),
+          meta: { requiresAuth: true },
+          props: true
+        },
       ]
     },
+
     {
       path: '/user',
       children: [
@@ -172,18 +187,25 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (from) {
-    const userStore = useUserStore()
-    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
-    if (requiresAuth && !userStore.isLogin) {
-      next({ name: 'Login' })
-    }
-    useLoadingStore().setLoadingStatus(true)
-    useLoadingStore().setIsCountingSeconds(true)
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+  const loadingStore = useLoadingStore()
+
+  // 等待登錄狀態檢查完成
+  if (!userStore.isLoginCheck) {
+    await userStore.checkLogin()
+  }
+
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  if (requiresAuth && !userStore.isLogin) {
+    next({ name: 'Login' })
+  } else {
+    loadingStore.setLoadingStatus(true)
+    loadingStore.setIsCountingSeconds(true)
     next()
   }
 })
+
 
 router.afterEach(() => {
   useLoadingStore().setIsCountingSeconds(false)

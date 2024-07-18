@@ -14,14 +14,19 @@ app.use(pinia)
 app.use(router)
 
 app.config.errorHandler = (err) => {
-  console.error(err)
-  const loadingStore = useLoadingStore()
-  const errorStore = useErrorStore()
-  loadingStore.setInRequest(false)
-  loadingStore.setLoadingStatus(false)
-  errorStore.setData(err)
-  router.push({ name: 'Error' })
+  console.error(err);
+  const loadingStore = useLoadingStore();
+  const errorStore = useErrorStore();
+  loadingStore.setInRequest(false);
+  loadingStore.setLoadingStatus(false);
+  errorStore.setData(err);
+
+  if (router.currentRoute.value.name !== 'Error') {
+    router.replace({ name: 'Error' });
+  }
 }
+
+
 
 app.mount('#app')
 

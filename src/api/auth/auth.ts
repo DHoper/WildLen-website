@@ -1,12 +1,11 @@
 import { ref } from 'vue'
-import type { AuthorDataType, UserDataType } from '@/types'
-import { apiClient } from '../axiosInstance'
+import type { User } from '@/types/User'
+import { apiClient } from '../axiosClient'
 
 export const ApiConfig = {
   index: '/auth/user',
-  getUser: (email: string) => `/auth/user/${email}`,
+  bySingleId: (userId: number) => `/auth/user/${userId}`,
   checkEmail: (email: string) => `/auth/user/checkEmail/${email}`,
-  getAuthor: (authorId: string) => `/auth/author/${authorId}`
 }
 
 export async function authLogin(email: string, password: string) {
@@ -33,32 +32,39 @@ export async function checkRepeatEmail(email: string) {
   }
 }
 
-export async function getUser(email: string) {
+export async function getCurrentUser(token: string | undefined) {
   try {
-    const responseData = ref<UserDataType>()
-    const response = await apiClient.get(ApiConfig.getUser(email))
-    responseData.value = response.data
+    const responseData = ref<User>()
+    const headers = token ? { Authorization: `Bearer ${token}` } : {}
 
-    return responseData
+    const response = await apiClient.get(ApiConfig.index, { headers })
+
+    if (response.data.user) {
+      responseData.value = response.data.user
+      return responseData
+    } else {
+      throw new Error('未正確取得使用者資料')
+    }
   } catch (error) {
     console.error('獲取使用者資料時發生錯誤:', error)
     throw error
   }
 }
 
-export async function getAuthor(authorId: string) {
+export async function getUserById(userId: number) {
   try {
-    const responseData = ref<AuthorDataType>()
-    const response = await apiClient.get(ApiConfig.getAuthor(authorId))
-    responseData.value = response.data
+    const responseData = ref<User>()
+    const response = await apiClient.get(ApiConfig.bySingleId(userId))
+
+    responseData.value = response.data.user
 
     if (response.status === 200) {
       return responseData
     } else {
-      throw new Error('API請求失敗，錯誤狀態:' + response.status)
+      throw new Error(`API請求失敗，錯誤狀態:${response.status}`)
     }
   } catch (error) {
-    console.error('獲取作者資料時發生錯誤:', error)
+    console.error('獲取特定用戶資料時發生錯誤:', error)
     throw error
   }
 }
@@ -73,11 +79,13 @@ export async function registerUser(postData: object) {
   }
 }
 
-export async function updateUser(updatedData: UserDataType) {
+export async function updateUser(updatedData: User) {
   try {
+    
     const response = await apiClient.put(ApiConfig.index, updatedData)
     return response
   } catch (error) {
+    console.error('更新用戶資料時發生錯誤:', error)
     throw error
   }
 }

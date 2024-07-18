@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { authLogin, getUser, updateUser } from '@/api/auth/auth'
-import type { UserDataType } from '../types'
+import { authLogin, getCurrentUser, updateUser as updatedUserApi } from '@/api/auth/auth'
 import router from '../router/index'
+import type { User } from '@/types/User'
+import { getCookie, removeCookie, setCookie } from '@/utils/helper'
 
 export enum LoginStatus {
   Success = '登錄成功',
@@ -11,60 +12,48 @@ export enum LoginStatus {
 }
 
 export const useUserStore = defineStore('user', () => {
-  const storedUser = localStorage.getItem('user')
-  const data = ref<UserDataType | null>()
-  if (storedUser) {
-    data.value = JSON.parse(storedUser)
-  } else {
-    data.value = null
-  }
+  const isLoginCheck = ref<boolean>(false)
+  const user = ref<User | null>(null)
 
-  const isLogin = computed<boolean>(() => (data.value ? true : false))
+  const isLogin = computed<boolean>(() => !!user.value)
   const loggingStatus = ref<LoginStatus | undefined>()
 
-  async function login(email: string, password: string) {
+  const login = async (email: string, password: string) => {
     try {
       const responseData = await authLogin(email, password)
-      console.log(555, responseData)
-      if (responseData?.token) {
+      if (responseData?.token && responseData.user) {
         loggingStatus.value = LoginStatus.Success
+        user.value = responseData.user
+
+        setCookie('auth_token', responseData.token, 7)
       }
     } catch (err) {
       console.error('getUser取得資料失敗: ', err)
     }
   }
 
-  function logout() {
-    localStorage.removeItem('user')
-    data.value = null
+  const logout = () => {
+    removeCookie("auth_token")
+    user.value = null
     router.push({ name: 'Articles' })
   }
 
-  function getData() {
-    if (isLogin.value) {
-      return data.value
-    } else {
-      return null
-    }
+  const getData = () => {
+    return isLogin.value ? user.value : null
   }
 
-  function getId() {
-    if (isLogin.value && data.value) {
-      return data.value._id
-    } else {
-      return null
-    }
+  const getId = () => {
+    return isLogin.value && user.value ? user.value.id : null
   }
 
-  async function updateUser(updatedData: UserDataType) {
+  const updateUser = async (updatedData: User) => {
     try {
-      await updateUser(updatedData)
-      if (data.value) {
-        const responseData = await getUser(data.value.email)
+      await updatedUserApi(updatedData)
+      if (user.value) {
+        const storedToken = await getCookie('auth_token')
+        const responseData = await getCurrentUser(storedToken)
         if (responseData.value) {
-          const userData = ref<UserDataType>(responseData.value)
-          data.value = userData.value
-          localStorage.setItem('user', JSON.stringify(data.value))
+          user.value = responseData.value
         }
       }
     } catch (err) {
@@ -72,14 +61,30 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const checkLogin = async () => {
+    const storedToken = await getCookie('auth_token')
+    if (storedToken) {
+      try {
+        const userData = await getCurrentUser(storedToken)
+        if (!userData.value) throw Error
+        user.value = userData.value
+      } catch (err) {
+        console.error('獲取用戶資料失敗: ', err)
+      }
+    }
+    isLoginCheck.value = true
+  }
+
   return {
-    data,
+    isLoginCheck,
+    user,
     isLogin,
     loggingStatus,
     getData,
     getId,
     login,
     logout,
-    updateUser
+    updateUser,
+    checkLogin
   }
 })
