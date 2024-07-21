@@ -61,8 +61,8 @@ const handelPreview = () => {
   }
 }
 
-function dataURLtoFile(dataUrl: string): File {
-  const arr = dataUrl.split(',')
+function dataURLtoFile(base64: string): File {
+  const arr = base64.split(',')
   const mime = arr[0].match(/:(.*?);/)![1]
   const bstr = atob(arr[1])
   let n = bstr.length
@@ -91,8 +91,8 @@ const handleSubmit = async () => {
       // 處理Delta格式中的圖片
       for (const op of deltaOps) {
         if (op.insert && typeof op.insert === 'object' && op.insert.image) {
-          const imageUrl = op.insert.image as string
-          const imageFile = dataURLtoFile(imageUrl)
+          const imageBase64 = op.insert.image as string
+          const imageFile = dataURLtoFile(imageBase64)
           const uploadResponse = await postImages([imageFile], 'community')
           op.insert = {
             image: uploadResponse[0].url
@@ -235,7 +235,7 @@ onUnmounted(() => {
               <label for="editor" class="text-sm font-bold text-stone-600 2xl:text-lg"
                 >貼文内容</label
               >
-              <div id="editor" class="h-64 w-full border-2 border-stone-800"></div>
+              <div id="editor" class="h-64 w-full text-base border-2 border-stone-800"></div>
               <div
                 v-if="!formInputInvalid.content"
                 class="absolute bottom-1 left-0 flex w-full translate-y-full items-center gap-1 text-xs text-red-500 2xl:text-base"

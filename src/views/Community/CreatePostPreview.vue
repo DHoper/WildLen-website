@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { type PropType, onMounted, ref, watch } from 'vue'
 import { EyeIcon, ChatBubbleBottomCenterIcon } from '@heroicons/vue/24/outline'
-
 import { HeartIcon } from '@heroicons/vue/24/solid'
+import { getConvertedHtml } from '@/utils/convertor'
 import { getTimeDifference, formatDateTime } from '../../utils/formator'
 import { setTagColor } from '../../fakeData/topicTags.js'
 import type { CommunityPost } from '@/types/Post'
@@ -54,6 +54,8 @@ async function handleSubmit() {
 
 onMounted(async () => {
   formData.value = props.data
+  console.log(props.data)
+
   formData.value.createdAt = new Date()
 })
 </script>
@@ -74,7 +76,7 @@ onMounted(async () => {
           <span class="text-lg font-bold text-stone-700 2xl:text-xl">{{ user.username }}</span>
           <span class="text-sm font-bold text-stone-500 2xl:text-base"
             >{{ formatDateTime(formData.createdAt) }}
-            <span class="text-md italic">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+            <span class="text-base italic">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
             {{ getTimeDifference(formData.createdAt) }} 以前
           </span>
         </div>
@@ -92,25 +94,13 @@ onMounted(async () => {
           {{ tag }}
         </span>
       </div>
-      <!-- <div
-        v-if="formData.images && formData.images.length > 0"
-        class="mt-20 border-2 border-stone-700"
-      >
-        <img :src="formData.images[0].url" class="object-cover w-full h-full" />
-      </div> -->
-      <!-- 問題--部分轉譯字元文本會超出寬度 -->
+
       <div
         class="quill-content mt-10 overflow-auto whitespace-pre-wrap text-stone-700 2xl:text-lg"
-        v-html="formData.content"
+        v-html="typeof(formData.content) === 'string' ? formData.content : getConvertedHtml(formData.content)"
       ></div>
+      <!-- <div v-else-if="formData.content === String" v-html="formData.content"></div> -->
       <div class="my-10 mt-5 w-full border-b-2 border-stone-600"></div>
-      <!-- <div v-if="formData.images && formData.images.length > 0" class="mt-4 flex flex-col gap-4">
-        <div v-for="(image, index) in formData.images" :key="index">
-          <div v-if="index != 0" class="border-2 border-stone-700">
-            <img :key="index" :src="image.url" class="object-cover w-full h-full" />
-          </div>
-        </div>
-      </div> -->
       <div class="my-4 mt-16 border-b-2 border-gray-300"></div>
       <div class="flex justify-between">
         <div class="flex gap-8">

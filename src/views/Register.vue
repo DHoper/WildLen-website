@@ -381,7 +381,7 @@ watch(activeTab, () => {
       </form>
     </div>
     <div
-      class="banner text-shadow-md flex h-screen grow flex-col items-center justify-start gap-10 bg-white bg-register bg-cover bg-center bg-no-repeat font-Raleway text-stone-100 shadow-inner sm:relative 2xl:justify-center"
+      class="flex h-screen grow flex-col items-center justify-start gap-10 bg-white bg-register bg-cover bg-center bg-no-repeat font-Raleway text-stone-100 shadow-inner sm:relative 2xl:justify-center"
     >
       <div class=" hidden w-full flex-col items-center gap-10 px-4 py-16 md:flex">
         <div
@@ -488,7 +488,7 @@ watch(activeTab, () => {
                     class="group border-2 border-dashed border-stone-600 p-1 transition-all duration-300 focus-within:border-solid hover:scale-105 hover:border-solid"
                   >
                     <img
-                      class="w-full transition-all duration-300 focus:scale-110 sm:w-12 sm:w-16 md:w-20 lg:w-32"
+                      class="w-full transition-all duration-300 focus:scale-110 sm:w-16 md:w-20 lg:w-32"
                       :src="`/assets/img/avatar (${index}).png`"
                       alt=""
                       tabindex="0"

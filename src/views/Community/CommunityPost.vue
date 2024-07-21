@@ -81,14 +81,14 @@ onMounted(async () => {
 <template>
   <div v-if="post && post.author && post.author.profile" class="w-full flex-1 bg-fixed">
     <div class="w-full bg-stone-100 px-4 py-8">
-      <div class="mx-auto flex w-full max-w-5xl flex-col items-center gap-20 bg-stone-100 px-5 pt-20">
+      <div class="mx-auto flex w-[62rem] flex-col items-center gap-20 bg-stone-100 px-5 pt-20">
         <button
           @click="router.back()"
           class="self-start text-sm font-bold text-stone-800 2xl:text-xl"
         >
           上一頁
         </button>
-        <div class="mx-auto w-full border-2 border-stone-800 bg-white px-6 py-8 md:px-16 md:py-12">
+        <div class="mx-auto w-full border-2 border-stone-800 bg-white px-24 py-16">
           <div class="flex items-center gap-4">
             <router-link
               :to="{
@@ -113,7 +113,7 @@ onMounted(async () => {
             <div class="flex flex-1 items-baseline justify-start gap-2">
               <span class="text-sm font-bold text-stone-500 2xl:text-base"
                 >{{ formatDateTime(post.createdAt!) }}
-                <span class="text-md italic">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                <span class="text-base italic">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
                 {{ getTimeDifference(post.createdAt!) }} 以前
               </span>
             </div>
@@ -131,10 +131,29 @@ onMounted(async () => {
               {{ tag }}
             </span>
           </div>
+          <!-- <div
+            v-if="post.images && post.images.length > 0"
+            class="mt-20 flex flex-col gap-4"
+          >
+            <img :src="post.images[0].url" class="border-2 border-stone-700" />
+          </div> -->
           <div
             v-html="getConvertedHtml(post.content)"
             class="quill-content mt-10 overflow-auto whitespace-pre-wrap text-stone-700 2xl:text-lg"
           ></div>
+          <!-- <div
+            v-if="post.images && post.images.length > 0"
+            class="mt-4 flex flex-col gap-4"
+          >
+            <div v-for="(image, index) in post.images" :key="index">
+              <img
+                :key="index"
+                v-if="index !== 0"
+                :src="image.url"
+                class="border-2 border-stone-700"
+              />
+            </div>
+          </div> -->
           <div class="my-4 border-b-[1.5px] border-gray-300"></div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-8 2xl:text-xl">

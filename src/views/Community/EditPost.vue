@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { ExclamationCircleIcon, TrashIcon } from '@heroicons/vue/24/solid'
+import { ExclamationCircleIcon } from '@heroicons/vue/24/solid'
 import CreatePostPreview from './CreatePostPreview.vue'
 import { updatePost, getPost } from '@/api/community/community.js'
-import { CommunityPostType, PhotoPostImageType } from '../../types/index.js'
 import { useLoadingStore } from '../../stores/loading.js'
-import { FieldName, inputValidator } from '../../utils/validator.js'
+import { type FieldName, inputValidator } from '../../utils/validator.js'
 import { topicTags } from '../../fakeData/topicTags.js'
-import { deleteImages, postImages } from '@/api/image/image'
+import { postImages } from '@/api/image/image'
+import type { CommunityPost } from '@/types/Post'
+import type { Image } from '@/types/Common'
+import Quill from 'quill'
+import 'quill/dist/quill.snow.css'
 
 const props = defineProps({
   id: {
@@ -16,47 +19,36 @@ const props = defineProps({
     required: true
   }
 })
+
+const id = computed(() => Number(props.id))
 const router = useRouter()
 const loadingStore = useLoadingStore()
 
-const formData = ref<CommunityPostType>()
-const postExistingImages = ref<PhotoPostImageType[]>([])
-const fetchPostData = async () => {
-  const responseData = await getPost(props.id)
-  if (responseData.value) {
-    formData.value = responseData.value
-    if (formData.value.images) {
-      for (const image of formData.value.images) {
-        postExistingImages.value.push(image)
-      }
-      oldImages.value = formData.value.images
-    }
-  }
-}
-
-const handleSelectDeleteImage = (index: number) => {
-  oldImages.value.splice(index, 1)
-}
-
-const isMaxSelected = computed(() => {
-  //限制tag最多選五
-  if (!formData.value) return
-  return formData.value.topicTags.length >= 5
+const formData = ref<CommunityPost>({
+  title: '',
+  content: '',
+  topicTags: [],
+  authorId: 0,
+  imageIds: [],
+  views: 0,
+  likes: 0,
+  isEdit: true
 })
+const submitData = ref<CommunityPost>()
 const inPreview = ref<boolean>(false)
+const editorRef = ref<Quill | null>(null) // 定義 editorRef
+let quillInstance: Quill | null = null
 
-//驗證器
+// 驗證器
 const validator = inputValidator()
 const formInputInvalid = validator.formInputInvalid
 const validateInput = (fieldName: FieldName | 'UserData') => {
-  //重新包裝validator
   if (!formData.value) return
   validator.validate(fieldName, formData.value)
 }
 
-//預覽驗證
+// 預覽驗證
 const previewAble = computed(() => {
-  if (!formData.value) return
   return (
     formData.value.topicTags.length > 0 &&
     formInputInvalid.value.title &&
@@ -65,67 +57,78 @@ const previewAble = computed(() => {
     formData.value.content
   )
 })
+
 const handelPreview = () => {
   if (!formData.value) return
-  formData.value.images = previewImages.value
   if (previewAble.value) {
     inPreview.value = true
   }
 }
 
-//圖片處裡
-const imgInput = ref<HTMLInputElement>()
-const oldImages = ref<PhotoPostImageType[]>([])
-const inputImages = ref<PhotoPostImageType[]>([])
-const previewImages = computed(() => {
-  return oldImages.value.concat(inputImages.value)
+// 限制tag最多選五
+const isMaxSelected = computed(() => {
+  return formData.value.topicTags.length >= 5
 })
 
-const setFileUrl = () => {
-  inputImages.value = []
-  if (imgInput.value && imgInput.value.files) {
-    const selectedFiles = Array.from(imgInput.value.files)
-    const urls = selectedFiles.map((file) => URL.createObjectURL(file))
-    for (const url of urls) {
-      inputImages.value.push({ url, filename: 'previewFile' })
-    }
-  }
-}
+// 初始化 Quill Editor
+onMounted(async () => {
+  await fetchPostData()
 
-let updatePostImages: PhotoPostImageType[] = [] //儲存最終提交之圖片url
-const uploadImages = async () => {
-  if (!formData.value) return
-  const inputElement = imgInput.value
-
-  if (inputElement && previewImages.value) {
-    const files = inputElement.files as FileList
-
-    updatePostImages = await postImages(files, 'Community')
-
-    for (const image of formData.value.images) {
-      if (postExistingImages.value.includes(image)) {
-        updatePostImages.unshift(image)
+  if (!quillInstance) {
+    quillInstance = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: '請輸入內容...',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline'],
+          ['link', 'image'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean']
+        ]
       }
+    })
+
+    quillInstance.setContents(formData.value.content)
+
+    editorRef.value = quillInstance
+
+    const toolbar = document.querySelector('.ql-toolbar') as HTMLElement | null
+    if (toolbar) {
+      toolbar.style.border = '2px solid black'
+      toolbar.style.marginTop = '16px'
+    }
+
+    quillInstance.on('text-change', () => {
+      formData.value.content = quillInstance?.root.innerHTML || ''
+    })
+  }
+})
+
+onUnmounted(() => {
+  if (quillInstance) {
+    quillInstance.off('text-change')
+    quillInstance = null
+  }
+})
+
+const fetchPostData = async () => {
+  const responseData = await getPost(id.value)
+
+  if (responseData.value) {
+    formData.value = {
+      ...responseData.value,
+      imageIds: responseData.value.images ? responseData.value.images.map((image) => image.id!) : []
+    }
+    oldImages.value = responseData.value.images || []
+
+    if (quillInstance) {
+      quillInstance.root.innerHTML = responseData.value.content
     }
   }
 }
 
-const setDeleteImagesPublicIds = () => {
-  if (!formData.value) return
-
-  const publicIds: string[] = []
-  console.log(postExistingImages.value)
-
-  for (const image of postExistingImages.value) {
-    if (!formData.value.images.includes(image)) {
-      publicIds.push(image.filename)
-    }
-  }
-
-  console.log(publicIds, 77)
-
-  return publicIds
-}
+const oldImages = ref<Image[]>([])
 
 const handelSubmit = async () => {
   if (!formData.value) return
@@ -135,23 +138,65 @@ const handelSubmit = async () => {
   loadingStore.setIsCountingSeconds(true)
   loadingStore.setIsCountingSeconds(false)
 
-  const publicIds = setDeleteImagesPublicIds()
-  if (publicIds && publicIds.length > 0) {
-    await deleteImages(publicIds)
+  const delta = quillInstance?.getContents()
+
+  if (formData.value.title && formData.value.topicTags.length > 0 && delta) {
+    try {
+      let newImageIds: number[] = []
+      const deltaOps = delta.ops
+
+      for (const op of deltaOps) {
+        if (op.insert && typeof op.insert === 'object' && op.insert.image) {
+          const imageBase64 = op.insert.image as string
+          const imageFile = dataURLtoFile(imageBase64)
+          if (!imageFile) continue
+          const uploadResponse = await postImages([imageFile], 'community')
+          op.insert = {
+            image: uploadResponse[0].url
+          }
+          newImageIds.push(uploadResponse[0].id)
+        }
+      }
+
+      const { title, topicTags, authorId } = formData.value
+      submitData.value = {
+        title,
+        content: delta,
+        topicTags,
+        authorId,
+        imageIds: formData.value.imageIds
+          ? formData.value.imageIds.concat(newImageIds)
+          : newImageIds
+      }
+
+      await updatePost(id.value, submitData.value)
+      router.push({ name: 'Community' })
+      loadingStore.setInRequest(false)
+      loadingStore.setLoadingStatus(false)
+    } catch (error) {
+      console.error('Error creating/updating post:', error)
+      loadingStore.setInRequest(false)
+      loadingStore.setLoadingStatus(false)
+    }
   }
-  await uploadImages()
-
-  formData.value.images = updatePostImages
-
-  await updatePost(props.id, formData.value)
-  loadingStore.setInRequest(false)
-  loadingStore.setLoadingStatus(false)
-  router.push({ name: 'Community' })
 }
 
-onMounted(async () => {
-  await fetchPostData()
-})
+function dataURLtoFile(base64: string): File | null {
+  const arr = base64.split(',')
+  const mimeMatch = arr[0].match(/:(.*?);/)
+  if (!mimeMatch) {
+    return null
+  }
+  const mime = mimeMatch[1]
+  const bstr = atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  const file = new File([u8arr], 'image.png', { type: mime })
+  return file
+}
 </script>
 
 <template>
@@ -165,7 +210,7 @@ onMounted(async () => {
           上一頁
         </button>
         <div class="mt-12 border-2 border-stone-800 px-24 py-16">
-          <h1 class="my-8 text-4xl text-stone-600">發佈新貼文</h1>
+          <h1 class="my-8 text-4xl text-stone-600">編輯貼文</h1>
           <form class="mt-4 flex flex-col gap-4 2xl:gap-12">
             <div class="relative">
               <label for="title" class="text-sm font-bold text-stone-600 2xl:text-lg">標題</label>
@@ -188,47 +233,13 @@ onMounted(async () => {
                 <p>請輸入有效標題</p>
               </div>
             </div>
-            <div class="imgBlock">
-              <label for="img" class="text-sm font-bold text-stone-600 2xl:text-lg"
-                >圖片(可選)</label
-              >
-              <div class="mt-4 flex items-center">
-                <label
-                  for="imgUpload"
-                  class="cursor-pointer border-2 border-stone-500 bg-stone-500 px-4 py-2 text-sm font-bold text-white hover:bg-white hover:text-stone-500 2xl:text-lg"
-                >
-                  選擇檔案
-                </label>
-                <input
-                  ref="imgInput"
-                  id="imgUpload"
-                  name="imgUpload"
-                  type="file"
-                  class="hidden"
-                  @change="setFileUrl"
-                  multiple
-                />
-              </div>
-              <div class="mt-4 flex gap-4 overflow-auto pb-1">
-                <div
-                  v-for="(image, index) in previewImages"
-                  class="relative h-[105px] w-[140px] shrink-0 border-2 border-stone-600"
-                >
-                  <img :src="image.url" alt="image.filename" class="size-full object-cover" />
-                  <TrashIcon
-                    v-if="postExistingImages.includes(image)"
-                    @click="handleSelectDeleteImage(index)"
-                    class="absolute right-2 top-2 z-10 w-8 cursor-pointer text-red-600 transition-all duration-300 hover:scale-105"
-                  />
-                </div>
-              </div>
-            </div>
             <div>
               <label class="text-sm font-bold text-stone-600 2xl:text-lg">貼文主題(最多五項)</label>
               <div class="mt-4 max-h-48 overflow-auto border-2 border-stone-700 p-2">
                 <div
                   class="flex flex-wrap items-center justify-center gap-2"
                   v-for="topic in topicTags"
+                  :key="topic.color"
                 >
                   <div class="mt-4 flex flex-wrap justify-center gap-2">
                     <label
@@ -258,19 +269,7 @@ onMounted(async () => {
               <label for="content" class="text-sm font-bold text-stone-600 2xl:text-lg"
                 >貼文内容</label
               >
-              <textarea
-                v-model="formData.content"
-                id="content"
-                name="content"
-                cols="20"
-                rows="10"
-                placeholder="10 ~ 2000字"
-                maxlength="2000"
-                @blur="validateInput('content')"
-                class="mb-0 mt-2 w-full resize-none border-2 border-stone-800 px-3 py-2 outline-none 2xl:p-6 2xl:text-lg"
-                :class="formInputInvalid.content ? 'border-stone-800' : 'border-red-700'"
-                required
-              />
+              <div id="editor" class="w-full border-2 border-t-0 border-stone-800 text-base"></div>
               <div
                 v-if="!formInputInvalid.content"
                 class="absolute bottom-1 left-0 flex w-full translate-y-full items-center gap-1 text-xs text-red-500 2xl:text-base"
@@ -293,12 +292,19 @@ onMounted(async () => {
               >
                 預覽
               </button>
+              <button
+                @click="handelSubmit"
+                type="button"
+                class="border-2 border-transparent bg-blue-900 px-8 py-2 text-white transition-all duration-300 hover:border-blue-900 hover:bg-white hover:text-blue-900"
+              >
+                提交
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <Transition
+    <transition
       name="previewPost"
       enter-active-class="transition ease-out duration-200"
       enter-from-class="opacity-0 translate-y-1"
@@ -313,7 +319,7 @@ onMounted(async () => {
         @close="inPreview = false"
         @submit="handelSubmit"
       />
-    </Transition>
+    </transition>
   </div>
 </template>
 

@@ -12,13 +12,12 @@ export interface PostComment {
 export interface Image {
     id?: number
     url: string
-    filename: string
-    photoPostId?: number
+    publicId: number
 }
 
 export interface Dialog {
     title: string,
     content: string,
-    cancelButton: boolean
+    cancelButton?: boolean
     warringStyle?: boolean
 }

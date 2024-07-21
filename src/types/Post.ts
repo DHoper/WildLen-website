@@ -2,7 +2,7 @@ import type { PostComment, Image } from './Common'
 import type { User } from './User'
 
 export interface PhotoPost {
-  id: number
+  id?: number
   title: string
   likes: number
   views: number
@@ -16,9 +16,9 @@ export interface PhotoPost {
   images?: Image[]
   imageIds?: number[]
   authorId: number
-  author: User
-  isEdit: boolean
-  createdAt: string
+  author?: User
+  isEdit?: boolean
+  createdAt?: string
 }
 
 export interface CommunityPost {
@@ -27,6 +27,7 @@ export interface CommunityPost {
   authorId: number
   author?: User
   content: any
+  images?: Image[]
   imageIds?: number[]
   likes?: number
   views?: number

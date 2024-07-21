@@ -57,7 +57,7 @@ onMounted(async () => {
                     locale: zhTW
                   })
                 }}
-                <span class="text-md font-bold">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                <span class="text-base font-bold">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
                 {{
                   formatDistance(article.createdAt, new Date(), {
                     locale: zhTW

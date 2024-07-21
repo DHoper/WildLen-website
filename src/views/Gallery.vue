@@ -97,7 +97,7 @@ function closePhoto() {
               class="absolute left-0 top-0 size-full scale-[101%] bg-black/0 transition-all duration-700 ease-in group-hover:scale-105 group-hover:bg-black/30"
             ></div>
             <div
-              @click="openPhoto(post.id)"
+              @click="openPhoto(post.id!)"
               class="absolute left-0 top-0 flex size-full -translate-x-4 scale-[101%] flex-col justify-between px-4 pb-2 pt-3 text-white opacity-0 transition-all duration-700 ease-in group-hover:translate-x-0 group-hover:scale-105 group-hover:opacity-100"
               tabindex="-1"
             >

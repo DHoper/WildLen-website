@@ -211,12 +211,12 @@ const closeMenu = () => {
               <PopoverPanel
                 class="absolute right-2 top-2/3 z-10 mt-4 flex flex-col items-center overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600"
               >
-                <div class="w-64 2xl:w-96">
+                <div class="w-64">
                   <div
                     class="flex items-center gap-4 rounded rounded-b-none border border-b-0 border-white bg-stone-600 px-6 py-4"
                   >
                     <div
-                      class="flex size-16 items-center justify-center rounded-full border border-stone-700 bg-white p-2 2xl:size-20"
+                      class=" flex size-16 items-center justify-center rounded-full border border-stone-700 bg-white p-2"
                     >
                       <img
                         class="rounded-full"
@@ -225,25 +225,25 @@ const closeMenu = () => {
                       />
                     </div>
                     <div class="flex flex-col">
-                      <span class="text-xl font-bold 2xl:text-2xl">#{{ user.username }}</span>
-                      <span class="text-sm 2xl:text-lg">{{ user.email }}</span>
+                      <span class="text-xl font-bold">#{{ user.username }}</span>
+                      <span class="text-sm">{{ user.email }}</span>
                     </div>
                   </div>
                   <div class="border border-white">
                     <div
                       v-for="(userAction, index) in userActions"
                       :key="index"
-                      class="w-full cursor-pointer text-lg leading-6 text-stone-700 hover:bg-stone-200 lg:text-base"
+                      class="w-full cursor-pointer text-lg leading-6 text-stone-700 hover:bg-stone-200 lg:text-base 2xl:text-sm"
                     >
                       <div
                         @click="userAction.action"
-                        class="flex flex-auto items-center gap-2 px-6 py-4 2xl:gap-8 2xl:py-6"
+                        class="flex flex-auto items-center gap-2 px-6 py-4  "
                       >
                         <div class="flex flex-none items-center justify-center">
-                          <component :is="userAction.icon" class="w-4 2xl:w-8" aria-hidden="true" />
+                          <component :is="userAction.icon" class="w-4 " aria-hidden="true" />
                         </div>
                         <span
-                          class="block whitespace-nowrap text-center tracking-widest 2xl:text-xl"
+                          class="block whitespace-nowrap text-center tracking-widest"
                         >
                           {{ userAction.actionName }}
                         </span>
@@ -258,7 +258,7 @@ const closeMenu = () => {
       </div>
       <button
         v-else
-        class="h-12 border-2 border-stone-600 bg-white px-2 py-1  text-2xl md:text-lg font-bold text-stone-700 transition-all duration-700 ease-in-out hover:border-white hover:bg-[#4b493ded] hover:text-white 2xl:text-xl"
+        class="h-12 border-2 border-stone-600 bg-white px-2 py-1  text-2xl font-bold text-stone-700 transition-all duration-700 ease-in-out hover:border-white hover:bg-[#4b493ded] hover:text-white md:text-lg 2xl:text-xl"
       >
         <router-link :to="{ name: 'Login' }">Get started</router-link>
       </button>

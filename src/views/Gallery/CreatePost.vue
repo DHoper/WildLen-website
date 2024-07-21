@@ -226,7 +226,7 @@ onMounted(async () => {
 <template>
   <div class="flex-1 bg-stone-100">
     <div
-      class="mx-auto my-12 flex w-[90%] flex-col gap-4 overflow-auto border-4 border-stone-500 bg-stone-100 sm:w-4/5"
+      class="mx-auto my-12 flex w-[90%] flex-col gap-4 overflow-auto border-4 border-stone-500 bg-stone-100 sm:w-4/5 xl:w-1/2"
     >
       <div class="mb-8 flex w-full flex-col">
         <h3 class="w-full bg-stone-500 p-1 text-center text-lg font-bold text-white 2xl:text-3xl">
@@ -353,7 +353,7 @@ onMounted(async () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="h- w-16 text-stone-300"
+                    class="size-16 text-stone-300"
                   >
                     <path
                       stroke-linecap="round"
