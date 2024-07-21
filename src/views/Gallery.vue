@@ -63,78 +63,78 @@ function closePhoto() {
 </script>
 
 <template>
-  <div class="flex-1 w-full overflow-hidden flex flex-col relative">
-    <div v-if="galleryDataset" class="w-full h-full flex relative overflow-hidden bg-stone-600">
+  <div class="relative flex w-full flex-1 flex-col overflow-hidden">
+    <div v-if="galleryDataset" class="relative flex size-full flex-col-reverse overflow-hidden bg-stone-600 sm:flex-row">
       <div
-        class="flex flex-col items-center justify-center bg-gallery bg-no-repeat bg-cover bg-center basis-[30%] text-white h-full"
+        class="flex h-full basis-[30%] flex-col items-center justify-center bg-gallery bg-cover bg-center bg-no-repeat py-4 text-white"
       >
         <span
-          class="text-5xl 2xl:text-6xl [writing-mode:vertical-lr] mt-auto tracking-[1rem] font-bold"
+          class="mt-auto text-4xl font-bold tracking-[1rem] [writing-mode:vertical-lr] sm:text-5xl 2xl:text-6xl"
           >偉大的世界</span
         >
         <div
-          class="my-auto text-lg 2xl:text-xl text-[#f9f9f9c8] flex flex-col items-center gap-4 tracking-[.8rem]"
+          class="my-auto flex flex-col items-center gap-4 text-lg tracking-[.8rem] text-[#f9f9f9c8] 2xl:text-xl"
         >
           <span>還有許多</span>
           <span>你未曾探尋之地</span>
         </div>
       </div>
-      <div class="basis-[70%] h-full">
+      <div class="h-full basis-[70%]">
         <div
           ref="rightBlock"
-          class="w-full h-full flex flex-wrap overflow-y-auto overflow-x-hidden content-start justify-start"
+          class="flex size-full flex-wrap content-start justify-start overflow-y-auto overflow-x-hidden"
         >
           <div
             v-for="(post, index) in galleryDataset"
             :key="index"
-            class="relative flex-none p-0 m-0 max-w-1/4 basis-1/4 2xl:w-1/5 group cursor-pointer hover:z-10"
+            class="group relative m-0 flex-none basis-1/2 cursor-pointer p-0 hover:z-10 md:basis-1/2 lg:basis-1/3 xl:max-w-[25%] xl:basis-1/4 2xl:w-1/5"
           >
             <img
-              class="w-full aspect-video object-cover scale-[101%] group-hover:scale-105 transition-all ease-in duration-700"
-              :src="post.images[0].url"
+              class="aspect-video w-full scale-[101%] object-cover transition-all duration-700 ease-in group-hover:scale-105"
+              :src="post.images![0].url"
             />
             <div
-              class="absolute top-0 left-0 w-full h-full scale-[101%] bg-black bg-opacity-0 group-hover:bg-opacity-30 group-hover:scale-105 transition-all ease-in duration-700"
+              class="absolute left-0 top-0 size-full scale-[101%] bg-black/0 transition-all duration-700 ease-in group-hover:scale-105 group-hover:bg-black/30"
             ></div>
             <div
               @click="openPhoto(post.id)"
-              class="flex flex-col justify-between absolute top-0 left-0 w-full h-full scale-[101%] text-white px-4 pt-3 pb-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:scale-105 group-hover:translate-x-0 transition-all duration-700 ease-in"
+              class="absolute left-0 top-0 flex size-full -translate-x-4 scale-[101%] flex-col justify-between px-4 pb-2 pt-3 text-white opacity-0 transition-all duration-700 ease-in group-hover:translate-x-0 group-hover:scale-105 group-hover:opacity-100"
               tabindex="-1"
             >
               <div v-if="post.createdAt">
-                <p class="text-xs 2xl:text-base text-[#fdfdfdda]">
+                <p class="text-xs text-[#fdfdfdda] 2xl:text-base">
                   {{ formatDateTime(post.createdAt) }}
                 </p>
-                <h3 class="text-xl 2xl:text-3xl my-2 text-[#fdfdfdda]">
+                <h3 class="my-2 text-xl text-[#fdfdfdda] 2xl:text-3xl">
                   {{ post.title }}
                 </h3>
-                <p class="text-xs 2xl:text-base text-[#fdfdfdda]">
+                <p class="text-xs text-[#fdfdfdda] 2xl:text-base">
                   {{ post.location }}
                 </p>
               </div>
-              <div>
-                <div class="border 2xl:mb-2 border-[#fdfdfdb7]"></div>
-                <div class="flex items-center justify-between h-7">
-                  <span class="button text-sm 2xl:text-base tracking-widest">查看更多</span>
+              <div class="mt-auto">
+                <div class="border border-[#fdfdfdb7] 2xl:mb-2"></div>
+                <div class="flex h-7 items-center justify-between">
+                  <span class="text-sm tracking-widest 2xl:text-base">查看更多</span>
                   <img
                     src="/assets/svg/long-arrow.svg"
                     alt="long-arrow"
-                    class="w-14 h-10 0 -translate-x-1/2 group-hover:translate-x-0 transition-all duration-1000 ease-linear"
+                    class="h-10 w-14 -translate-x-1/2 transition-all duration-1000 ease-linear group-hover:translate-x-0"
                   />
                 </div>
               </div>
             </div>
           </div>
-          <router-link class="flex-grow" v-if="addBlock === 'block'" :to="{ name: 'CreatePost' }">
+          <router-link class="grow" v-if="addBlock === 'block'" :to="{ name: 'CreatePost' }">
             <div
-              class="border-2 flex-1 h-full py-8 2xl:py-10 flex justify-center items-center text-xl 2xl:text-3xl font-bold bg-gray-100 text-stone-700 cursor-pointer hover:text-stone-800 hover:scale-105 hover:bg-white hover:z-10 transition-all duration-[1150ms]"
+              class="flex h-full flex-1 cursor-pointer items-center justify-center border-2 bg-gray-100 py-8 text-xl font-bold text-stone-700 transition-all duration-[1150ms] hover:z-10 hover:scale-105 hover:bg-white hover:text-stone-800 2xl:py-10 2xl:text-3xl"
             >
               添加更多發現
             </div>
           </router-link>
           <router-link v-else :to="{ name: 'CreatePost' }">
             <PlusCircleIcon
-              class="fixed bottom-12 right-12 w-16 h-16 2xl:w-20 2xl:h-20 z-10 text-white cursor-pointer hover:scale-110 hover:text-emerald-400 transition-all ease-in"
+              class="fixed bottom-12 right-12 z-10 size-16 cursor-pointer text-white transition-all ease-in hover:scale-110 hover:text-emerald-400 2xl:size-20"
             />
           </router-link>
         </div>

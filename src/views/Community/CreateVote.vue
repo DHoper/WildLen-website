@@ -64,78 +64,77 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="flex-1 w-full bg-fixed">
-    <div class="bg-stone-100 w-full py-8 px-4">
-      <div class="mx-auto flex flex-col items-center gap-20 bg-stone-100 w-[62rem] pt-20 px-5">
+  <div class="w-full flex-1 bg-fixed">
+    <div class="w-full bg-stone-100 px-4 py-8">
+      <div class="mx-auto flex max-w-7xl flex-col items-center gap-8 bg-stone-100 px-5 pt-20 lg:gap-20 lg:px-8 lg:pt-24">
         <button
           @click="router.back()"
-          class="self-start text-sm 2xl:text-xl font-bold text-stone-800"
+          class="self-start text-sm font-bold text-stone-800 2xl:text-xl"
         >
           上一頁
         </button>
-        <div class="mx-auto border-2 border-stone-800 w-full px-24 py-16 bg-white">
-          <h1 class="text-2xl 2xl:text-4xl font-bold text-stone-900 mb-8">發起投票</h1>
+        <div class="mx-auto w-full border-2 border-stone-800 bg-white px-6 py-8 sm:px-12 sm:py-10 lg:px-24 lg:py-16">
+          <h1 class="mb-8 text-2xl font-bold text-stone-900 2xl:text-4xl">發起投票</h1>
           <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
             <div>
-              <label for="title" class="block text-stone-700 font-bold mb-2">標題</label>
+              <label for="title" class="mb-2 block font-bold text-stone-700">標題</label>
               <input
                 id="title"
                 v-model="voteTitle"
                 type="text"
-                class="border-2 border-stone-700 w-full px-4 py-2"
+                class="w-full border-2 border-stone-700 px-4 py-2"
                 required
               />
             </div>
             <div>
-              <label for="description" class="block text-stone-700 font-bold mb-2">描述</label>
+              <label for="description" class="mb-2 block font-bold text-stone-700">描述</label>
               <textarea
                 id="description"
                 v-model="voteDescription"
-                class="border-2 border-stone-700 w-full px-4 py-2 resize-none"
+                class="w-full resize-none border-2 border-stone-700 px-4 py-2"
                 rows="5"
                 required
               ></textarea>
             </div>
             <div>
-              <label class="block text-stone-700 font-bold mb-2">選項</label>
-              <div class="w-full flex flex-wrap gap-y-1.5 border mb-2">
+              <label class="mb-2 block font-bold text-stone-700">選項</label>
+              <div class="mb-2 flex w-full flex-wrap gap-y-1.5 border">
                 <div
                   v-for="(option, index) in voteOptions"
                   :key="index"
-                  class="relative basis-1/2 flex-1 flex items-center flex-wrap border"
+                  class="relative flex flex-1 basis-full sm:basis-1/2 flex-wrap items-center border"
                 >
                   <input
                     v-model="voteOptions[index].text"
                     type="text"
-                    class="border-2 border-stone-700 w-full px-4 py-2 pr-8 truncate"
+                    class="w-full truncate border-2 border-stone-700 px-4 py-2 pr-8"
                     required
                   />
                   <button
                     @click="removeOption(index)"
                     type="button"
-                    class="absolute top-1/2 right-2 -translate-y-1/2 flex items-center justify-center text-red-500"
+                    class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center text-red-500"
                     v-if="voteOptions.length > 2"
                   >
-                    <TrashIcon class="h-6 w-6 transition-all hover:text-red-600" />
+                    <TrashIcon class="size-6 transition-all hover:text-red-600" />
                   </button>
                 </div>
               </div>
-
               <button
                 @click="addOption"
                 type="button"
-                class="p-2 bg-emerald-600 hover:bg-emerald-500 transition-all text-white w-full"
+                class="w-full bg-emerald-600 p-2 text-white transition-all hover:bg-emerald-500"
               >
-                <PlusIcon class="mx-auto w-5 h-5" />
+                <PlusIcon class="mx-auto size-5" />
               </button>
             </div>
             <div>
-              <label for="endDate" class="block text-stone-700 font-bold mb-2">截止日期</label>
+              <label for="endDate" class="mb-2 block font-bold text-stone-700">截止日期</label>
               <input
                 id="endDate"
                 v-model="endDate"
                 type="date"
-                class="border-2 border-stone-700 w-full px-4 py-2"
+                class="w-full border-2 border-stone-700 px-4 py-2"
                 required
               />
             </div>
@@ -144,7 +143,7 @@ const handleSubmit = async () => {
             </div>
             <button
               type="submit"
-              class="mt-12 px-4 py-2 bg-sky-600 hover:bg-sky-500 transition-all text-white font-bold w-full"
+              class="mt-12 w-full bg-sky-600 px-4 py-2 font-bold text-white transition-all hover:bg-sky-500"
             >
               創建投票
             </button>

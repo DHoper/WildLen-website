@@ -10,7 +10,6 @@ import {
   QuestionMarkCircleIcon,
   BellIcon
 } from '@heroicons/vue/24/outline'
-import type { User } from '@/types/User'
 import { useRoute } from 'vue-router'
 import router from '../../router'
 
@@ -19,8 +18,6 @@ const route = useRoute()
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 const isLogin = computed<boolean>(() => userStore.isLogin)
-
-console.log(user)
 
 const userActions = [
   {
@@ -33,7 +30,7 @@ const userActions = [
     icon: BookmarkSquareIcon,
     action: () => router.push({ name: 'PersonalPosts' })
   },
-  { actionName: '追蹤', icon: HeartIcon },
+  // { actionName: '追蹤', icon: HeartIcon },
   {
     actionName: '幫助',
     icon: QuestionMarkCircleIcon,
@@ -64,6 +61,12 @@ const handleScroll = () => {
   prevScrollY = currentScrollY
 }
 
+const refreshCurrentRoute = (routeName: string) => {
+  if (route.name === routeName) {
+    router.go(0)
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 })
@@ -72,79 +75,80 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-console.log(444)
-console.log(user.value)
+const isMenuOpen = ref(false)
 
-const refreshCurrentRoute = (routeName: string) => {
-  if (route.name === routeName) {
-    router.go(0)
-  }
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const closeMenu = () => {
+  isMenuOpen.value = false
 }
 </script>
 
 <template>
   <nav
-    class="sticky top-0 font-Cormorant w-full bg-stone-600 text-white px-6 py-2 2xl:py-4 flex items-center justify-between z-40"
+    class="sticky top-0 z-40 flex w-full items-center justify-between bg-stone-600 px-6 py-4 font-Cormorant text-white lg:py-2 2xl:py-4"
     id="invisible"
-    :class="{ 'visible-none': isHidden, visible: !isHidden }"
+    :class="{ invisible: isHidden, visible: !isHidden }"
   >
-    <div class="logo flex items-center">
-      <img src="/assets/img/deerIcon.png" alt="deerIcon" class="w-8 2xl:w-12 mr-0" />
-      <a class="ml-2 text-2xl 2xl:text-3xl font-bold" href="/">WILDLENS</a>
+    <div class="flex items-center">
+      <img src="/assets/img/deerIcon.png" alt="deerIcon" class="mr-0 w-8 2xl:w-12" />
+      <a class="ml-2 text-xl font-bold lg:text-2xl 2xl:text-3xl" href="/">WILDLENS</a>
     </div>
-    <div class="navbar flex items-center gap-4">
-      <ul class="flex gap-3 text-lg 2xl:text-xl font-thin">
+    <div class="flex items-center gap-4 transition-all">
+      <ul class="hidden gap-0 text-base font-thin sm:flex lg:gap-3 lg:text-lg 2xl:text-xl">
         <li
-          class="border-2 border-transparent hover:border-white transition-all duration-700 ease-in-out font-bold py-1 text-white"
+          class="border-2 border-transparent py-1 font-bold text-white transition-all duration-700 ease-in-out hover:border-white"
         >
           <router-link
             @click="refreshCurrentRoute('Articles')"
             :to="{ name: 'Articles' }"
-            class="tracking-widest px-4"
+            class="px-4 tracking-widest"
             >文章</router-link
           >
         </li>
         <li
-          class="border-2 border-transparent hover:border-white transition-all duration-700 ease-in-out font-bold py-1 text-white"
+          class="border-2 border-transparent py-1 font-bold text-white transition-all duration-700 ease-in-out hover:border-white"
         >
           <router-link
             @click="refreshCurrentRoute('Explore')"
             :to="{ name: 'Explore' }"
-            class="tracking-widest px-4"
+            class="px-4 tracking-widest"
             >探索</router-link
           >
         </li>
         <li
-          class="border-2 border-transparent hover:border-white transition-all duration-700 ease-in-out font-bold py-1 text-wite"
+          class="border-2 border-transparent py-1 font-bold text-white transition-all duration-700 ease-in-out hover:border-white"
         >
           <router-link
             @click="refreshCurrentRoute('Gallery')"
             :to="{ name: 'Gallery' }"
-            class="tracking-widest px-4"
+            class="px-4 tracking-widest"
             >照片牆</router-link
           >
         </li>
         <li
-          class="border-2 border-transparent hover:border-white transition-all duration-700 ease-in-out font-bold py-1 text-white"
+          class="border-2 border-transparent py-1 font-bold text-white transition-all duration-700 ease-in-out hover:border-white"
         >
           <router-link
             @click="refreshCurrentRoute('Community')"
             :to="{ name: 'Community' }"
-            class="tracking-widest px-4"
+            class="px-4 tracking-widest"
             >社區</router-link
           >
         </li>
       </ul>
       <div
         v-if="isLogin && user && user.profile"
-        class="avatar border-2 border-transparent flex items-center gap-2"
+        class="flex items-center gap-2 border-2 border-transparent"
       >
         <PopoverGroup class="flex items-center gap-2">
           <Popover>
             <PopoverButton
               class="flex items-center gap-x-1 text-sm font-semibold leading-6 focus:outline-none"
             >
-              <BellIcon class="w-6 2xl:w-8 text-white" />
+              <BellIcon class="w-6 text-white 2xl:w-8" />
             </PopoverButton>
 
             <transition
@@ -156,23 +160,23 @@ const refreshCurrentRoute = (routeName: string) => {
               leave-to-class="opacity-0 translate-y-1"
             >
               <PopoverPanel
-                class="flex items-center flex-col absolute right-2 top-2/3 z-10 mt-3 overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600 w-72 2xl:w-96"
+                class="absolute right-2 top-2/3 z-10 mt-3 flex w-72 flex-col items-center overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600 2xl:w-96"
               >
                 <div class="w-full">
                   <span
-                    class="block rounded rounded-b-none bg-stone-600 text-white border border-white p-3 px-5 font-bold w-full 2xl:text-lg"
+                    class="block w-full rounded rounded-b-none border border-white bg-stone-600 p-3 px-5 text-lg font-bold text-white"
                     >通知</span
                   >
                   <div class="border border-white">
                     <div
                       v-for="(notification, index) in notifications"
                       :key="index"
-                      class="p-3 px-5 text-sm 2xl:p-5 2xl:text-base leading-6 hover:bg-stone-100 text-stone-700"
+                      class="p-3 px-5 text-sm leading-6 text-stone-700 hover:bg-stone-100 2xl:p-5 2xl:text-base"
                     >
                       <div class="flex-auto">
                         <a
                           :href="notification.href"
-                          class="whitespace-nowrap block overflow-hidden truncate"
+                          class="block overflow-hidden truncate whitespace-nowrap"
                         >
                           {{ notification.content }}
                         </a>
@@ -184,12 +188,12 @@ const refreshCurrentRoute = (routeName: string) => {
             </transition>
           </Popover>
           <Popover class="h-12">
-            <PopoverButton class="focus:outline-none">
+            <PopoverButton class="focus:outline-none" @click="closeMenu">
               <div
-                class="rounded-full bg-white w-12 h-12 p-1 flex items-center justify-center overflow-hidden"
+                class="flex size-12 items-center justify-center overflow-hidden rounded-full bg-white p-1"
               >
                 <img
-                  class="rounded-full"
+                  class="rounded-full object-cover"
                   :src="`/assets/img/avatar (${user.profile.selectedAvatarIndex}).png`"
                   alt="avatar"
                 />
@@ -205,14 +209,14 @@ const refreshCurrentRoute = (routeName: string) => {
               leave-to-class="opacity-0 translate-y-1"
             >
               <PopoverPanel
-                class="flex items-center flex-col absolute right-2 top-2/3 z-10 mt-4 overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600"
+                class="absolute right-2 top-2/3 z-10 mt-4 flex flex-col items-center overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600"
               >
                 <div class="w-64 2xl:w-96">
                   <div
-                    class="px-6 py-4 flex items-center gap-4 bg-stone-600 rounded rounded-b-none border border-b-0 border-white"
+                    class="flex items-center gap-4 rounded rounded-b-none border border-b-0 border-white bg-stone-600 px-6 py-4"
                   >
                     <div
-                      class="rounded-full bg-white w-16 h-16 2xl:w-20 2xl:h-20 p-2 flex items-center justify-center border border-stone-700"
+                      class="flex size-16 items-center justify-center rounded-full border border-stone-700 bg-white p-2 2xl:size-20"
                     >
                       <img
                         class="rounded-full"
@@ -221,7 +225,7 @@ const refreshCurrentRoute = (routeName: string) => {
                       />
                     </div>
                     <div class="flex flex-col">
-                      <span class="text-xl 2xl:text-2xl font-bold">#{{ user.username }}</span>
+                      <span class="text-xl font-bold 2xl:text-2xl">#{{ user.username }}</span>
                       <span class="text-sm 2xl:text-lg">{{ user.email }}</span>
                     </div>
                   </div>
@@ -229,17 +233,17 @@ const refreshCurrentRoute = (routeName: string) => {
                     <div
                       v-for="(userAction, index) in userActions"
                       :key="index"
-                      class="text w-full leading-6 hover:bg-stone-200 text-stone-700 cursor-pointer"
+                      class="w-full cursor-pointer text-lg leading-6 text-stone-700 hover:bg-stone-200 lg:text-base"
                     >
                       <div
                         @click="userAction.action"
-                        class="flex-auto flex items-center 2xl:gap-8 gap-2 px-6 py-4 2xl:py-6"
+                        class="flex flex-auto items-center gap-2 px-6 py-4 2xl:gap-8 2xl:py-6"
                       >
                         <div class="flex flex-none items-center justify-center">
                           <component :is="userAction.icon" class="w-4 2xl:w-8" aria-hidden="true" />
                         </div>
                         <span
-                          class="whitespace-nowrap text-center block tracking-widest 2xl:text-xl"
+                          class="block whitespace-nowrap text-center tracking-widest 2xl:text-xl"
                         >
                           {{ userAction.actionName }}
                         </span>
@@ -254,10 +258,93 @@ const refreshCurrentRoute = (routeName: string) => {
       </div>
       <button
         v-else
-        class="text-stone-700 text-lg 2xl:text-xl font-bold h-12 bg-white border-2 border-stone-600 hover:bg-[#4b493ded] hover:text-white hover:border-white transition-all duration-700 ease-in-out py-1 px-2"
+        class="h-12 border-2 border-stone-600 bg-white px-2 py-1  text-2xl md:text-lg font-bold text-stone-700 transition-all duration-700 ease-in-out hover:border-white hover:bg-[#4b493ded] hover:text-white 2xl:text-xl"
       >
         <router-link :to="{ name: 'Login' }">Get started</router-link>
       </button>
+      <div class="flex items-center gap-2 sm:hidden">
+        <button class="text-white focus:outline-none" @click="toggleMenu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="size-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <transition
+        enter-active-class="transition-max-height east duration-500"
+        enter-from-class="max-h-0"
+        enter-to-class="max-h-screen"
+        leave-active-class="transition-max-height east duration-500"
+        leave-from-class="max-h-screen"
+        leave-to-class="max-h-0"
+      >
+        <div v-if="isMenuOpen" class="absolute left-0 top-20 z-50 w-full bg-stone-600 text-center">
+          <ul class="flex flex-col items-start p-4 text-white">
+            <li class="mx-auto my-2 w-3/4 border-b border-white py-2">
+              <router-link
+                @click="
+                  () => {
+                    refreshCurrentRoute('Articles')
+                    closeMenu()
+                  }
+                "
+                :to="{ name: 'Articles' }"
+                class="block w-full px-4"
+                >文章</router-link
+              >
+            </li>
+            <li class="mx-auto my-2 w-3/4 border-b border-white py-2">
+              <router-link
+                @click="
+                  () => {
+                    refreshCurrentRoute('Explore')
+                    closeMenu()
+                  }
+                "
+                :to="{ name: 'Explore' }"
+                class="block w-full px-4"
+                >探索</router-link
+              >
+            </li>
+            <li class="mx-auto my-2 w-3/4 border-b border-white py-2">
+              <router-link
+                @click="
+                  () => {
+                    refreshCurrentRoute('Gallery')
+                    closeMenu()
+                  }
+                "
+                :to="{ name: 'Gallery' }"
+                class="block w-full px-4"
+                >照片牆</router-link
+              >
+            </li>
+            <li class="mx-auto my-2 w-3/4 py-2">
+              <router-link
+                @click="
+                  () => {
+                    refreshCurrentRoute('Community')
+                    closeMenu()
+                  }
+                "
+                :to="{ name: 'Community' }"
+                class="block w-full px-4"
+                >社區</router-link
+              >
+            </li>
+          </ul>
+        </div>
+      </transition>
     </div>
   </nav>
 </template>

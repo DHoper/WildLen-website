@@ -17,9 +17,6 @@ const props = defineProps({
 const userStore = useUserStore()
 const selectedOptionId = ref<number | null>(null)
 
-// const isUserVoted = ref(false)
-// const existingUserVote = ref<UserVote | null>(null)
-
 const handleVote = async () => {
   const loadingStore = useLoadingStore() //設置loading動畫頁
   loadingStore.setLoadingStatus(true)
@@ -55,23 +52,20 @@ const getOptionClass = (optionId: number) => {
   }
 }
 
-// onMounted(async () => {
-//   await checkIfVoted()
-// })
 </script>
 
 <template>
   <div v-if="props.vote" class="w-full">
-    <div class="flex flex-col gap-4 mt-4">
+    <div class="mt-4 flex flex-col gap-4">
       <div
-        v-for="option in vote.options"
+        v-for="option in props.vote.options"
         :key="option.id"
         @click="selectOption(option.id!)"
         class="cursor-pointer"
       >
         <div
-          class="p-4 py-3 border-2 border-stone-500 font-semibold"
-          :class="['w-full flex-shrink-0 truncate', getOptionClass(option.id!)]"
+          class="border-2 border-stone-500 p-4 py-3 font-semibold"
+          :class="['w-full shrink-0 truncate', getOptionClass(option.id!)]"
           @click="selectOption(option.id!)"
         >
           {{ option.text }}
@@ -81,7 +75,7 @@ const getOptionClass = (optionId: number) => {
     <button
       v-if="!userHasVoted"
       @click="handleVote"
-      class="block mt-16 ml-auto bg-blue-900 text-white p-2 px-8"
+      class="ml-auto mt-16 block bg-blue-900 p-2 px-8 text-white transition-all hover:bg-blue-700"
     >
       投票
     </button>

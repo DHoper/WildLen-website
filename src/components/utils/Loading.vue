@@ -8,26 +8,26 @@ const isLoading = computed(() => useLoadingStore().getLoadingStatus())
 <template>
   <div
     v-if="isLoading"
-    class="fixed top-0 left-0 z-50 w-screen h-screen flex flex-col gap-8 2xl:gap-16 items-center justify-center bg-stone-600 bg-opacity-100"
+    class="fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center gap-8 bg-stone-600 bg-opacity-100 2xl:gap-16"
   >
-    <div class="relative p-4 flex">
+    <div class="relative flex p-4">
       <div
-        class="absolute top-0 left-0 w-full h-full border-[.375rem] border-white text-[#b4b2b265] animate-loading"
+        class="absolute left-0 top-0 size-full animate-loading border-[.375rem] border-white text-[#b4b2b265]"
       />
       <img src="/assets/img/deerIcon.png" alt="deerIcon" class="w-16 2xl:w-24" />
     </div>
     <div class="flex items-center justify-between gap-8">
-      <div class="w-3 h-3 2xl:w-6 2xl:h-6">
-        <div class="w-2 h-2 2xl:w-4 2xl:h-4 bg-white opacity-0 rounded-full animate-bounce1" />
+      <div class="size-3 2xl:size-6">
+        <div class="size-2 animate-bounce1 rounded-full bg-white opacity-0 2xl:size-4" />
       </div>
-      <div class="w-3 h-3 2xl:w-6 2xl:h-6">
-        <div class="w-2 h-2 2xl:w-4 2xl:h-4 bg-white opacity-0 rounded-full animate-bounce2" />
+      <div class="size-3 2xl:size-6">
+        <div class="size-2 animate-bounce2 rounded-full bg-white opacity-0 2xl:size-4" />
       </div>
-      <div class="w-3 h-3 2xl:w-6 2xl:h-6">
-        <div class="w-2 h-2 2xl:w-4 2xl:h-4 bg-white opacity-0 rounded-full animate-bounce3" />
+      <div class="size-3 2xl:size-6">
+        <div class="size-2 animate-bounce3 rounded-full bg-white opacity-0 2xl:size-4" />
       </div>
-      <div class="w-3 h-3 2xl:w-6 2xl:h-6">
-        <div class="w-2 h-2 2xl:w-4 2xl:h-4 bg-white opacity-0 rounded-full animate-bounce4" />
+      <div class="size-3 2xl:size-6">
+        <div class="size-2 animate-bounce4 rounded-full bg-white opacity-0 2xl:size-4" />
       </div>
     </div>
   </div>

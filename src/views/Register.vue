@@ -130,24 +130,24 @@ watch(activeTab, () => {
 <template>
   <div class="relative flex h-screen w-screen overflow-hidden">
     <div
-      class="loginForm min-w-fit bg-stone-700 opacity-95 flex flex-col items-center justify-center w-96 gap-10 2xl:w-1/3 2xl:gap-0"
+      class="flex w-full min-w-fit flex-col items-center justify-start gap-0 bg-stone-700  opacity-95 sm:w-3/5 sm:justify-center sm:gap-10 md:w-96 2xl:w-1/3 2xl:gap-0"
     >
-      <div class="mt-8">
-        <div class="flex-1 flex items-center border-4 border-white p-4 w-fit mx-auto">
+      <div class="mt-24 sm:mt-8">
+        <div class="mx-auto flex w-fit flex-1 items-center border-4 border-white p-4">
           <img src="/assets/img/deerIcon.png" alt="deerIcon" class="w-16 2xl:w-20" />
         </div>
-        <span class="text-white text-3xl font-bold 2xl:text-4xl">WILDLEN</span>
+        <span class="text-3xl font-bold text-white 2xl:text-4xl">WILDLEN</span>
       </div>
       <form
         method="POST"
         autocomplete="off"
         @submit.prevent="handleSubmit"
-        class="text-white flex flex-col items-center gap-6 w-80 2xl:w-96 2xl:gap-12 2xl:mt-32"
+        class="flex w-96 flex-1 flex-col items-center justify-center gap-6 text-white sm:w-80 sm:flex-none sm:justify-start 2xl:mt-32 2xl:w-96 2xl:gap-12"
       >
-        <div class="formContent w-full">
-          <div v-if="formStep === 0" class="step1 flex flex-col gap-6">
+        <div class="w-full">
+          <div v-if="formStep === 0" class="flex flex-col gap-6">
             <div
-              class="relative mb-3 text-center flex flex-col bg-[#61606058] px-2 pt-1 pb-0 border-2"
+              class="relative mb-3 flex flex-col border-2 bg-[#61606058] px-2 pb-0 pt-1 text-center"
               :class="
                 !formInputInvalid.email.valid || formInputInvalid.email.registered
                   ? 'border-red-500 pb-1'
@@ -155,7 +155,7 @@ watch(activeTab, () => {
               "
             >
               <div
-                class="border-stone-300 flex items-baseline gap-2 w-full py-1 2xl:p-2"
+                class="flex w-full items-baseline gap-2 border-stone-300 py-1 2xl:p-2"
                 :class="
                   !formInputInvalid.email.valid || formInputInvalid.email.registered
                     ? 'border-none'
@@ -168,7 +168,7 @@ watch(activeTab, () => {
                 <input
                   v-model="formInput.email"
                   @blur="validateInput('email')"
-                  class="border-0 focus:ring-0 focus:outline-none bg-transparent flex-1 text-sm 2xl:text-base text-white"
+                  class="flex-1 border-0 bg-transparent text-sm text-white focus:outline-none focus:ring-0 2xl:text-base"
                   type="text"
                   placeholder="請輸入有效信箱"
                   name="email"
@@ -179,25 +179,25 @@ watch(activeTab, () => {
               </div>
               <div
                 v-if="!formInputInvalid.email.valid"
-                class="w-full absolute left-0 -top-6 flex items-center justify-center gap-1 text-sm 2xl:text-base text-red-500"
+                class="absolute -top-6 left-0 flex w-full items-center justify-center gap-1 text-sm text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入有效信箱</p>
               </div>
               <div
                 v-else-if="formInputInvalid.email.registered"
-                class="w-full absolute left-0 -top-6 flex items-center justify-center gap-1 text-sm 2xl:text-base text-red-500"
+                class="absolute -top-6 left-0 flex w-full items-center justify-center gap-1 text-sm text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>此信箱已被註冊</p>
               </div>
             </div>
             <div
-              class="relative mb-3 text-center flex flex-col bg-[#61606058] px-2 pt-1 pb-0 border-2"
+              class="relative mb-3 flex flex-col border-2 bg-[#61606058] px-2 pb-0 pt-1 text-center"
               :class="formInputInvalid.username ? 'border-transparent' : 'border-red-500 pb-1'"
             >
               <div
-                class="border-b-2 border-stone-300 flex items-baseline gap-2 w-full py-1 2xl:p-2"
+                class="flex w-full items-baseline gap-2 border-b-2 border-stone-300 py-1 2xl:p-2"
                 :class="formInputInvalid.username ? '' : 'border-none'"
               >
                 <label class="text-gray-200 opacity-80 2xl:text-lg" for="username"
@@ -206,7 +206,7 @@ watch(activeTab, () => {
                 <input
                   v-model="formInput.username"
                   @blur="validateInput('username')"
-                  class="border-0 focus:ring-0 focus:outline-none bg-transparent flex-1 text-sm 2xl:text-base"
+                  class="flex-1 border-0 bg-transparent text-sm focus:outline-none focus:ring-0 2xl:text-base"
                   type="text"
                   placeholder="2~7字"
                   name="username"
@@ -217,20 +217,20 @@ watch(activeTab, () => {
               </div>
               <div
                 v-if="!formInputInvalid.username"
-                class="w-full absolute left-0 -top-6 flex justify-center items-center gap-1 text-sm 2xl:text-base text-red-500"
+                class="absolute -top-6 left-0 flex w-full items-center justify-center gap-1 text-sm text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入2~7字有效暱稱</p>
               </div>
             </div>
           </div>
-          <div v-if="formStep === 1" class="step2 flex flex-col gap-6">
+          <div v-if="formStep === 1" class="flex flex-col gap-6">
             <div
-              class="relative mb-3 text-center flex flex-col bg-[#61606058] px-2 pt-1 pb-0 border-2"
+              class="relative mb-3 flex flex-col border-2 bg-[#61606058] px-2 pb-0 pt-1 text-center"
               :class="formInputInvalid.password ? 'border-transparent' : 'border-red-500 pb-1'"
             >
               <div
-                class="border-b-2 border-stone-300 flex items-baseline gap-2 w-full py-1 2xl:p-2"
+                class="flex w-full items-baseline gap-2 border-b-2 border-stone-300 py-1 2xl:p-2"
                 :class="formInputInvalid.password ? '' : 'border-none'"
               >
                 <label class="text-gray-200 opacity-80 2xl:text-lg" for="password"
@@ -240,7 +240,7 @@ watch(activeTab, () => {
                   v-model="formInput.password"
                   @blur="validateInput('password')"
                   placeholder="6 ~ 15字"
-                  class="border-0 focus:ring-0 focus:outline-none bg-transparent flex-1 text-sm 2xl:text-base"
+                  class="flex-1 border-0 bg-transparent text-sm focus:outline-none focus:ring-0 2xl:text-base"
                   type="password"
                   name="password"
                   id="password"
@@ -250,20 +250,20 @@ watch(activeTab, () => {
               </div>
               <div
                 v-if="!formInputInvalid.password"
-                class="w-full absolute left-0 -top-6 flex justify-center items-center gap-1 text-sm 2xl:text-base text-red-500"
+                class="absolute -top-6 left-0 flex w-full items-center justify-center gap-1 text-sm text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入六個字以上的有效密碼</p>
               </div>
             </div>
             <div
-              class="relative mb-3 text-center flex flex-col bg-[#61606058] px-2 pt-1 pb-0 border-2"
+              class="relative mb-3 flex flex-col border-2 bg-[#61606058] px-2 pb-0 pt-1 text-center"
               :class="
                 formInputInvalid.passwordConfirm ? 'border-transparent' : 'border-red-500 pb-1'
               "
             >
               <div
-                class="border-b-2 border-stone-300 flex items-baseline gap-2 w-full py-1 2xl:p-2"
+                class="flex w-full items-baseline gap-2 border-b-2 border-stone-300 py-1 2xl:p-2"
                 :class="formInputInvalid.passwordConfirm ? '' : 'border-none'"
               >
                 <label class="text-gray-200 opacity-80 2xl:text-lg" for="passwordConfirm"
@@ -273,7 +273,7 @@ watch(activeTab, () => {
                   v-model="formInput.passwordConfirm"
                   @blur="validateInput('passwordConfirm')"
                   placeholder="6 ~ 15字"
-                  class="border-0 focus:ring-0 focus:outline-none bg-transparent flex-1 text-sm 2xl:text-base"
+                  class="flex-1 border-0 bg-transparent text-sm focus:outline-none focus:ring-0 2xl:text-base"
                   type="password"
                   name="passwordConfirm"
                   id="passwordConfirm"
@@ -283,19 +283,16 @@ watch(activeTab, () => {
               </div>
               <div
                 v-if="!formInputInvalid.passwordConfirm"
-                class="w-full absolute left-0 -top-6 flex justify-center items-center gap-1 text-sm 2xl:text-base text-red-500"
+                class="absolute -top-6 left-0 flex w-full items-center justify-center gap-1 text-sm text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入與上方相同之密碼</p>
               </div>
             </div>
           </div>
-          <div
-            v-if="formStep === 2"
-            class="step3 flex flex-col items-center gap-4 -mt-4 2xl:-mt-0 mb-8"
-          >
+          <div v-if="formStep === 2" class="-mt-4 mb-8 flex flex-col items-center gap-4 2xl:-mt-0">
             <div
-              class="bg-stone-100 border-2 border-dashed border-stone-700 w-32 2xl:w-40 overflow-hidden"
+              class="w-32 overflow-hidden border-2 border-dashed border-stone-700 bg-stone-100 2xl:w-40"
             >
               <img
                 class="p-3"
@@ -306,29 +303,29 @@ watch(activeTab, () => {
             <button
               @click="showAvatarSelector = true"
               type="button"
-              class="w-32 2xl:w-40 2xl:text-lg bg-stone-600 text-white px-4 py-2 hover:bg-stone-500 focus:outline-none tracking-widest transition-all duration-500"
+              class="w-32 bg-stone-600 px-4 py-2 tracking-widest text-white transition-all duration-500 hover:bg-stone-500 focus:outline-none 2xl:w-40 2xl:text-lg"
             >
               選擇頭像
             </button>
           </div>
-          <div v-if="formStep === 3" class="step4 flex flex-col -mt-4 mb-2 w-full">
+          <div v-if="formStep === 3" class="-mt-4 mb-2 flex w-full flex-col">
             <p
-              class="w-full bg-stone-500 text-stone-100 px-4 py-2 text-center border border-stone-500 border-b-0 2xl:text-lg 2xl:py-3"
+              class="w-full border border-b-0 border-stone-500 bg-stone-500 px-4 py-2 text-center text-stone-100 2xl:py-3 2xl:text-lg"
             >
               挑選一些感興趣的主題
             </p>
             <div
-              class="overflow-auto flex items-center justify-center flex-wrap w-full h-40 border border-stone-500 p-2 bg-stone-600 border-t-0"
+              class="flex h-64 w-full flex-wrap items-center justify-center overflow-auto border border-t-0 border-stone-500 bg-stone-600 p-2 sm:h-40"
             >
               <div
-                class="flex items-center justify-center flex-wrap"
+                class="flex flex-wrap items-center justify-center"
                 v-for="(topic, index) in topicTags"
                 :key="index"
               >
                 <label
                   v-for="(tag, index) in topic.tags"
                   :key="index"
-                  class="border p-1 m-1 bg-stone-600 2xl:p-2"
+                  class="m-1 border bg-stone-600 p-1 2xl:p-2"
                   :style="
                     selectedTags.includes(tag) ? `background-color:${topic.color} !important` : ''
                   "
@@ -340,12 +337,12 @@ watch(activeTab, () => {
             </div>
           </div>
         </div>
-        <div class="formActions w-full flex gap-4">
+        <div class=" flex w-full gap-4">
           <button
             @click.prevent="previousStep()"
             v-if="formStep !== 0"
             type="button"
-            class="flex-1 border-2 bg-stone-600 border-stone-100 text-white px-4 py-2 hover:bg-stone-100 hover:text-stone-800 focus:outline-none tracking-widest transition-all duration-500"
+            class="flex-1 border-2 border-stone-100 bg-stone-600 px-4 py-2 tracking-widest text-white transition-all duration-500 hover:bg-stone-100 hover:text-stone-800 focus:outline-none"
           >
             上一步
           </button>
@@ -353,7 +350,7 @@ watch(activeTab, () => {
             v-if="formStep !== 3"
             @click.prevent="nextStep"
             type="button"
-            class="flex-1 bg-stone-600 border-2 border-stone-100 text-white px-4 py-2 hover:bg-stone-100 hover:text-stone-800 focus:outline-none tracking-widest transition-all duration-500 2xl:text-lg"
+            class="flex-1 border-2 border-stone-100 bg-stone-600 px-4 py-2 tracking-widest text-white transition-all duration-500 hover:bg-stone-100 hover:text-stone-800 focus:outline-none 2xl:text-lg"
           >
             下一步
           </button>
@@ -361,7 +358,7 @@ watch(activeTab, () => {
             v-else
             :disabled="!finished"
             type="submit"
-            class="flex-1 border-2 px-4 py-2 focus:outline-none tracking-widest transition-all duration-500 2xl:text-lg"
+            class="flex-1 border-2 px-4 py-2 tracking-widest transition-all duration-500 focus:outline-none 2xl:text-lg"
             :class="
               finished
                 ? 'bg-stone-600 border-stone-100 text-white  hover:bg-stone-100 hover:text-stone-800'
@@ -379,21 +376,21 @@ watch(activeTab, () => {
           使用Google帳號註冊
         </button> -->
         <router-link :to="{ name: 'Login' }">
-          <div class="text-sm 2xl:text-lg underline">已有帳號?</div>
+          <div class="text-sm underline 2xl:text-lg">已有帳號?</div>
         </router-link>
       </form>
     </div>
     <div
-      class="relative banner font-Raleway flex flex-col items-center justify-start 2xl:justify-center gap-10 flex-grow h-screen bg-white text-stone-100 bg-register bg-no-repeat bg-cover bg-center text-shadow-md shadow-inner"
+      class="banner text-shadow-md flex h-screen grow flex-col items-center justify-start gap-10 bg-white bg-register bg-cover bg-center bg-no-repeat font-Raleway text-stone-100 shadow-inner sm:relative 2xl:justify-center"
     >
-      <div class="flex flex-col items-center gap-10 py-16 px-4 w-full">
+      <div class=" hidden w-full flex-col items-center gap-10 px-4 py-16 md:flex">
         <div
           ref="nav"
-          class="w-full flex items-center justify-center gap-16 text-[#ffffff9e] text-2xl"
+          class="flex w-full items-center justify-center gap-16 text-2xl text-[#ffffff9e]"
         >
           <button
             @mouseover="addTabClass(0)"
-            class="transition duration-500 2xl:text-4xl border-white border-b-2 scale-110"
+            class="scale-110 border-b-2 border-white transition duration-500 2xl:text-4xl"
           >
             探索
           </button>
@@ -404,58 +401,58 @@ watch(activeTab, () => {
             分享
           </button>
         </div>
-        <div class="w-full h-52 flex flex-col items-center relative mt-20">
+        <div class="relative mt-20 flex h-52 w-full flex-col items-center">
           <transition>
-            <div v-if="activeTab == 0" class="w-full flex flex-col items-center absolute top-0">
-              <h2 class="text-8xl 2xl:text-9xl mb-4 font-Cormorant tracking-tighter">
+            <div v-if="activeTab == 0" class="absolute top-0 flex w-full flex-col items-center">
+              <h2 class="mb-4 font-Cormorant text-8xl tracking-tighter 2xl:text-9xl">
                 探索&nbsp;&nbsp;視界.
               </h2>
-              <p class="text-lg 2xl:text-xl 2xl:mt-10 tracking-wide text-center">
+              <p class="text-center text-lg tracking-wide 2xl:mt-10 2xl:text-xl">
                 這個廣大壯闊的世界，還有多少你未曾發現的事物?
               </p>
-              <p class="text-lg 2xl:text-xl 2xl:mt-2 tracking-wide text-center">
+              <p class="text-center text-lg tracking-wide 2xl:mt-2 2xl:text-xl">
                 以全新的視野，重新走進這個世界，發掘那些你從前不曾留意過的美麗
               </p>
             </div>
           </transition>
           <transition>
-            <div v-if="activeTab == 1" class="flex flex-col items-center absolute top-0">
-              <h2 class="text-8xl 2xl:text-9xl mb-4 font-Cormorant tracking-tighter">
+            <div v-if="activeTab == 1" class="absolute top-0 flex flex-col items-center">
+              <h2 class="mb-4 font-Cormorant text-8xl tracking-tighter 2xl:text-9xl">
                 紀錄&nbsp;&nbsp;冒險.
               </h2>
-              <p class="text-lg 2xl:text-xl 2xl:mt-10 tracking-wide">
+              <p class="text-lg tracking-wide 2xl:mt-10 2xl:text-xl">
                 無論大或小，每一段記憶都值得被好好珍藏
               </p>
-              <p class="text-lg 2xl:text-xl 2xl:mt-2 tracking-wide">
+              <p class="text-lg tracking-wide 2xl:mt-2 2xl:text-xl">
                 從這裡開始，和我們一起，紀錄下那些獨一無二的獨特時光
               </p>
             </div>
           </transition>
           <transition>
-            <div v-if="activeTab == 2" class="flex flex-col items-center absolute top-0">
-              <h2 class="text-8xl 2xl:text-9xl mb-4 font-Cormorant tracking-tighter">
+            <div v-if="activeTab == 2" class="absolute top-0 flex flex-col items-center">
+              <h2 class="mb-4 font-Cormorant text-8xl tracking-tighter 2xl:text-9xl">
                 分享&nbsp;&nbsp;體驗.
               </h2>
-              <p class="text-lg 2xl:text-xl 2xl:mt-10 tracking-wide text-center">
+              <p class="text-center text-lg tracking-wide 2xl:mt-10 2xl:text-xl">
                 將你的感動化成照片和文字，與世界各地的人們交流
               </p>
-              <p class="text-lg 2xl:text-xl 2xl:mt-2 tracking-wide text-center">
+              <p class="text-center text-lg tracking-wide 2xl:mt-2 2xl:text-xl">
                 分享的力量是無限的，將你的所見傳遞給出去，彼此的距離因此變得不再遙遠
               </p>
             </div>
           </transition>
         </div>
-        <div class="absolute bottom-10 flex justify-end w-full gap-4 pr-4 2xl:pr-10">
+        <div class="absolute bottom-10 flex w-full justify-end gap-4 pr-4 2xl:pr-10">
           <router-link :to="{ name: 'Articles' }">
             <button
-              class="border-2 border-transparent text-white py-2 px-4 hover:bg-stone-100 hover:text-stone-600 hover:border-stone-100 tracking-widest transition-all duration-500 2xl:text-lg 2xl:px-6"
+              class="border-2 border-transparent px-4 py-2 tracking-widest text-white transition-all duration-500 hover:border-stone-100 hover:bg-stone-100 hover:text-stone-600 2xl:px-6 2xl:text-lg"
             >
               返回主頁
             </button>
           </router-link>
           <router-link :to="{ name: 'Help' }">
             <button
-              class="border-2 border-stone-100 text-stone-100 py-2 px-4 hover:bg-stone-100 hover:text-stone-600 tracking-widest transition-all duration-500 2xl:text-lg 2xl:px-6"
+              class="border-2 border-stone-100 px-4 py-2 tracking-widest text-stone-100 transition-all duration-500 hover:bg-stone-100 hover:text-stone-600 2xl:px-6 2xl:text-lg"
             >
               關於我們
             </button>
@@ -469,15 +466,15 @@ watch(activeTab, () => {
       >
         <div
           v-if="showAvatarSelector"
-          class="absolute top-0 left-0 w-full h-full bg-stone-700 bg-opacity-60 flex justify-center items-center"
+          class="absolute left-0 top-0 flex size-full items-center justify-center bg-stone-700/60"
         >
           <div
-            class="flex z-10 bg-white flex-col items-center justify-around gap-4 pt-4 pb-10 px-16 2xl:pt-12 w-full h-full overflow-auto"
+            class="z-10 flex size-full flex-col items-center justify-around gap-4 overflow-auto bg-white px-16 pb-10 pt-4 2xl:pt-12"
           >
-            <p class="block text-stone-700 text-xl 2xl:text-3xl font-bold tracking-widest">
+            <p class="block text-2xl font-bold tracking-widest text-stone-700 sm:text-xl 2xl:text-3xl">
               選擇頭像
             </p>
-            <div class="grid grid-cols-6 gap-4 p-4">
+            <div class="grid h-96 w-full grid-cols-3 gap-4 overflow-auto p-4 sm:w-auto sm:grid-cols-2 md:h-auto md:grid-cols-6">
               <div v-for="index in 12" :key="index">
                 <label class="cursor-pointer">
                   <input
@@ -488,10 +485,10 @@ watch(activeTab, () => {
                     v-model="formInput.selectedAvatarIndex"
                   />
                   <div
-                    class="p-1 border-2 border-dashed border-stone-600 hover:scale-105 transition-all duration-300 hover:border-solid group focus-within:border-solid"
+                    class="group border-2 border-dashed border-stone-600 p-1 transition-all duration-300 focus-within:border-solid hover:scale-105 hover:border-solid"
                   >
                     <img
-                      class="sm:w-16 md:w-20 lg:w-32 w-12 focus:scale-110 transition-all duration-300"
+                      class="w-full transition-all duration-300 focus:scale-110 sm:w-12 sm:w-16 md:w-20 lg:w-32"
                       :src="`/assets/img/avatar (${index}).png`"
                       alt=""
                       tabindex="0"
@@ -502,7 +499,7 @@ watch(activeTab, () => {
             </div>
             <button
               @click="showAvatarSelector = false"
-              class="w-full bg-stone-600 font-bold px-4 py-3 hover:bg-stone-700 text-white focus:outline-none tracking-widest transition-all duration-500 2xl:text-xl 2xl:p-4"
+              class="w-full bg-stone-600 px-4 py-3 font-bold tracking-widest text-white transition-all duration-500 hover:bg-stone-700 focus:outline-none 2xl:p-4 2xl:text-xl"
             >
               完成
             </button>
@@ -512,4 +509,3 @@ watch(activeTab, () => {
     </div>
   </div>
 </template>
-../utils/validator.ts@/api/user/user.ts

@@ -25,16 +25,16 @@ async function login() {
 </script>
 
 <template>
-  <div class="bg-login bg-cover bg-no-repeat bg-center w-screen h-screen">
-    <div class="min-w-fit flex justify-between items-center w-screen h-full">
-      <div class="basis-3/5 flex flex-col items-center">
-        <div class="flex items-center border-4 border-white text-[#b4b2b265] p-4 w-fit">
+  <div class="h-screen w-screen bg-login bg-cover bg-center bg-no-repeat">
+    <div class="flex h-full w-screen min-w-fit flex-col items-center justify-between sm:flex-row">
+      <div class="flex w-full basis-2/5  flex-col items-center justify-center sm:w-auto sm:basis-1/2 md:basis-3/5">
+        <div class="flex w-fit items-center border-4 border-white p-4 text-[#b4b2b265]">
           <img src="/assets/img/deerIcon.png" alt="deerIcon" class="w-16 2xl:w-24" />
         </div>
-        <span class="text-white text-[#8d8c8ca0] text-3xl font-bold">WILDLENS</span>
+        <span class="text-3xl font-bold  text-white">WILDLENS</span>
       </div>
       <div
-        class="relative h-full basis-2/5 bg-stone-800 bg-opacity-40 flex flex-col justify-center items-center"
+        class="relative flex size-full basis-3/5 flex-col  items-center justify-center sm:w-auto sm:basis-1/2 sm:bg-stone-800/40 md:basis-2/5 "
       >
         <router-link :to="{ name: 'Help' }">
           <svg
@@ -43,7 +43,7 @@ async function login() {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="absolute top-6 right-6 w-10 h-10 text-white 2xl:w-12 2xl:h-12"
+            class="absolute right-6 top-6 size-10 text-white 2xl:size-12"
           >
             <path
               stroke-linecap="round"
@@ -52,19 +52,19 @@ async function login() {
             />
           </svg>
         </router-link>
-        <div class="text-white flex flex-col justify-center items-center gap-6">
+        <div class="flex w-4/5 flex-col items-center justify-center gap-6 text-white sm:w-auto">
           <div
-            class="border mb-3 text-center flex flex-col w-full bg-[#d1d1d1] px-2 py-1 text-stone-800"
+            class="mb-3 flex w-full flex-col border bg-[#d1d1d1] px-2 py-1 text-center text-stone-800"
             :class="
               loginIsFailed === LoginStatus.EmailError ? 'border-red-500' : 'border-transparent'
             "
           >
-            <div class="border-b-2 border-stone-300 flex items-center gap-2 w-full py-1 2xl:px-2">
-              <label class="text-stone-700 opacity-80 2xl:text-lg" for="username">信箱:</label>
+            <div class="flex w-full items-center gap-2 border-b-2 border-stone-300 py-1 2xl:px-2">
+              <label class="text-stone-700 opacity-80 2xl:text-lg" for="username">信箱 :</label>
               <input
                 id="username"
                 v-model="email"
-                class="focus:ring-0 focus:outline-none bg-transparent max-w-52 text-sm 2xl:text-base"
+                class="flex-1 bg-transparent text-lg focus:outline-none focus:ring-0 sm:max-w-52 md:text-sm 2xl:text-base"
                 type="text"
                 name="username"
                 required
@@ -73,17 +73,17 @@ async function login() {
             </div>
           </div>
           <div
-            class="border mb-3 text-center flex flex-col w-full bg-[#d1d1d1] px-2 py-1 text-stone-800"
+            class="mb-3 flex w-full flex-col border bg-[#d1d1d1] px-2 py-1 text-center text-stone-800"
             :class="
               loginIsFailed === LoginStatus.PasswordError ? 'border-red-500' : 'border-transparent'
             "
           >
-            <div class="border-b-2 border-stone-300 flex gap-2 py-1 2xl:px-2">
-              <label class="text-stone-700 opacity-80 2xl:text-lg" for="password">密碼:</label>
+            <div class="flex gap-2 border-b-2 border-stone-300 py-1 2xl:px-2">
+              <label class="text-stone-700 opacity-80 2xl:text-lg" for="password">密碼 :</label>
               <input
                 id="password"
                 v-model="password"
-                class="focus:ring-0 focus:outline-none bg-transparent max-w-52 text-sm 2xl:text-base"
+                class="flex-1 bg-transparent text-lg focus:outline-none focus:ring-0 sm:max-w-52 md:text-sm 2xl:text-base"
                 type="password"
                 name="password"
                 required
@@ -93,7 +93,7 @@ async function login() {
           </div>
           <button
             type="button"
-            class="w-full bg-stone-600 border-2 border-stone-100 text-white px-4 py-2 hover:bg-stone-100 hover:text-stone-800 focus:outline-none tracking-widest transition-all duration-500 2xl:text-lg"
+            class="w-full border-2 border-stone-100 bg-stone-600 px-4 py-2 tracking-widest text-white transition-all duration-500 hover:bg-stone-100 hover:text-stone-800 focus:outline-none 2xl:text-lg"
             @click="login"
           >
             登入
@@ -104,21 +104,21 @@ async function login() {
           >
             使用Google帳號登錄
           </button> -->
-          <div class="text-sm 2xl:text-base underline">
+          <div class="text-sm underline 2xl:text-base">
             <router-link :to="{ name: 'Register' }"> 還未註冊? </router-link>
           </div>
         </div>
-        <div class="absolute bottom-10 flex justify-end w-full gap-4 pr-4">
+        <div class="absolute bottom-10 flex w-full justify-end gap-4 pr-4">
           <router-link :to="{ name: 'Articles' }">
             <button
-              class="border-2 border-transparent text-white py-2 px-4 hover:bg-stone-100 hover:text-stone-600 hover:border-stone-100 tracking-widest transition-all duration-500 2xl:text-lg 2xl:px-6"
+              class="border-2 border-transparent px-4 py-2 tracking-widest text-white transition-all duration-500 hover:border-stone-100 hover:bg-stone-100 hover:text-stone-600 2xl:px-6 2xl:text-lg"
             >
               返回主頁
             </button>
           </router-link>
           <router-link :to="{ name: 'Help' }">
             <button
-              class="border-2 border-stone-100 text-stone-100 py-2 px-4 hover:bg-stone-100 hover:text-stone-600 tracking-widest transition-all duration-500 2xl:text-lg 2xl:px-6"
+              class="border-2 border-stone-100 px-4 py-2 tracking-widest text-stone-100 transition-all duration-500 hover:bg-stone-100 hover:text-stone-600 2xl:px-6 2xl:text-lg"
             >
               關於我們
             </button>

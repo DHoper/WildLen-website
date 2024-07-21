@@ -165,11 +165,11 @@ onUnmounted(() => {
 
 <template>
   <div class="relative flex-1">
-    <div class="bg-white w-full py-12 px-4">
-      <div class="mx-auto flex flex-col bg-white w-[62rem] max-w-full px-5">
+    <div class="w-full bg-white px-4 py-12">
+      <div class="mx-auto flex w-[62rem] max-w-full flex-col bg-white px-5">
         <button
           @click="router.back()"
-          class="self-start text-sm 2xl:text-lg font-bold text-stone-800"
+          class="self-start text-sm font-bold text-stone-800 2xl:text-lg"
         >
           上一頁
         </button>
@@ -177,7 +177,7 @@ onUnmounted(() => {
           <h1 class="my-8 text-4xl text-stone-600">發佈新貼文</h1>
           <form class="mt-4 flex flex-col gap-4 2xl:gap-12">
             <div class="relative">
-              <label for="title" class="text-stone-600 font-bold text-sm 2xl:text-lg">標題</label>
+              <label for="title" class="text-sm font-bold text-stone-600 2xl:text-lg">標題</label>
               <input
                 v-model="formData.title"
                 type="text"
@@ -185,29 +185,29 @@ onUnmounted(() => {
                 name="title"
                 placeholder="3 ~ 40字"
                 @blur="validateInput('title')"
-                class="mt-2 w-full border-2 py-2 px-3 outline-none"
+                class="mt-2 w-full border-2 px-3 py-2 outline-none"
                 :class="formInputInvalid.title ? 'border-stone-800' : 'border-red-700'"
                 required
               />
               <div
                 v-if="!formInputInvalid.title"
-                class="w-full absolute left-0 bottom-0 2xl:-bottom-1 translate-y-full flex items-center gap-1 text-xs 2xl:text-base text-red-500"
+                class="absolute bottom-0 left-0 flex w-full translate-y-full items-center gap-1 text-xs text-red-500 2xl:-bottom-1 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4 2xl:w-6" />
                 <p>請輸入3 ~ 40字有效標題</p>
               </div>
             </div>
             <div>
-              <label for="img" class="text-stone-600 font-bold text-sm 2xl:text-lg"
+              <label for="img" class="text-sm font-bold text-stone-600 2xl:text-lg"
                 >貼文主題(最多五項)</label
               >
-              <div class="mt-4 border-2 border-stone-700 p-2 overflow-auto max-h-48">
+              <div class="mt-4 max-h-48 overflow-auto border-2 border-stone-700 p-2">
                 <div
-                  class="flex gap-2 items-center justify-center flex-wrap"
+                  class="flex flex-wrap items-center justify-center gap-2"
                   v-for="(topic, index) in topicTags"
                   :key="index"
                 >
-                  <div class="mt-4 flex flex-wrap gap-2 justify-center">
+                  <div class="mt-4 flex flex-wrap justify-center gap-2">
                     <label
                       v-for="tag in topic.tags"
                       :key="tag"
@@ -232,13 +232,13 @@ onUnmounted(() => {
               </div>
             </div>
             <div class="relative">
-              <label for="editor" class="text-stone-600 font-bold text-sm 2xl:text-lg"
+              <label for="editor" class="text-sm font-bold text-stone-600 2xl:text-lg"
                 >貼文内容</label
               >
-              <div id="editor" class="w-full h-64 border-2 border-stone-800"></div>
+              <div id="editor" class="h-64 w-full border-2 border-stone-800"></div>
               <div
                 v-if="!formInputInvalid.content"
-                class="w-full absolute left-0 bottom-1 translate-y-full flex items-center gap-1 text-xs 2xl:text-base text-red-500"
+                class="absolute bottom-1 left-0 flex w-full translate-y-full items-center gap-1 text-xs text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4 2xl:w-6" />
                 <p>請輸入10 ~ 2000字有效內容</p>
@@ -249,7 +249,7 @@ onUnmounted(() => {
                 @click="handelPreview"
                 type="button"
                 :disabled="!previewAble"
-                class="text-white border-2 border-transparent px-8 py-2 transition-all duration-300"
+                class="border-2 border-transparent px-8 py-2 text-white transition-all duration-300"
                 :class="
                   previewAble
                     ? 'bg-blue-900 hover:bg-white hover:text-blue-900 hover:border-blue-900'
@@ -261,7 +261,7 @@ onUnmounted(() => {
               <button
                 @click="handleSubmit"
                 type="button"
-                class="text-white border-2 border-transparent px-8 py-2 transition-all duration-300 bg-blue-900 hover:bg-white hover:text-blue-900 hover:border-blue-900"
+                class="border-2 border-transparent bg-blue-900 px-8 py-2 text-white transition-all duration-300 hover:border-blue-900 hover:bg-white hover:text-blue-900"
               >
                 提交
               </button>

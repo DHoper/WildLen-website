@@ -113,7 +113,6 @@ const handleDelete = async (postType: ActionPageType, id: number) => {
 const fetchPostsData = async () => {
   if (!userId.value) return
   const photoPostsResponseData = await getPhotoPostsData(userId.value)
-  console.log(333, photoPostsResponseData)
 
   const communityPostsResponseData = await getCommunityPostsData(userId.value)
   if (photoPostsResponseData.value && communityPostsResponseData.value) {
@@ -135,27 +134,27 @@ const activeTab = ref('photoPosts')
 <template>
   <div class="flex-1 bg-stone-100 py-24">
     <div
-      class="w-2/3 px-28 pt-20 pb-10 2xl:w-1/2 mx-auto flex flex-col items-center border-4 border-stone-700 shadow bg-stone-100"
+      class="mx-auto flex w-[90%] flex-col items-center border-4 border-stone-700 bg-stone-100 px-8 pb-10 pt-20 shadow sm:w-4/5 md:w-2/3 md:px-28 2xl:w-1/2"
     >
-      <h1 class="text-5xl mb-20 font-bold">貼文紀錄</h1>
+      <h1 class="mb-20 text-5xl font-bold">貼文紀錄</h1>
       <!-- 選項卡 -->
       <div class="flex space-x-4">
         <button
           @click="activeTab = 'photoPosts'"
-          class="py-2 px-4 cursor-pointer border-2"
+          class="cursor-pointer border-2 px-4 py-2"
           :class="{
-            'bg-stone-700 text-white border-transparent': activeTab === 'photoPosts',
-            'bg-white border-stone-700': activeTab !== 'photoPosts'
+            'border-transparent bg-stone-700 text-white': activeTab === 'photoPosts',
+            'border-stone-700 bg-white': activeTab !== 'photoPosts'
           }"
         >
           照片牆貼文
         </button>
         <button
           @click="activeTab = 'communityPosts'"
-          class="py-2 px-4 cursor-pointer border-2"
+          class="cursor-pointer border-2 px-4 py-2"
           :class="{
-            'bg-stone-700 text-white border-transparent': activeTab === 'communityPosts',
-            'bg-white border-stone-700': activeTab !== 'communityPosts'
+            'border-transparent bg-stone-700 text-white': activeTab === 'communityPosts',
+            'border-stone-700 bg-white': activeTab !== 'communityPosts'
           }"
         >
           社區頁貼文
@@ -165,45 +164,45 @@ const activeTab = ref('photoPosts')
       <!-- 照片牆 -->
       <div
         v-if="activeTab === 'photoPosts' && visiblePhotoPosts.length > 0"
-        class="w-full mt-10 h-[45rem]"
+        class="mt-10 h-[45rem] w-full"
       >
         <div
           v-for="post in visiblePhotoPosts"
           :key="post.id!"
-          class="bg-white text-stone-700 p-4 flex flex-col gap-1 justify-between shadow mb-4 h-32 w-full border-2 border-stone-700"
+          class="mb-4 flex h-32 w-full flex-col justify-between gap-1 border-2 border-stone-700 bg-white p-4 text-stone-700 shadow"
         >
           <div class="flex justify-between">
-            <h2 class="text-xl font-bold truncate">{{ post.title }}</h2>
+            <h2 class="truncate text-xl font-bold">{{ post.title }}</h2>
             <div class="flex gap-4">
               <EyeIcon
                 @click="openPostInNewTab(ActionPageType.PhotoPost, post.id!)"
-                class="w-6 cursor-pointer text-blue-900 hover:text-blue-700 transition-all duration-300"
+                class="w-6 cursor-pointer text-blue-900 transition-all duration-300 hover:text-blue-700"
               />
               <PencilSquareIcon
                 @click="openPostInNewTab(ActionPageType.EditPhotoPost, post.id!)"
-                class="w-6 cursor-pointer text-blue-700 hover:text-blue-500 transition-all duration-300"
+                class="w-6 cursor-pointer text-blue-700 transition-all duration-300 hover:text-blue-500"
               />
               <TrashIcon
                 @click="handleDelete(ActionPageType.PhotoPost, post.id!)"
-                class="w-6 cursor-pointer text-red-700 hover:text-red-500 transition-all duration-300"
+                class="w-6 cursor-pointer text-red-700 transition-all duration-300 hover:text-red-500"
               />
             </div>
           </div>
-          <p class="text-stone-500 truncate">{{ post.description }}</p>
+          <p class="truncate text-stone-500">{{ post.description }}</p>
           <div class="flex justify-between gap-2 text-sm text-gray-500">
-            <div class="flex gap-2">
-              <span class="flex gap-1 items-center text-base text-blue-900">
+            <div class="ml-auto flex gap-2 sm:ml-0">
+              <span class="flex items-center gap-1 text-base text-blue-900">
                 <EyeIcon class="w-5" /> {{ post.views }}
               </span>
-              <span class="flex gap-1 items-center text-base text-red-700">
+              <span class="flex items-center gap-1 text-base text-red-700">
                 <HeartIcon class="w-5" />{{ post.likes }}
               </span>
-              <span class="flex gap-1 items-center text-base text-teal-900">
+              <span class="flex items-center gap-1 text-base text-teal-900">
                 <ChatBubbleBottomCenterIcon class="w-5" />
                 {{ post.comments!.length }}
               </span>
             </div>
-            <span>
+            <span class="hidden sm:block">
               {{ formatDateTime(post.createdAt!) }}
             </span>
           </div>
@@ -211,7 +210,7 @@ const activeTab = ref('photoPosts')
       </div>
       <div
         v-else-if="activeTab === 'photoPosts'"
-        class="mt-8 bg-white text-stone-700 text-lg p-4 flex justify-center items-center shadow mb-4 h-32 w-full border-2 border-stone-700"
+        class="mb-4 mt-8 flex h-32 w-full items-center justify-center border-2 border-stone-700 bg-white p-4 text-lg text-stone-700 shadow"
       >
         暫無貼文紀錄
       </div>
@@ -219,45 +218,45 @@ const activeTab = ref('photoPosts')
       <!-- 社區 -->
       <div
         v-if="activeTab === 'communityPosts' && visibleCommunityPosts.length > 0"
-        class="w-full mt-10 h-[45rem]"
+        class="mt-10 h-[45rem] w-full"
       >
         <div
           v-for="post in visibleCommunityPosts"
           :key="post.id!"
-          class="bg-white text-stone-700 p-4 flex flex-col gap-1 justify-between shadow mb-4 h-32 w-full border-2 border-stone-700"
+          class="mb-4 flex h-32 w-full flex-col justify-between gap-1 border-2 border-stone-700 bg-white p-4 text-stone-700 shadow"
         >
           <div class="flex justify-between">
-            <h2 class="text-xl font-bold truncate">{{ post.title }}</h2>
+            <h2 class="truncate text-xl font-bold">{{ post.title }}</h2>
             <div class="flex gap-4">
               <EyeIcon
                 @click="openPostInNewTab(ActionPageType.CommunityPost, post.id!)"
-                class="w-6 cursor-pointer text-blue-900 hover:text-blue-700 transition-all duration-300"
+                class="w-6 cursor-pointer text-blue-900 transition-all duration-300 hover:text-blue-700"
               />
               <PencilSquareIcon
                 @click="openPostInNewTab(ActionPageType.EditCommunityPost, post.id!)"
-                class="w-6 cursor-pointer text-blue-700 hover:text-blue-500 transition-all duration-300"
+                class="w-6 cursor-pointer text-blue-700 transition-all duration-300 hover:text-blue-500"
               />
               <TrashIcon
                 @click="handleDelete(ActionPageType.CommunityPost, post.id!)"
-                class="w-6 cursor-pointer text-red-700 hover:text-red-500 transition-all duration-300"
+                class="w-6 cursor-pointer text-red-700 transition-all duration-300 hover:text-red-500"
               />
             </div>
           </div>
-          <p class="text-stone-500 truncate">{{ getFirstLineWithEllipsis(post.content) }}</p>
+          <p class="truncate text-stone-500">{{ getFirstLineWithEllipsis(post.content) }}</p>
           <div class="flex justify-between gap-2 text-sm text-gray-500">
-            <div class="flex gap-2">
-              <span class="flex gap-1 items-center text-base text-blue-900">
+            <div class="ml-auto flex gap-2 sm:ml-0">
+              <span class="flex items-center gap-1 text-base text-blue-900">
                 <EyeIcon class="w-5" /> {{ post.views }}
               </span>
-              <span class="flex gap-1 items-center text-base text-red-700">
+              <span class="flex items-center gap-1 text-base text-red-700">
                 <HeartIcon class="w-5" />{{ post.likes }}
               </span>
-              <span class="flex gap-1 items-center text-base text-teal-900">
+              <span class="flex items-center gap-1 text-base text-teal-900">
                 <ChatBubbleBottomCenterIcon class="w-5" />
                 {{ post.comments!.length }}
               </span>
             </div>
-            <span>
+            <span class="hidden sm:block">
               {{ formatDateTime(post.createdAt!) }}
             </span>
           </div>
@@ -265,7 +264,7 @@ const activeTab = ref('photoPosts')
       </div>
       <div
         v-else-if="activeTab === 'communityPosts'"
-        class="mt-8 bg-white text-stone-700 text-lg p-4 flex justify-center items-center shadow mb-4 h-32 w-full border-2 border-stone-700"
+        class="mb-4 mt-8 flex h-32 w-full items-center justify-center border-2 border-stone-700 bg-white p-4 text-lg text-stone-700 shadow"
       >
         暫無貼文紀錄
       </div>
@@ -275,15 +274,15 @@ const activeTab = ref('photoPosts')
         <button
           @click="changePage(-1)"
           :disabled="currentPage === 1"
-          class="py-2 px-4 cursor-pointer border-2 border-stone-600"
+          class="cursor-pointer border-2 border-stone-600 px-4 py-2"
         >
           上一頁
         </button>
-        <span class="mx-2 py-2 px-4 border-2 border-stone-900">{{ currentPage }}</span>
+        <span class="mx-2 border-2 border-stone-900 px-4 py-2">{{ currentPage }}</span>
         <button
           @click="changePage(1)"
           :disabled="currentPage === totalPage"
-          class="py-2 px-4 cursor-pointer border-2 border-stone-600"
+          class="cursor-pointer border-2 border-stone-600 px-4 py-2"
         >
           下一頁
         </button>

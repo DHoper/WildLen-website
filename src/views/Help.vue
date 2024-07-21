@@ -120,7 +120,7 @@ const footerNavigation = {
           aria-hidden="true"
         >
           <div
-            class="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+            class="bg-gradient-to-tr aspect-[801/1036] w-[50.0625rem] from-[#ff80b5] to-[#9089fc] opacity-30"
             style="
               clip-path: polygon(
                 63.1% 29.5%,
@@ -368,7 +368,7 @@ const footerNavigation = {
         >
           <li>
             <img
-              class="mx-auto h-24 w-24 rounded-full"
+              class="mx-auto size-24 rounded-full"
               src="/assets/img/cute-headshot.gif"
               alt=""
             />
@@ -402,7 +402,7 @@ const footerNavigation = {
           class="text-gray-400 hover:text-gray-500"
         >
           <span class="sr-only">{{ item.name }}</span>
-          <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
+          <component :is="item.icon" class="size-6" aria-hidden="true" />
         </a>
       </div>
       <p class="mt-10 text-center text-xs leading-5 text-gray-500">

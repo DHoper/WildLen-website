@@ -22,21 +22,21 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="bg-stone-700 bg-opacity-80 fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center"
+    class="fixed left-0 top-0 z-50 flex size-full items-center justify-center bg-stone-700 bg-opacity-80"
   >
     <div
-      class="p-1 w-80 2xl:w-96 -mt-20"
+      class="-mt-20 w-80 p-1 2xl:w-96"
     >
       <div
-        class="text-white flex flex-col justify-around items-center py-10 2xl:py-16 gap-6"
+        class="flex flex-col items-center justify-around gap-6 py-10 text-white 2xl:py-16"
         :class="props.dialogData.warringStyle ? 'bg-red-500/90' : 'bg-stone-600'"
       >
         <h3 class="text-2xl tracking-widest">{{ props.dialogData.title }}</h3>
         <p>{{ props.dialogData.content }}</p>
-        <div class="flex gap-4 w-full px-8">
+        <div class="flex w-full gap-4 px-8">
           <button
             @click="emit('closePopup', true)"
-            class="flex-1 text-lg border-2 border-white p-2 hover:bg-white transition-all duration-300"
+            class="flex-1 border-2 border-white p-2 text-lg transition-all duration-300 hover:bg-white"
             :class="
               props.dialogData.warringStyle
                 ? 'bg-red-500/90 hover:text-red-500/75'
@@ -48,7 +48,7 @@ onUnmounted(() => {
           <button
             v-if="props.dialogData.cancelButton"
             @click="emit('closePopup', false)"
-            class="flex-1 text-lg border-2 border-white p-2 hover:bg-white bg-white text-stone-600 transition-all duration-300"
+            class="flex-1 border-2 border-white bg-white p-2 text-lg text-stone-600 transition-all duration-300 hover:bg-white"
             :class="props.dialogData.warringStyle ? 'hover:text-red-500/75' : 'hover:font-bold'"
           >
             取消

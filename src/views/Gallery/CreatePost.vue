@@ -226,10 +226,10 @@ onMounted(async () => {
 <template>
   <div class="flex-1 bg-stone-100">
     <div
-      class="w-4/5 mx-auto bg-stone-100 flex flex-col overflow-auto my-12 gap-4 border-4 border-stone-500"
+      class="mx-auto my-12 flex w-[90%] flex-col gap-4 overflow-auto border-4 border-stone-500 bg-stone-100 sm:w-4/5"
     >
-      <div class="flex flex-col w-full mb-8">
-        <h3 class="w-full text-lg 2xl:text-3xl text-center font-bold p-1 bg-stone-500 text-white">
+      <div class="mb-8 flex w-full flex-col">
+        <h3 class="w-full bg-stone-500 p-1 text-center text-lg font-bold text-white 2xl:text-3xl">
           創建新照片
         </h3>
         <!-- <div class="border-t-2 my-4 mt-10 border-stone-500 w-full"></div> -->
@@ -238,32 +238,32 @@ onMounted(async () => {
         method="POST"
         autocomplete="off"
         @submit.prevent="handleSubmit"
-        class="flex-1 w-full flex flex-col gap-10"
+        class="flex w-full flex-1 flex-col gap-10"
       >
-        <div class="flex flex-col items-center gap-8 px-10">
-          <div class="w-full px-8 contentBlock flex flex-col items-center gap-12 text-stone-500">
-            <div class="relative w-full flex flex-col gap-2">
-              <label for="title" class="text-lg 2xl:text-xl 2xl:p-4 font-bold">標題</label>
+        <div class="flex flex-col items-center gap-8 px-0 sm:px-10">
+          <div class="flex w-full flex-col items-center gap-12 px-8  text-stone-500">
+            <div class="relative flex w-full flex-col gap-2">
+              <label for="title" class="text-lg font-bold 2xl:p-4 2xl:text-xl">標題</label>
               <input
                 v-model="newPost.title"
                 @blur="validateInput('title')"
                 type="text"
                 id="title"
-                class="w-full p-2 border-2 focus:border-stone-500 focus:outline-none text-stone-500 2xl:text-lg 2xl:px-4"
+                class="w-full border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none 2xl:px-4 2xl:text-lg"
                 :class="postInputInvalid.title ? 'border-stone-500' : 'border-red-500'"
                 placeholder="2~15字"
                 required
               />
               <div
                 v-if="!postInputInvalid.title"
-                class="w-full absolute left-0 -bottom-6 flex items-center gap-1 text-sm 2xl:text-base 2xl:-bottom-7 text-red-500"
+                class="absolute -bottom-6 left-0 flex w-full items-center gap-1 text-sm text-red-500 2xl:-bottom-7 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入2 ~ 15字之標題</p>
               </div>
             </div>
-            <div class="relative w-full flex flex-col gap-2">
-              <label for="description" class="block text-lg 2xl:text-xl 2xl:p-4 font-bold"
+            <div class="relative flex w-full flex-col gap-2">
+              <label for="description" class="block text-lg font-bold 2xl:p-4 2xl:text-xl"
                 >簡短描述</label
               >
               <textarea
@@ -272,47 +272,47 @@ onMounted(async () => {
                 id="description"
                 rows="4"
                 maxlength="100"
-                class="w-full border-2 resize-none focus:border-stone-500 focus:outline-none text-stone-500 p-2 2xl:text-lg 2xl:p-4"
+                class="w-full resize-none border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none 2xl:p-4 2xl:text-lg"
                 :class="postInputInvalid.description ? 'border-stone-500' : 'border-red-500'"
                 placeholder="5~100字(中英 2:1)"
                 required
               ></textarea>
               <div
                 v-if="!postInputInvalid.description"
-                class="w-full absolute left-0 -bottom-6 flex items-center gap-1 text-sm 2xl:text-base 2xl:-bottom-7 text-red-500"
+                class="absolute -bottom-6 left-0 flex w-full items-center gap-1 text-sm text-red-500 2xl:-bottom-7 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入5 ~ 100字之內容</p>
               </div>
             </div>
           </div>
-          <div class="mapBlock w-full px-8">
-            <div class="flex flex-col items-center border-stone-500 border-2">
+          <div class="w-full px-8">
+            <div class="flex flex-col items-center border-2 border-stone-500">
               <input
                 v-model="newPost.location"
                 type="text"
                 id="location"
                 placeholder="請選擇照片拍攝地點"
-                class="w-full p-2 pointer-events-none bg-white text-center text-stone-800 font-semibold 2xl:text-lg tracking-wide border-b-2 border-stone-500 border-dashed"
+                class="pointer-events-none w-full border-b-2 border-dashed border-stone-500 bg-white p-2 text-center font-semibold tracking-wide text-stone-800 2xl:text-lg"
                 required
                 readonly
               />
-              <div ref="mapContainer" class="w-full h-80 2xl:h-96"></div>
+              <div ref="mapContainer" class="h-80 w-full 2xl:h-96"></div>
             </div>
           </div>
-          <div class="w-full px-8 imgBlock flex flex-col items-center gap-4 overflow-auto mb-4">
+          <div class="mb-4 flex w-full flex-col items-center gap-4 overflow-auto px-8">
             <div
-              class="w-full mt-4 flex flex-col items-center gap-2 text-sm leading-6 text-gray-600"
+              class="mt-4 flex w-full flex-col items-center gap-2 text-sm leading-6 text-gray-600"
             >
-              <label for="imgUpload" class="relative cursor-pointer bg-stone-100 w-full">
+              <label for="imgUpload" class="relative w-full cursor-pointer bg-stone-100">
                 <div
                   v-if="previewUrls.length > 0"
-                  class="relative border-4 border-stone-500 rounded-sm w-full aspect-video bg-stone-100 cursor-pointer"
+                  class="relative aspect-video w-full cursor-pointer rounded-sm border-4 border-stone-500 bg-stone-100"
                 >
                   <img
                     :src="previewUrls[previewImg]"
                     alt=""
-                    class="w-full aspect-video object-cover"
+                    class="aspect-video w-full object-cover"
                   />
                   <!-- <EyeIcon
                   class="absolute top-2 right-2 w-8 z-10 text-stone-100 hover:scale-110"
@@ -329,15 +329,15 @@ onMounted(async () => {
                   >
                     <div
                       v-if="showPreview"
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-video 2xl:w-[800px] border-4 border-stone-500 rounded-sm z-10"
+                      class="absolute left-1/2 top-1/2 z-10 aspect-video w-full -translate-x-1/2 -translate-y-1/2 rounded-sm border-4 border-stone-500 2xl:w-[800px]"
                     >
                       <img
                         :src="previewUrls[previewImg]"
                         alt="Preview"
-                        class="w-full h-full object-cover rounded-sm"
+                        class="size-full rounded-sm object-cover"
                       />
                       <XCircleIcon
-                        class="w-8 text-stone-100 absolute top-1 right-1 hover:scale-105"
+                        class="absolute right-1 top-1 w-8 text-stone-100 hover:scale-105"
                         @click="showPreview = false"
                       />
                     </div>
@@ -345,7 +345,7 @@ onMounted(async () => {
                 </div>
                 <div
                   v-else
-                  class="flex justify-center items-center border-4 border-dashed border-stone-500 rounded-sm w-full aspect-video"
+                  class="flex aspect-video w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -353,7 +353,7 @@ onMounted(async () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-16 h- text-stone-300"
+                    class="h- w-16 text-stone-300"
                   >
                     <path
                       stroke-linecap="round"
@@ -364,7 +364,7 @@ onMounted(async () => {
                 </div>
                 <span
                   type="button"
-                  class="mt-4 block bg-stone-500 text-stone-100 p-2 w-full font-bold hover:bg-stone-500 transition-all duration-300 text-center text-lg 2xl:text-xl 2xl:p-3"
+                  class="mt-4 block w-full bg-stone-500 p-2 text-center text-lg font-bold text-stone-100 transition-all duration-300 hover:bg-stone-500 2xl:p-3 2xl:text-xl"
                   >選擇圖片</span
                 >
                 <input
@@ -379,24 +379,24 @@ onMounted(async () => {
                 />
               </label>
             </div>
-            <div class="previewRows flex gap-3 w-full overflow-auto py-1">
-              <div v-if="previewUrls.length > 0" class="w-full flex justify-between gap-3">
+            <div class="flex w-full gap-3 overflow-auto py-1">
+              <div v-if="previewUrls.length > 0" class="flex w-full justify-between gap-3">
                 <div
                   v-for="(url, index) in previewUrls"
                   :key="index"
-                  class="border-4 rounded-sm min-w-[calc(25%-.75rem)] flex-1 aspect-video"
+                  class="aspect-video min-w-[70%] flex-1 rounded-sm border-4 sm:min-w-[calc(50%-.75rem)] lg:min-w-[calc(25%-.75rem)]"
                   :class="previewImg === index ? 'border-lime-500' : 'border-stone-500 '"
                 >
                   <img
                     :src="url"
                     :key="index"
                     @click="previewImg = index"
-                    class="w-full h-full object-cover cursor-pointer"
+                    class="size-full cursor-pointer object-cover"
                   />
                 </div>
-                <div class="flex-1 min-w-[calc(25%-.75rem)] flex gap-3">
+                <div class="flex min-w-[calc(25%-.75rem)] flex-1 gap-3">
                   <div
-                    class="border-4 border-dashed border-stone-500 rounded-sm w-full aspect-video flex items-center justify-center text-stone-200"
+                    class="flex aspect-video w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-200"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -404,7 +404,7 @@ onMounted(async () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="w-10 h-10 text-stone-300"
+                      class="size-10 text-stone-300"
                     >
                       <path
                         stroke-linecap="round"
@@ -415,11 +415,11 @@ onMounted(async () => {
                   </div>
                 </div>
               </div>
-              <div v-else class="w-full flex justify-between gap-3">
+              <div v-else class="flex w-full justify-between gap-3">
                 <div
                   v-for="index in 4"
                   :key="index"
-                  class="border-4 border-dashed border-stone-500 rounded-sm flex-1 min-w-[calc(25%-.75rem)] aspect-video flex items-center justify-center text-stone-300"
+                  class="flex aspect-video min-w-[calc(25%-.75rem)] flex-1 items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -427,7 +427,7 @@ onMounted(async () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-10 h-10"
+                    class="size-10"
                   >
                     <path
                       stroke-linecap="round"
@@ -442,7 +442,7 @@ onMounted(async () => {
         </div>
         <button
           type="submit"
-          class="w-full bg-stone-500 text-stone-100 px-4 py-2 basis-1 text-lg 2xl:text-xl font-bold hover:text-white transition-all duration-300"
+          class="w-full basis-1 bg-stone-500 px-4 py-2 text-lg font-bold text-stone-100 transition-all duration-300 hover:text-white 2xl:text-xl"
         >
           發佈
         </button>

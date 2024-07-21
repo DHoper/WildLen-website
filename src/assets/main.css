@@ -51,3 +51,31 @@ input:-webkit-autofill:active {
     place-items: center;
   }
 }
+
+/* 手機 */
+@media (max-width: 640px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* 平板 */
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* 桌面 */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* 大螢幕桌面 */
+@media (min-width: 1441px) {
+  html {
+    font-size: 18px; /* 在大螢幕桌面上使用較大的字體大小 */
+  }
+}

@@ -93,7 +93,6 @@ const sortPostsByTopic = () => {
       post.title.toLowerCase().includes(search)
   )
 }
-// const sortedPosts = computed(() => sortPostsByTopic())
 
 onMounted(async () => {
   const loadingStore = useLoadingStore()
@@ -111,12 +110,12 @@ onMounted(async () => {
 <template>
   <div
     v-if="communityPosts && votes"
-    class="flex-1 flex flex-col items-center gap-12 py-4 2xl:py-16 2xl:px-8 bg-stone-100 p-4 overflow-auto"
+    class="flex flex-1 flex-col items-center gap-12 overflow-auto bg-stone-100 p-4 sm:p-6 md:p-8 lg:p-10 2xl:px-8 2xl:py-16"
   >
-    <div class="votes w-full">
-      <h1 class="text-3xl mb-4">話題投票</h1>
-      <div class="border-b-2 border-stone-700 my-4"></div>
-      <div class="flex gap-4 mb-4">
+    <div class="w-full">
+      <h1 class="mb-4 text-2xl sm:text-3xl">話題投票</h1>
+      <div class="my-4 border-b-2 border-stone-700"></div>
+      <div class="mb-8 flex flex-wrap gap-4 lg:mb-4">
         <button
           @click="changeTab('latest')"
           class="transition-all"
@@ -165,73 +164,74 @@ onMounted(async () => {
           @click="changeTab('myCreatedVotes')"
           class="transition-all"
           :class="{
-            'bg-stone-800 text-white px-4 py-2': activeTab === 'myCreatedVotes',
-            'bg-stone-500 text-white px-4 py-2 hover:bg-stone-600': activeTab !== 'myCreatedVotes'
+            'bg-stone-800 px-4 py-2 text-white': activeTab === 'myCreatedVotes',
+            'bg-stone-500 px-4 py-2 text-white hover:bg-stone-600': activeTab !== 'myCreatedVotes'
           }"
         >
           我的投票
         </button>
-
         <button
           @click="router.push({ name: 'CreateVote' })"
-          class="ml-auto bg-green-700 text-white px-4 py-2 hover:bg-green-800 transition-all"
+          class="ml-auto bg-green-700 px-4 py-2 text-white transition-all hover:bg-green-800"
         >
           發起新投票
         </button>
       </div>
-      <div class="flex gap-8 overflow-auto">
-        <div
-          v-for="vote in filteredVotes"
-          :key="vote.id"
-          :class="[
-            'md:basis-1/3 2xl:basis-1/4 flex-shrink-0 p-4 border-2 shadow mb-4',
-            vote.isEnd || isBeforeToday(vote.endDate)
-              ? 'bg-gray-200 border-gray-400'
-              : vote.userHasVoted
-                ? 'bg-stone-300 border-stone-500'
-                : 'bg-stone-100 border-stone-700'
-          ]"
-        >
-          <div class="flex gap-4 items-center mb-2">
-            <h2 class="text-xl">{{ vote.title }}</h2>
-            <span class="h-fit flex gap-1 justify-center items-center text-red-500">
-              <FireIcon class="h-4 w-4" />
-              {{ vote.participantCount }}
-            </span>
-          </div>
+      <div class="overflow-x-auto ">
+        <div class="flex max-h-52 w-full flex-wrap gap-4 lg:max-h-36 lg:flex-nowrap">
+          <div
+            v-for="vote in filteredVotes"
+            :key="vote.id"
+            :class="[
+              'w-full shrink-0 border-2 p-4 shadow sm:w-[calc(50%-1rem)] lg:mb-4 lg:w-1/4',
+              vote.isEnd || isBeforeToday(vote.endDate)
+                ? 'border-gray-400 bg-gray-200'
+                : vote.userHasVoted
+                  ? 'border-stone-500 bg-stone-300'
+                  : 'border-stone-700 bg-stone-100'
+            ]"
+          >
+            <div class="mb-2 flex items-center gap-4">
+              <h2 class="text-xl">{{ vote.title }}</h2>
+              <span class="flex h-fit items-center justify-center gap-1 text-red-500">
+                <FireIcon class="w-4" />
+                {{ vote.participantCount }}
+              </span>
+            </div>
 
-          <div class="mt-4 flex justify-between items-end">
-            <span class="text-stone-800"
-              >截止日：{{ format(new Date(vote.endDate), 'yyyy-MM-dd') }}</span
-            >
+            <div class="mt-4 flex items-end justify-between">
+              <span class="text-stone-800"
+                >截止日：{{ format(new Date(vote.endDate), 'yyyy-MM-dd') }}</span
+              >
 
-            <button
-              @click="router.push({ name: 'Vote', params: { id: vote.id } })"
-              :class="[
-                'text-white px-4 py-2 transition-all',
-                vote.isEnd || isBeforeToday(vote.endDate)
-                  ? 'bg-gray-400 hover:bg-gray-500'
-                  : vote.userHasVoted
-                    ? 'bg-stone-600 hover:bg-stone-700'
-                    : 'bg-stone-500 hover:bg-stone-600'
-              ]"
-            >
-              {{ vote.isEnd ? '已結束' : vote.userHasVoted ? '已投票' : '投票' }}
-            </button>
+              <button
+                @click="router.push({ name: 'Vote', params: { id: vote.id } })"
+                :class="[
+                  'px-4 py-2 text-white transition-all',
+                  vote.isEnd || isBeforeToday(vote.endDate)
+                    ? 'bg-gray-400 hover:bg-gray-500'
+                    : vote.userHasVoted
+                      ? 'bg-stone-600 hover:bg-stone-700'
+                      : 'bg-stone-500 hover:bg-stone-600'
+                ]"
+              >
+                {{ vote.isEnd ? '已結束' : vote.userHasVoted ? '已投票' : '投票' }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 貼文 -->
-    <div class="w-full mt-auto">
-      <div class="flex items-center justify-between gap-4">
-        <h1 class="text-3xl leading-none">社區討論</h1>
-        <div class="flex gap-4 items-center">
-          <div class="flex items-center h-12">
+    <div class="mt-auto w-full">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <h1 class="text-2xl leading-none sm:text-3xl">社區討論</h1>
+        <div class="flex items-center gap-4">
+          <div class="flex h-12 items-center">
             <label
               for="searchByTopic"
-              class="border-2 border-stone-600 bg-stone-600 text-stone-100 border-r-0 h-full px-4 text-lg flex justify-center items-center"
+              class="flex h-full items-center justify-center border-2 border-r-0 border-stone-600 bg-stone-600 px-4 text-lg text-stone-100"
             >
               <p>搜尋</p>
             </label>
@@ -240,21 +240,21 @@ onMounted(async () => {
               id="searchByTopic"
               v-model="searchString"
               @input="sortPostsByTopic"
-              class="rounded-none focus:outline-none border-2 border-stone-600 h-full text-lg m-0 w-48 px-2"
+              class="m-0 h-full w-48 rounded-none border-2 border-stone-600 px-2 text-lg focus:outline-none"
             />
           </div>
           <div
             @click="router.push({ name: 'CommunityCreatePost' })"
-            class="flex items-center font-bold h-12 border-2 border-stone-600 bg-stone-600 text-stone-100 p-2 px-3 2xl:p-2 2xl:px-4 2xl:text-lg hover:bg-stone-100 hover:text-stone-600 transition-all duration-300 cursor-pointer"
+            class="flex h-12 cursor-pointer items-center border-2 border-stone-600 bg-stone-600 p-2 px-3 font-bold text-stone-100 transition-all duration-300 hover:bg-stone-100 hover:text-stone-600 2xl:p-2 2xl:px-4 2xl:text-lg"
           >
             <PlusIcon class="w-6 font-bold" />
           </div>
         </div>
       </div>
-      <div class="border-b-2 border-stone-700 my-4"></div>
+      <div class="my-4 border-b-2 border-stone-700"></div>
       <div
         v-if="communityPosts && communityPosts.length > 0"
-        class="flex flex-col gap-4 justify-between mt-8"
+        class="mt-8 flex flex-col justify-between gap-4"
       >
         <div
           v-for="communityPost in communityPosts"
@@ -265,12 +265,12 @@ onMounted(async () => {
               params: { id: communityPost.id }
             })
           "
-          class="w-full basis-1 p-4 2xl:p-8 2xl:pb-4 border-2 border-stone-700 shadow cursor-pointer group hover:bg-stone-700 hover:text-white hover:border-stone-700 transition-all duration-300"
+          class="group w-full cursor-pointer border-2 border-stone-700 p-4 shadow transition-all duration-300 hover:border-stone-700 hover:bg-stone-700 hover:text-white 2xl:p-8 2xl:pb-4"
         >
           <div class="flex justify-between">
-            <div class="flex gap-4 items-center justify-center">
+            <div class="flex items-center justify-center gap-4">
               <h2
-                class="text-xl font-bold max-w-[20rem] 2xl:max-w-[60rem] truncate overflow-hidden"
+                class="max-w-40 overflow-hidden truncate text-xl font-bold sm:max-w-80 md:max-w-[30rem] lg:max-w-[40rem] 2xl:max-w-[60rem]"
               >
                 {{ communityPost.title }}
               </h2>
@@ -278,7 +278,7 @@ onMounted(async () => {
                 <span
                   v-for="(tag, index) in communityPost.topicTags"
                   :key="index"
-                  class="px-2 py-1 text-xs 2xl:text-sm rounded text-stone-100"
+                  class="rounded px-2 py-1 text-xs text-stone-100 2xl:text-sm"
                   :style="`background-color:${setTagColor(tag)}`"
                 >
                   {{ tag }}
@@ -287,17 +287,17 @@ onMounted(async () => {
             </div>
           </div>
           <div
-            class="my-2 overflow-hidden 2xl:my-4 text-stone-600 2xl:text-lg truncate group-hover:text-stone-100"
+            class="my-2 overflow-hidden truncate text-stone-600 group-hover:text-stone-100 2xl:my-4 2xl:text-lg"
           >
             {{ getFirstLineWithEllipsis(communityPost.content) }}
           </div>
 
-          <div class="mt-4 w-full flex gap-4 justify-between">
+          <div class="mt-4 flex w-full justify-between gap-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-sm 2xl:text-base text-stone-700 font-bold group-hover:text-stone-100">
+              <p class="text-sm font-bold text-stone-700 group-hover:text-stone-100 2xl:text-base">
                 #{{ communityPost.author?.username }}
               </p>
-              <p class="text-sm 2xl:text-base italic text-stone-500 group-hover:text-stone-100">
+              <p class="text-sm italic text-stone-500 group-hover:text-stone-100 2xl:text-base">
                 --{{ getTimeDifference(communityPost.createdAt!) }}&nbsp;前
               </p>
             </div>
@@ -325,7 +325,7 @@ onMounted(async () => {
         <button
           @click="changePage('prev')"
           :disabled="currentPage === 1"
-          class="border-2 px-3 py-1 2xl:px-6 2xl:py-2 ml-2 2xl:text-lg transition-all duration-300"
+          class="ml-2 border-2 px-3 py-1 transition-all duration-300 2xl:px-6 2xl:py-2 2xl:text-lg"
           :class="
             currentPage === 1
               ? 'border-stone-500 text-stone-500'
@@ -339,7 +339,7 @@ onMounted(async () => {
             v-for="pageNumber in totalPages"
             :key="pageNumber"
             @click="goToPage(pageNumber)"
-            class="border-2 px-3 py-1 2xl:px-5 2xl:py-2 2xl:text-lg transition-all duration-300"
+            class="border-2 px-3 py-1 transition-all duration-300 2xl:px-5 2xl:py-2 2xl:text-lg"
             :class="
               pageNumber != currentPage
                 ? 'border-stone-800 text-stone-800 hover:bg-stone-800 hover:text-white'
@@ -352,11 +352,11 @@ onMounted(async () => {
         <button
           @click="changePage('next')"
           :disabled="currentPage === totalPages"
-          class="border-2 px-3 py-1 2xl:px-6 2xl:py-2 2xl:text-lg transition-all duration-300"
+          class="border-2 px-3 py-1 transition-all duration-300 2xl:px-6 2xl:py-2 2xl:text-lg"
           :class="
             currentPage === totalPages
               ? 'border-stone-500 text-stone-500'
-              : 'border-stone-800 text-stone-800 cursor-pointer hover-text-white hover:bg-stone-800'
+              : 'border-stone-800 text-stone-800 cursor-pointer hover:text-white hover:bg-stone-800'
           "
         >
           下一頁

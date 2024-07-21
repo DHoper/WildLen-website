@@ -235,9 +235,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
-    <div class="bg-stone-600 p-1 pt-0 flex-grow relative">
-      <div ref="mapContainer" class="w-full h-full rounded-sm"></div>
+  <div class="flex h-screen flex-col">
+    <div class="relative grow bg-stone-600 p-1 pt-0">
+      <div ref="mapContainer" class="size-full rounded-sm"></div>
       <Post v-if="photoPostShow" :id="photoPostID!" @close="closePhoto" />
     </div>
   </div>

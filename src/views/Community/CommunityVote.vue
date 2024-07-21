@@ -66,56 +66,56 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="vote" class="flex-1 w-full bg-fixed">
-    <div class="bg-stone-100 w-full py-8 px-4">
-      <div class="mx-auto flex flex-col items-center gap-20 bg-stone-100 w-[62rem] pt-20 px-5">
+  <div v-if="vote" class="w-full flex-1 bg-fixed">
+    <div class="w-full bg-stone-100 px-4 py-8">
+      <div class="mx-auto flex max-w-7xl flex-col items-center gap-8 bg-stone-100 px-5 pt-20 lg:gap-20 lg:px-8 lg:pt-24">
         <button
           @click="router.back()"
-          class="self-start text-sm 2xl:text-xl font-bold text-stone-800"
+          class="self-start text-sm font-bold text-stone-800 2xl:text-xl"
         >
           上一頁
         </button>
-        <div class="mx-auto border-2 border-stone-800 w-full px-24 py-12 bg-white">
+        <div class="mx-auto w-full border-2 border-stone-800 bg-white px-6 py-8 sm:px-12 sm:py-10 lg:px-24 lg:py-16">
           <div
-            v-if="userHasVoted"
-            class="mb-4 p-6 bg-orange-300 rounded text-white text-center text-base tracking-wide"
+            v-if="userHasVoted && !vote.isEnd"
+            class="mb-4 rounded bg-orange-300 p-6 text-center text-base tracking-wide text-white"
           >
             已參與
           </div>
           <div
             v-if="vote.isEnd || isBeforeToday(vote.endDate)"
-            class="mb-4 p-6 bg-stone-300 rounded text-white text-center text-base tracking-wide"
+            class="mb-4 rounded bg-stone-300 p-6 text-center text-base tracking-wide text-white"
           >
             已結束
           </div>
 
-          <h1 class="my-4 text-2xl 2xl:text-4xl 2xl:pt-4 text-stone-900 font-bold">
+          <h1 class="my-4 text-2xl font-bold text-stone-900 2xl:pt-4 2xl:text-4xl">
             {{ vote.title }}
           </h1>
-          <div class="flex items-center gap-4 mb-6">
+          <div class="mb-6 flex flex-wrap items-center gap-4">
             <router-link :to="{ name: 'PersonalInfo', params: { email: vote.author?.email } }">
               <div class="flex items-center gap-2">
                 <div
-                  class="border border-stone-800 rounded-full bg-white w-10 h-10 2xl:w-12 2xl:h-12 p-1 flex items-center justify-center overflow-hidden"
+                  class="flex size-10 items-center justify-center overflow-hidden rounded-full border border-stone-800 bg-white p-1 2xl:size-12"
                 >
                   <img
                     :src="`/assets/img/avatar (${vote.author?.profile?.selectedAvatarIndex}).png`"
                     alt="avatar"
                   />
                 </div>
-                <span class="2xl:text-lg text-stone-700 font-bold">{{
+                <span class="font-bold text-stone-700 2xl:text-lg">{{
                   vote.author?.username
                 }}</span>
               </div>
             </router-link>
             <div class="flex items-center gap-2">
-              <span class="font-bold text-sm text-stone-500">
+              <span class="text-sm font-bold text-stone-500">
                 {{
                   format(vote.startDate, 'yyyy-MM-dd', {
                     locale: zhTW
                   })
                 }}
-                <span class="text-md">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                <span class="text-base">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
                 {{
                   formatDistance(vote.startDate, new Date(), {
                     locale: zhTW
@@ -125,13 +125,13 @@ onMounted(async () => {
               </span>
             </div>
           </div>
-          <div class="bg-white p-4 mb-4 min-h-24">
+          <div class="mb-4 min-h-24 bg-white p-4">
             <div class="text-stone-700">{{ vote.description }}</div>
           </div>
 
           <div
             v-if="!vote.isEnd && !isBeforeToday(vote.endDate)"
-            class="w-fit ml-auto font-semibold text-sm text-stone-500"
+            class="ml-auto w-fit text-sm font-semibold text-stone-500"
           >
             截止日期 :
             {{
@@ -139,7 +139,7 @@ onMounted(async () => {
                 locale: zhTW
               })
             }}
-            <span class="text-md">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+            <span class="text-base">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
             {{
               formatDistance(new Date(), vote.endDate, {
                 locale: zhTW
@@ -148,7 +148,7 @@ onMounted(async () => {
             後
           </div>
 
-          <div class="border-t-2 border-stone-600 w-full mt-2 mb-8"></div>
+          <div class="mb-8 mt-2 w-full border-t-2 border-stone-600"></div>
           <VoteParticipateIn
             v-if="!vote.isEnd && !isBeforeToday(vote.endDate)"
             :vote="vote"

@@ -22,7 +22,7 @@ watch(
 
 <template>
   <Loading />
-  <div v-if="userStore.isLoginCheck" class="h-screen w-screen flex flex-col overflow-auto">
+  <div v-if="userStore.isLoginCheck" class="flex h-screen w-screen flex-col overflow-auto">
     <TheHeader :key="headerKey" v-if="showHeader" />
     <router-view></router-view>
   </div>

@@ -79,16 +79,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="post && post.author && post.author.profile" class="flex-1 w-full bg-fixed">
-    <div class="bg-stone-100 w-full py-8 px-4">
-      <div class="mx-auto flex flex-col items-center gap-20 bg-stone-100 w-[62rem] pt-20 px-5">
+  <div v-if="post && post.author && post.author.profile" class="w-full flex-1 bg-fixed">
+    <div class="w-full bg-stone-100 px-4 py-8">
+      <div class="mx-auto flex w-full max-w-5xl flex-col items-center gap-20 bg-stone-100 px-5 pt-20">
         <button
           @click="router.back()"
-          class="self-start text-sm 2xl:text-xl font-bold text-stone-800"
+          class="self-start text-sm font-bold text-stone-800 2xl:text-xl"
         >
           上一頁
         </button>
-        <div class="mx-auto border-2 border-stone-800 w-full px-24 py-16 bg-white">
+        <div class="mx-auto w-full border-2 border-stone-800 bg-white px-6 py-8 md:px-16 md:py-12">
           <div class="flex items-center gap-4">
             <router-link
               :to="{
@@ -98,80 +98,61 @@ onMounted(async () => {
             >
               <div class="flex items-center gap-2">
                 <div
-                  class="border border-stone-800 rounded-full bg-white w-10 h-10 2xl:w-12 2xl:h-12 p-1 flex items-center justify-center overflow-hidden"
+                  class="flex size-10 items-center justify-center overflow-hidden rounded-full border border-stone-800 bg-white p-1 2xl:size-12"
                 >
                   <img
                     :src="`/assets/img/avatar (${post.author.profile.selectedAvatarIndex}).png`"
                     alt="avatar"
                   />
                 </div>
-                <span class="2xl:text-lg text-stone-700 font-bold">
+                <span class="font-bold text-stone-700 2xl:text-lg">
                   {{ post.author.username }}
                 </span>
               </div>
             </router-link>
-            <div class="flex gap-2 items-baseline justify-start flex-1">
-              <span class="font-bold text-sm 2xl:text-base text-stone-500"
+            <div class="flex flex-1 items-baseline justify-start gap-2">
+              <span class="text-sm font-bold text-stone-500 2xl:text-base"
                 >{{ formatDateTime(post.createdAt!) }}
                 <span class="text-md italic">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
                 {{ getTimeDifference(post.createdAt!) }} 以前
               </span>
             </div>
           </div>
-          <h1 class="my-4 text-2xl 2xl:text-4xl 2xl:pt-4 text-stone-900 font-bold">
+          <h1 class="my-4 text-2xl font-bold text-stone-900 2xl:pt-4 2xl:text-4xl">
             {{ post.title }}
           </h1>
-          <div class="flex gap-2 flex-wrap">
+          <div class="flex flex-wrap gap-2">
             <span
               v-for="(tag, index) in post.topicTags"
               :key="index"
-              class="px-2 py-1 text-sm rounded-sm text-stone-100"
+              class="rounded-sm px-2 py-1 text-sm text-stone-100"
               :style="`background-color:${setTagColor(tag)}`"
             >
               {{ tag }}
             </span>
           </div>
-          <!-- <div
-            v-if="post.images && post.images.length > 0"
-            class="mt-20 flex flex-col gap-4"
-          >
-            <img :src="post.images[0].url" class="border-2 border-stone-700" />
-          </div> -->
           <div
             v-html="getConvertedHtml(post.content)"
-            class="quill-content mt-10 text-stone-700 2xl:text-lg whitespace-pre-wrap overflow-auto"
+            class="quill-content mt-10 overflow-auto whitespace-pre-wrap text-stone-700 2xl:text-lg"
           ></div>
-          <!-- <div
-            v-if="post.images && post.images.length > 0"
-            class="mt-4 flex flex-col gap-4"
-          >
-            <div v-for="(image, index) in post.images" :key="index">
-              <img
-                :key="index"
-                v-if="index !== 0"
-                :src="image.url"
-                class="border-2 border-stone-700"
-              />
-            </div>
-          </div> -->
-          <div class="border-b-[1.5px] border-gray-300 my-4"></div>
-          <div class="flex justify-between items-center">
+          <div class="my-4 border-b-[1.5px] border-gray-300"></div>
+          <div class="flex items-center justify-between">
             <div class="flex items-center gap-8 2xl:text-xl">
               <span class="flex items-center gap-1 text-blue-900">
                 <EyeIcon class="w-4 2xl:w-6" />{{ post.views }}
               </span>
-              <span class="flex items-center gap-1 2xl:text-xl text-orange-900">
+              <span class="flex items-center gap-1 text-orange-900 2xl:text-xl">
                 <ChatBubbleBottomCenterIcon class="w-4 2xl:w-6" />
                 {{ postComments ? postComments.length : 0 }}
               </span>
             </div>
             <span
-              class="group flex items-center gap-1 2xl:text-xl hover:cursor-pointer focus:text-red-600 transition-all"
+              class="group flex items-center gap-1 transition-all hover:cursor-pointer focus:text-red-600 2xl:text-xl"
               tabindex="0"
             >
               <HeartIcon
                 @click="handleLikes"
-                class="w-4 2xl:w-6 group-focus:scale-[115%] transition-all duration-300"
+                class="w-4 transition-all duration-300 group-focus:scale-[115%] 2xl:w-6"
               />{{ post.likes }}
             </span>
           </div>

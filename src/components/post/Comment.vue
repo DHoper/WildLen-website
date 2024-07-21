@@ -126,12 +126,12 @@ onMounted(async () => {
 
 <template>
   <div
-    class="w-full border-2 border-stone-800 bg-white py-10 px-8 2xl:px-24 2xl:py-20 overflow-auto"
+    class="w-full overflow-auto border-2 border-stone-800 bg-white px-8 py-10 2xl:px-24 2xl:py-20"
   >
-    <span class="font-bold text-stone-700 tracking-widest 2xl:text-xl">留言區</span>
-    <div class="border-b-[.0938rem] 2xl:border-b-2 border-stone-700 my-4"></div>
+    <span class="font-bold tracking-widest text-stone-700 2xl:text-xl">留言區</span>
+    <div class="my-4 border-b-[.0938rem] border-stone-700 2xl:border-b-2"></div>
     <form method="POST" @submit.prevent="handleCommentSubmit">
-      <div class="mt-10 mb-4 border-2 border-stone-600 p-4 2xl:p-8 2xl:text-lg">
+      <div class="mb-4 mt-10 border-2 border-stone-600 p-4 2xl:p-8 2xl:text-lg">
         <textarea
           v-model="commentPost"
           name=""
@@ -140,21 +140,21 @@ onMounted(async () => {
           rows="3"
           placeholder="輸入留言..."
           maxlength="50"
-          class="w-full border-none outline-none resize-none bg-transparent p-0 m-0 text-current"
+          class="m-0 w-full resize-none border-none bg-transparent p-0 text-current outline-none"
         />
       </div>
       <div class="flex justify-end gap-4 2xl:gap-6">
         <button
           type="button"
           @click="commentPost = ''"
-          class="text-green-400 px-5 py-2 2xl:text-lg hover:text-green-600"
+          class="px-5 py-2 text-green-400 hover:text-green-600 2xl:text-lg"
         >
           取消
         </button>
         <button
           ref="commentSubmitButton"
           type="submit"
-          class="text-white bg-gray-300 px-5 py-2 2xl:text-lg transition-all"
+          class="bg-gray-300 px-5 py-2 text-white transition-all 2xl:text-lg"
         >
           送出
         </button>
@@ -172,41 +172,41 @@ onMounted(async () => {
             >
               <div class="flex items-center gap-2">
                 <div
-                  class="border border-stone-800 rounded-full bg-white w-10 h-10 2xl:w-12 2xl:h-12 p-1 flex items-center justify-center overflow-hidden"
+                  class="flex size-10 items-center justify-center overflow-hidden rounded-full border border-stone-800 bg-white p-1 2xl:size-12"
                 >
                   <img
                     :src="`/assets/img/avatar (${authors[index].profile!.selectedAvatarIndex}).png`"
                     alt="avatar"
                   />
                 </div>
-                <span class="2xl:text-lg text-stone-700 font-bold">
+                <span class="font-bold text-stone-700 2xl:text-lg">
                   {{ authors[index].username }}
                 </span>
               </div>
             </router-link>
-            <div class="flex gap-2 items-baseline justify-start flex-1">
-              <span class="text-sm 2xl:text-base text-stone-500 text-center"
+            <div class="flex flex-1 items-baseline justify-start gap-2">
+              <span class="text-center text-sm text-stone-500 2xl:text-base"
                 >{{ formatDateTime(comment.createdAt!, 'concise') }}
               </span>
               <TrashIcon
                 v-if="isLogin && userId === comment.authorId"
                 @click="handleDeleteComment(comment.id!)"
-                class="w-6 cursor-pointer text-red-700 ml-auto"
+                class="ml-auto w-6 cursor-pointer text-red-700"
               />
             </div>
           </div>
           <div>
-            <p class="mt-10 text-stone-700 2xl:text-lg whitespace-pre-wrap overflow-auto">
+            <p class="mt-10 overflow-auto whitespace-pre-wrap text-stone-700 2xl:text-lg">
               {{ comment.content }}
             </p>
           </div>
-          <div class="border-b-[.0938rem] 2xl:border-b-2 border-gray-300 my-4"></div>
+          <div class="my-4 border-b-[.0938rem] border-gray-300 2xl:border-b-2"></div>
         </div>
       </li>
     </ul>
     <div
       v-else
-      class="border-b-2 2xl:text-lg 2xl:border-b-2 border-gray-300 my-12 text-center text-gray-400 py-1"
+      class="my-12 border-b-2 border-gray-300 py-1 text-center text-gray-400 2xl:border-b-2 2xl:text-lg"
     >
       尚未有留言
     </div>

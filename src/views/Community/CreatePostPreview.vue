@@ -61,32 +61,32 @@ onMounted(async () => {
 <template>
   <div
     v-if="formData && user && user.profile"
-    class="fixed top-0 w-screen h-full overflow-auto border-4 py-12 px-4 z-50 bg-white flex flex-col items-center gap-10 2xl:gap-16"
+    class="fixed top-0 z-50 flex h-full w-screen flex-col items-center gap-10 overflow-auto border-4 bg-white px-4 py-12 2xl:gap-16"
   >
-    <div class="mt-12 mx-auto border-2 border-stone-800 w-[62rem] max-w-full px-24 py-16">
+    <div class="mx-auto mt-12 w-[62rem] max-w-full border-2 border-stone-800 px-24 py-16">
       <div class="flex items-center gap-4">
         <div
-          class="border border-stone-800 rounded-full bg-white w-14 h-14 2xl:w-16 2xl:h-16 p-1 flex items-center justify-center overflow-hidden"
+          class="flex size-14 items-center justify-center overflow-hidden rounded-full border border-stone-800 bg-white p-1 2xl:size-16"
         >
           <img :src="`/assets/img/avatar (${user.profile.selectedAvatarIndex}).png`" alt="avatar" />
         </div>
-        <div class="flex gap-2 items-baseline justify-start flex-1">
-          <span class="text-lg 2xl:text-xl text-stone-700 font-bold">{{ user.username }}</span>
-          <span class="font-bold text-sm 2xl:text-base text-stone-500"
+        <div class="flex flex-1 items-baseline justify-start gap-2">
+          <span class="text-lg font-bold text-stone-700 2xl:text-xl">{{ user.username }}</span>
+          <span class="text-sm font-bold text-stone-500 2xl:text-base"
             >{{ formatDateTime(formData.createdAt) }}
             <span class="text-md italic">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
             {{ getTimeDifference(formData.createdAt) }} 以前
           </span>
         </div>
       </div>
-      <h1 class="my-4 text-2xl 2xl:text-3xl text-stone-900 font-bold">
+      <h1 class="my-4 text-2xl font-bold text-stone-900 2xl:text-3xl">
         {{ formData.title }}
       </h1>
-      <div class="flex gap-2 flex-wrap">
+      <div class="flex flex-wrap gap-2">
         <span
           v-for="(tag, index) in formData.topicTags"
           :key="index"
-          class="px-2 py-1 text-stone-100 rounded-sm"
+          class="rounded-sm px-2 py-1 text-stone-100"
           :style="`background-color:${setTagColor(tag)}`"
         >
           {{ tag }}
@@ -100,10 +100,10 @@ onMounted(async () => {
       </div> -->
       <!-- 問題--部分轉譯字元文本會超出寬度 -->
       <div
-        class="quill-content mt-10 text-stone-700 2xl:text-lg whitespace-pre-wrap overflow-auto"
+        class="quill-content mt-10 overflow-auto whitespace-pre-wrap text-stone-700 2xl:text-lg"
         v-html="formData.content"
       ></div>
-      <div class="border-b-2 border-stone-600 w-full my-10 mt-5"></div>
+      <div class="my-10 mt-5 w-full border-b-2 border-stone-600"></div>
       <!-- <div v-if="formData.images && formData.images.length > 0" class="mt-4 flex flex-col gap-4">
         <div v-for="(image, index) in formData.images" :key="index">
           <div v-if="index != 0" class="border-2 border-stone-700">
@@ -111,7 +111,7 @@ onMounted(async () => {
           </div>
         </div>
       </div> -->
-      <div class="border-b-2 border-gray-300 my-4 mt-16"></div>
+      <div class="my-4 mt-16 border-b-2 border-gray-300"></div>
       <div class="flex justify-between">
         <div class="flex gap-8">
           <span class="flex items-center gap-1 2xl:text-xl">
@@ -122,7 +122,7 @@ onMounted(async () => {
           </span>
         </div>
         <span class="group flex items-center gap-1 2xl:text-xl">
-          <HeartIcon class="w-4 2xl:w-6 transition-all duration-300" />0
+          <HeartIcon class="w-4 transition-all duration-300 2xl:w-6" />0
         </span>
       </div>
     </div>
@@ -130,7 +130,7 @@ onMounted(async () => {
       <button
         @click="handleSubmit"
         :disabled="isSubmitting"
-        class="text-white px-6 py-2 border-2 border-transparent"
+        class="border-2 border-transparent px-6 py-2 text-white"
         :class="
           isSubmitting
             ? 'bg-stone-400'
@@ -141,7 +141,7 @@ onMounted(async () => {
       </button>
       <button
         @click="emit('close')"
-        class="text-white bg-stone-600 px-6 py-2 border-2 border-transparent hover:border-stone-700 hover:bg-white hover:text-stone-700 transition-all duration-300"
+        class="border-2 border-transparent bg-stone-600 px-6 py-2 text-white transition-all duration-300 hover:border-stone-700 hover:bg-white hover:text-stone-700"
       >
         返回
       </button>

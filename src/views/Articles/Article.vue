@@ -103,26 +103,31 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-articles bg-no-repeat bg-cover bg-center w-full bg-fixed">
+  <div class="w-full bg-articles bg-cover bg-fixed bg-center bg-no-repeat">
     <div
-      class="absolute flex flex-col items-center top-52 left-1/2 -translate-x-1/2 font-Josefin tracking-widest"
+      class="absolute left-1/2 top-40 flex -translate-x-1/2 flex-col items-center font-Josefin tracking-widest xl:top-52"
     >
-      <h1 class="uppercase text-5xl font-bold">The beauty of nature</h1>
-      <h3 class="italic text-xl mt-2">探索自然與保育之美</h3>
+      <h1 class="text-center text-5xl font-bold uppercase">The beauty of nature</h1>
+      <h3 class="mt-2 text-xl italic">探索自然與保育之美</h3>
     </div>
-    <div class="bg-white w-full mt-[90vh] py-12 px-4">
-      <div class="mx-auto flex flex-col bg-white w-[62rem] translate-y-[-7rem] pt-28 px-5">
-        <button @click="router.back()" class="self-start text-sm font-bold text-stone-800">
+    <div class="mt-[55vh] w-full bg-white px-4 py-12 xl:mt-[45vh]">
+      <div
+        class="g:w-[62rem] mx-auto flex w-full -translate-y-28 flex-col bg-white px-2 pt-4 xl:px-5 xl:pt-28"
+      >
+        <button
+          @click="router.back()"
+          class="self-start p-2 text-base font-bold text-stone-800 xl:p-0 xl:text-sm"
+        >
           上一頁
         </button>
-        <div v-if="article" class="mt-12 border-2 border-stone-800 px-24 py-16 mb-20">
-          <span class="font-bold text-sm text-stone-500">
+        <div v-if="article" class="mb-20 mt-12 border-2 border-stone-800 px-8 py-16 xl:px-24">
+          <span class="text-sm font-bold text-stone-500">
             {{
               format(article.createdAt, 'yyyy-MM-dd', {
                 locale: zhTW
               })
             }}
-            <span class="text-md">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+            <span class="text-base">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
             {{
               formatDistance(article.createdAt, new Date(), {
                 locale: zhTW
@@ -131,31 +136,36 @@ onMounted(async () => {
             前
           </span>
           <h1 class="my-8 text-4xl text-stone-600">{{ article.title }}</h1>
-          <p class="font-bold italic text-sm text-stone-900">{{ article.subTitle }}</p>
+          <p class="text-sm font-bold italic text-stone-900">{{ article.subTitle }}</p>
           <div class="mt-4 max-h-[32.5rem] overflow-hidden">
-            <img :src="article.coverImage" class="w-full filter grayscale-[10%]" />
+            <img :src="article.coverImage" class="w-full grayscale-[10%]" />
           </div>
-          <div class="quill-content w-full my-8" v-html="getConvertedHtml(article.content)"></div>
-          <div class="border-b-[.0938rem] border-gray-300 my-4"></div>
+          <div
+            class="quill-content my-8 w-full text-base"
+            v-html="getConvertedHtml(article.content)"
+          ></div>
+          <div class="my-4 border-b-[.0938rem] border-gray-300"></div>
           <div class="flex justify-between">
             <div class="flex gap-8">
-              <span class="flex gap-1"><EyeIcon class="w-4" />{{ article.views }}</span>
-              <span class="flex gap-1"
-                ><!-- <ChatBubbleBottomCenterIcon class="w-4" />{{ article.length }} --></span
+              <span class="flex items-center gap-1">
+                <EyeIcon class="w-8 xl:w-4" />
+                <span class="text-xl lg:text-base">{{ article.views }}</span></span
               >
             </div>
             <span
-              class="group flex gap-1 hover:cursor-pointer transition-scale"
+              class="group flex items-center gap-1 hover:cursor-pointer"
               :class="{ 'text-red-500': isLiked }"
               tabindex="0"
               @click="toggleLike"
             >
               <component
                 :is="isLiked ? SolidHeartIcon : HeartIcon"
-                class="w-4 group-focus:scale-[125%] transition-scale duration-300"
+                class="w-8 duration-300 group-focus:scale-[125%] xl:w-4"
                 :class="{ 'scale-[125%]': isLiked }"
               />
-              {{ article.likes }}
+              <span class="text-xl lg:text-base">
+                {{ article.likes }}
+              </span>
             </span>
           </div>
         </div>

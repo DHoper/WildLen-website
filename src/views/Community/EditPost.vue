@@ -156,11 +156,11 @@ onMounted(async () => {
 
 <template>
   <div v-if="formData" class="relative flex-1">
-    <div class="bg-white w-full py-12 px-4">
-      <div class="mx-auto flex flex-col bg-white w-[62rem] max-w-full px-5">
+    <div class="w-full bg-white px-4 py-12">
+      <div class="mx-auto flex w-[62rem] max-w-full flex-col bg-white px-5">
         <button
           @click="router.back()"
-          class="self-start text-sm 2xl:text-lg font-bold text-stone-800"
+          class="self-start text-sm font-bold text-stone-800 2xl:text-lg"
         >
           上一頁
         </button>
@@ -168,7 +168,7 @@ onMounted(async () => {
           <h1 class="my-8 text-4xl text-stone-600">發佈新貼文</h1>
           <form class="mt-4 flex flex-col gap-4 2xl:gap-12">
             <div class="relative">
-              <label for="title" class="text-stone-600 font-bold text-sm 2xl:text-lg">標題</label>
+              <label for="title" class="text-sm font-bold text-stone-600 2xl:text-lg">標題</label>
               <input
                 v-model="formData.title"
                 type="text"
@@ -176,26 +176,26 @@ onMounted(async () => {
                 name="title"
                 placeholder="5 ~ 40字"
                 @blur="validateInput('title')"
-                class="mt-2 w-full border-2 py-2 px-3 outline-none"
+                class="mt-2 w-full border-2 px-3 py-2 outline-none"
                 :class="formInputInvalid.title ? 'border-stone-800' : 'border-red-700'"
                 required
               />
               <div
                 v-if="!formInputInvalid.title"
-                class="w-full absolute left-0 bottom-0 2xl:-bottom-1 translate-y-full flex items-center gap-1 text-xs 2xl:text-base text-red-500"
+                class="absolute bottom-0 left-0 flex w-full translate-y-full items-center gap-1 text-xs text-red-500 2xl:-bottom-1 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4 2xl:w-6" />
                 <p>請輸入有效標題</p>
               </div>
             </div>
             <div class="imgBlock">
-              <label for="img" class="text-stone-600 font-bold text-sm 2xl:text-lg"
+              <label for="img" class="text-sm font-bold text-stone-600 2xl:text-lg"
                 >圖片(可選)</label
               >
-              <div class="flex items-center mt-4">
+              <div class="mt-4 flex items-center">
                 <label
                   for="imgUpload"
-                  class="border-2 border-stone-500 bg-stone-500 text-white hover:bg-white hover:text-stone-500 font-bold py-2 px-4 cursor-pointer text-sm 2xl:text-lg"
+                  class="cursor-pointer border-2 border-stone-500 bg-stone-500 px-4 py-2 text-sm font-bold text-white hover:bg-white hover:text-stone-500 2xl:text-lg"
                 >
                   選擇檔案
                 </label>
@@ -212,25 +212,25 @@ onMounted(async () => {
               <div class="mt-4 flex gap-4 overflow-auto pb-1">
                 <div
                   v-for="(image, index) in previewImages"
-                  class="relative flex-shrink-0 border-2 border-stone-600 w-[140px] h-[105px]"
+                  class="relative h-[105px] w-[140px] shrink-0 border-2 border-stone-600"
                 >
-                  <img :src="image.url" alt="image.filename" class="object-cover w-full h-full" />
+                  <img :src="image.url" alt="image.filename" class="size-full object-cover" />
                   <TrashIcon
                     v-if="postExistingImages.includes(image)"
                     @click="handleSelectDeleteImage(index)"
-                    class="absolute top-2 right-2 w-8 z-10 cursor-pointer text-red-600 hover:scale-105 transition-all duration-300"
+                    class="absolute right-2 top-2 z-10 w-8 cursor-pointer text-red-600 transition-all duration-300 hover:scale-105"
                   />
                 </div>
               </div>
             </div>
             <div>
-              <label class="text-stone-600 font-bold text-sm 2xl:text-lg">貼文主題(最多五項)</label>
-              <div class="mt-4 border-2 border-stone-700 p-2 overflow-auto max-h-48">
+              <label class="text-sm font-bold text-stone-600 2xl:text-lg">貼文主題(最多五項)</label>
+              <div class="mt-4 max-h-48 overflow-auto border-2 border-stone-700 p-2">
                 <div
-                  class="flex gap-2 items-center justify-center flex-wrap"
+                  class="flex flex-wrap items-center justify-center gap-2"
                   v-for="topic in topicTags"
                 >
-                  <div class="mt-4 flex flex-wrap gap-2 justify-center">
+                  <div class="mt-4 flex flex-wrap justify-center gap-2">
                     <label
                       v-for="tag in topic.tags"
                       :key="tag"
@@ -255,7 +255,7 @@ onMounted(async () => {
               </div>
             </div>
             <div class="relative">
-              <label for="content" class="text-stone-600 font-bold text-sm 2xl:text-lg"
+              <label for="content" class="text-sm font-bold text-stone-600 2xl:text-lg"
                 >貼文内容</label
               >
               <textarea
@@ -267,13 +267,13 @@ onMounted(async () => {
                 placeholder="10 ~ 2000字"
                 maxlength="2000"
                 @blur="validateInput('content')"
-                class="mt-2 mb-0 w-full border-2 border-stone-800 py-2 px-3 2xl:p-6 2xl:text-lg outline-none resize-none"
+                class="mb-0 mt-2 w-full resize-none border-2 border-stone-800 px-3 py-2 outline-none 2xl:p-6 2xl:text-lg"
                 :class="formInputInvalid.content ? 'border-stone-800' : 'border-red-700'"
                 required
               />
               <div
                 v-if="!formInputInvalid.content"
-                class="w-full absolute left-0 bottom-1 translate-y-full flex items-center gap-1 text-xs 2xl:text-base text-red-500"
+                class="absolute bottom-1 left-0 flex w-full translate-y-full items-center gap-1 text-xs text-red-500 2xl:text-base"
               >
                 <ExclamationCircleIcon class="w-4 2xl:w-6" />
                 <p>請輸入有效內容</p>
@@ -284,7 +284,7 @@ onMounted(async () => {
                 @click="handelPreview"
                 type="button"
                 :disabled="!previewAble"
-                class="text-white border-2 border-transparent px-8 py-2 transition-all duration-300"
+                class="border-2 border-transparent px-8 py-2 text-white transition-all duration-300"
                 :class="
                   previewAble
                     ? 'bg-blue-900 hover:bg-white hover:text-blue-900 hover:border-blue-900'
