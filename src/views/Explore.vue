@@ -3,8 +3,7 @@ import Popup from './Explore/Popup.vue'
 import Post from './Gallery/Post.vue'
 import { ref, onMounted, h, render } from 'vue'
 import mapboxgl from 'mapbox-gl'
-import MapBoxGeoCoder from '@mapbox/mapbox-gl-geocoder'
-import Result from '@mapbox/mapbox-gl-geocoder'
+import MapBoxGeoCoder, { Result } from '@mapbox/mapbox-gl-geocoder'
 import MapBoxLanguage from '@mapbox/mapbox-gl-language'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css'
@@ -25,7 +24,7 @@ function openPhoto(id: number) {
 }
 function closePhoto() {
   photoPostShow.value = false
-  photoPostID.value = null
+  photoPostID.value = ''
 }
 
 onMounted(async () => {
@@ -35,7 +34,8 @@ onMounted(async () => {
 
   const response = await getAllPosts() //取得照片牆貼文資料
   const animalsDataset = response.value!
-  console.log(animalsDataset)
+  console.log(animalsDataset);
+  
 
   const geoJSONFeatures = animalsDataset.map((animalsData: PhotoPost) => ({
     type: 'Feature',
@@ -47,7 +47,7 @@ onMounted(async () => {
       _id: animalsData.id,
       title: animalsData.title,
       location: animalsData.location,
-      url: animalsData.images![0].url
+      url: animalsData.images[0].url
     }
   }))
 
