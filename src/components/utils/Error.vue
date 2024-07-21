@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useErrorStore } from '../../stores/error.ts'
+import { useErrorStore } from '../../stores/error'
 
 const errorData = ref()
 const router = useRouter()

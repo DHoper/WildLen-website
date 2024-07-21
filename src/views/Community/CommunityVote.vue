@@ -21,9 +21,7 @@ const props = defineProps({
 })
 
 const vote = ref<Vote>()
-const userHasVoted = computed(() => {
-  return isUserVoted.value
-})
+const userHasVoted = ref<boolean>(false)
 
 const isUserVoted = ref<boolean>(false)
 const existingUserVote = ref<UserVote | null>(null)
@@ -31,9 +29,9 @@ const existingUserVote = ref<UserVote | null>(null)
 const checkIfVoted = async () => {
   try {
     const response = await checkUserVoted(vote.value!.id!, userStore.user!.id)
-
     isUserVoted.value = response.isVoted
     existingUserVote.value = response.existingUserVote
+    userHasVoted.value = response.isVoted 
   } catch (error) {
     console.error('Error checking user vote:', error)
   }
@@ -46,12 +44,13 @@ const fetchVoteData = async () => {
 
     if (userStore.user) {
       const result = await checkUserVoted(props.id, userStore.user.id)
-      userHasVoted.value = result.hasVoted
+      userHasVoted.value = result.hasVoted // 更新 userHasVoted.value
     }
   } catch (error) {
     console.error('Error fetching vote data:', error)
   }
 }
+
 onMounted(async () => {
   const loadingStore = useLoadingStore() //設置loading動畫頁
   loadingStore.setLoadingStatus(true)
@@ -68,14 +67,18 @@ onMounted(async () => {
 <template>
   <div v-if="vote" class="w-full flex-1 bg-fixed">
     <div class="w-full bg-stone-100 px-4 py-8">
-      <div class="mx-auto flex max-w-7xl flex-col items-center gap-8 bg-stone-100 px-5 pt-20 lg:gap-20 lg:px-8 lg:pt-24">
+      <div
+        class="mx-auto flex max-w-7xl flex-col items-center gap-8 bg-stone-100 px-5 pt-20 lg:gap-20 lg:px-8 lg:pt-24"
+      >
         <button
           @click="router.back()"
           class="self-start text-sm font-bold text-stone-800 2xl:text-xl"
         >
           上一頁
         </button>
-        <div class="mx-auto w-full border-2 border-stone-800 bg-white px-6 py-8 sm:px-12 sm:py-10 lg:px-24 lg:py-16">
+        <div
+          class="mx-auto w-full border-2 border-stone-800 bg-white px-6 py-8 sm:px-12 sm:py-10 lg:px-24 lg:py-16"
+        >
           <div
             v-if="userHasVoted && !vote.isEnd"
             class="mb-4 rounded bg-orange-300 p-6 text-center text-base tracking-wide text-white"

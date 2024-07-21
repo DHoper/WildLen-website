@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref, watch, watchEffect } from 'vue'
 import { TrashIcon } from '@heroicons/vue/24/outline'
-import { useUserStore } from '../../stores/user.ts'
+import { useUserStore } from '../../stores/user'
 import { formatDateTime } from '../../utils/formator.js'
-import { getUserById } from '@/api/auth/auth.ts'
+import { getUserById } from '@/api/auth/auth'
 import type { User } from '@/types/User.js'
-import type { PostComment } from '@/types/Common.js'
+import type { Dialog, PostComment } from '@/types/Common.js'
 
 const userStore = useUserStore()
 const props = defineProps({

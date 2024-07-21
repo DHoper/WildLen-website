@@ -5,7 +5,7 @@ export interface PostComment {
     authorId: number
     content: string
     likes?: number
-    createdAt?: Date
+    createdAt?: string
     updateAt?: Date
 }
 

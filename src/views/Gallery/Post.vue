@@ -144,7 +144,7 @@ onMounted(async () => {
                   <div class="relative -ml-2 object-cover sm:basis-2/3 2xl:basis-1/2">
                     <img
                       :src="post.images![0].url"
-                      :alt="post.images![0].filename"
+                      :alt="post.images![0].publicId.toString()"
                       class="z-10 aspect-[4/3] rounded-sm object-cover shadow-sm shadow-stone-600 2xl:w-full"
                     />
                   </div>
@@ -237,7 +237,7 @@ onMounted(async () => {
                     >
                       <img
                         :src="picture.url"
-                        :alt="picture.filename"
+                        :alt="picture.publicId.toString()"
                         class="relative z-10 shadow-sm shadow-stone-600"
                       />
                     </div>
@@ -264,7 +264,7 @@ onMounted(async () => {
                     >
                       <img
                         :src="post.images![pictureIndex].url"
-                        :alt="post.images![pictureIndex].filename"
+                        :alt="post.images![pictureIndex].publicId.toString()"
                         class="relative z-10 w-full shadow-sm shadow-stone-600 sm:w-auto 2xl:w-[36rem]"
                       />
                     </div>
