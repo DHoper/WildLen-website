@@ -3,6 +3,7 @@ import Popup from './Explore/Popup.vue'
 import Post from './Gallery/Post.vue'
 import { ref, onMounted, h, render } from 'vue'
 import mapboxgl from 'mapbox-gl'
+// @ts-ignore
 import MapBoxGeoCoder, { Result } from '@mapbox/mapbox-gl-geocoder'
 import MapBoxLanguage from '@mapbox/mapbox-gl-language'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -24,7 +25,7 @@ function openPhoto(id: number) {
 }
 function closePhoto() {
   photoPostShow.value = false
-  photoPostID.value = ''
+  photoPostID.value = null
 }
 
 onMounted(async () => {
@@ -34,8 +35,7 @@ onMounted(async () => {
 
   const response = await getAllPosts() //取得照片牆貼文資料
   const animalsDataset = response.value!
-  console.log(animalsDataset);
-  
+  console.log(animalsDataset)
 
   const geoJSONFeatures = animalsDataset.map((animalsData: PhotoPost) => ({
     type: 'Feature',
@@ -47,7 +47,7 @@ onMounted(async () => {
       _id: animalsData.id,
       title: animalsData.title,
       location: animalsData.location,
-      url: animalsData.images[0].url
+      url: animalsData.images![0].url
     }
   }))
 
@@ -185,6 +185,7 @@ onMounted(async () => {
     })
 
     //集群點擊彈窗事件
+    // @ts-ignore
     map.on('click', 'unclustered-point', (e: { features: any }) => {
       const geometry = e.features![0].geometry
       if (geometry.type === 'Point' && Array.isArray(geometry.coordinates)) {
@@ -224,6 +225,7 @@ onMounted(async () => {
     }
     geocoder.on('result', (e: LocationData) => {
       if (currentPopup) {
+        // @ts-ignore
         currentPopup.remove()
       }
       setPopup(e.result.center, e.result.properties)
