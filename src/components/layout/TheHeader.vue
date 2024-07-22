@@ -174,10 +174,7 @@ const closeMenu = () => {
                       class="p-3 px-5 text-sm leading-6 text-stone-700 hover:bg-stone-100"
                     >
                       <div class="flex-auto">
-                        <a
-                          :href="notification.href"
-                          class="block overflow-hidden truncate whitespace-nowrap"
-                        >
+                        <a class="block overflow-hidden truncate whitespace-nowrap">
                           {{ notification.content }}
                         </a>
                       </div>
