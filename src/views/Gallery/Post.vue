@@ -118,7 +118,10 @@ onMounted(async () => {
     :class="route.name === 'PhotoPost' ? 'relative' : 'absolute'"
   >
     <div class="relative flex size-full flex-col-reverse lg:flex-row">
-      <div ref="leftBlock" class="h-full basis-[30%] animate-slideInLeft overflow-auto bg-white">
+      <div
+        ref="leftBlock"
+        class="scrollbar-hide h-full basis-[30%] animate-slideInLeft overflow-auto bg-white"
+      >
         <Comment
           :post-id="post.id!"
           :comments-data="postComments ? postComments : []"
@@ -138,7 +141,7 @@ onMounted(async () => {
             <Transition :duration="1000">
               <div
                 v-if="!turnPage"
-                class="absolute left-0 top-0 flex size-full flex-col overflow-auto p-4 px-8 xl:justify-between 2xl:gap-4"
+                class="scrollbar-hide absolute left-0 top-0 flex size-full flex-col overflow-auto p-4 px-8 xl:justify-between 2xl:gap-4"
               >
                 <div class="flex flex-1 flex-col items-center justify-between sm:flex-row sm:gap-4">
                   <div class="relative -ml-2 object-cover sm:basis-2/3 2xl:basis-1/2">
@@ -158,7 +161,7 @@ onMounted(async () => {
                       {{ post.location }}
                     </p>
                     <p
-                      class="my-auto flex max-h-60 w-full justify-center overflow-auto p-4 text-center italic 2xl:text-xl"
+                      class="scrollbar-hide my-auto flex max-h-60 w-full justify-center overflow-auto p-4 text-center italic 2xl:text-xl"
                     >
                       {{ post.description }}
                     </p>
@@ -226,7 +229,7 @@ onMounted(async () => {
                   class="flex h-full flex-col-reverse items-center justify-around gap-8 p-4 sm:flex-row lg:flex-row 2xl:px-0 2xl:py-8 2xl:pr-10"
                 >
                   <div
-                    class="flex size-full basis-1/2 flex-row gap-4 overflow-auto p-0 sm:w-auto sm:basis-1/4 sm:flex-col lg:basis-1/3 xl:basis-1/4 2xl:basis-1/3 2xl:gap-10 2xl:px-0"
+                    class="scrollbar-hide flex size-full basis-1/2 flex-row gap-4 overflow-auto p-0 sm:w-auto sm:basis-1/4 sm:flex-col lg:basis-1/3 xl:basis-1/4 2xl:basis-1/3 2xl:gap-10 2xl:px-0"
                   >
                     <div
                       v-for="(picture, index) in post.images!"
@@ -258,9 +261,9 @@ onMounted(async () => {
                     </div>
                   </div>
 
-                  <div class="flex size-full overflow-auto sm:w-auto sm:items-center">
+                  <div class="scrollbar-hide flex size-full overflow-auto sm:w-auto sm:items-center">
                     <div
-                      class="h-fit w-full overflow-auto rounded-sm border-4 border-b-2 border-stone-600 sm:w-auto"
+                      class="scrollbar-hide h-fit w-full overflow-auto rounded-sm border-4 border-b-2 border-stone-600 sm:w-auto"
                     >
                       <img
                         :src="post.images![pictureIndex].url"

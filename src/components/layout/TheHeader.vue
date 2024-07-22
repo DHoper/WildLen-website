@@ -6,7 +6,6 @@ import {
   UserIcon,
   BookmarkSquareIcon,
   ArrowRightStartOnRectangleIcon,
-  HeartIcon,
   QuestionMarkCircleIcon,
   BellIcon
 } from '@heroicons/vue/24/outline'
