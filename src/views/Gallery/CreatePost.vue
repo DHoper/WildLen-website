@@ -229,7 +229,7 @@ onMounted(async () => {
       class="mx-auto my-12 flex w-[90%] flex-col gap-4 overflow-auto border-4 border-stone-500 bg-stone-100 sm:w-4/5 xl:w-1/2"
     >
       <div class="mb-8 flex w-full flex-col">
-        <h3 class="w-full bg-stone-500 p-1 text-center text-lg font-bold text-white 2xl:text-3xl">
+        <h3 class="w-full bg-stone-500 p-1 text-center text-lg font-bold text-white">
           創建新照片
         </h3>
         <!-- <div class="border-t-2 my-4 mt-10 border-stone-500 w-full"></div> -->
@@ -243,27 +243,27 @@ onMounted(async () => {
         <div class="flex flex-col items-center gap-8 px-0 sm:px-10">
           <div class="flex w-full flex-col items-center gap-12 px-8  text-stone-500">
             <div class="relative flex w-full flex-col gap-2">
-              <label for="title" class="text-lg font-bold 2xl:p-4 2xl:text-xl">標題</label>
+              <label for="title" class="text-lg font-bold">標題</label>
               <input
                 v-model="newPost.title"
                 @blur="validateInput('title')"
                 type="text"
                 id="title"
-                class="w-full border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none 2xl:px-4 2xl:text-lg"
+                class="w-full border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none"
                 :class="postInputInvalid.title ? 'border-stone-500' : 'border-red-500'"
                 placeholder="2~15字"
                 required
               />
               <div
                 v-if="!postInputInvalid.title"
-                class="absolute -bottom-6 left-0 flex w-full items-center gap-1 text-sm text-red-500 2xl:-bottom-7 2xl:text-base"
+                class="absolute -bottom-6 left-0 flex w-full items-center gap-1 text-sm text-red-500"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入2 ~ 15字之標題</p>
               </div>
             </div>
             <div class="relative flex w-full flex-col gap-2">
-              <label for="description" class="block text-lg font-bold 2xl:p-4 2xl:text-xl"
+              <label for="description" class="block text-lg font-bold"
                 >簡短描述</label
               >
               <textarea
@@ -272,14 +272,14 @@ onMounted(async () => {
                 id="description"
                 rows="4"
                 maxlength="100"
-                class="w-full resize-none border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none 2xl:p-4 2xl:text-lg"
+                class="w-full resize-none border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none"
                 :class="postInputInvalid.description ? 'border-stone-500' : 'border-red-500'"
                 placeholder="5~100字(中英 2:1)"
                 required
               ></textarea>
               <div
                 v-if="!postInputInvalid.description"
-                class="absolute -bottom-6 left-0 flex w-full items-center gap-1 text-sm text-red-500 2xl:-bottom-7 2xl:text-base"
+                class="absolute -bottom-6 left-0 flex w-full items-center gap-1 text-sm text-red-500"
               >
                 <ExclamationCircleIcon class="w-4" />
                 <p>請輸入5 ~ 100字之內容</p>
@@ -293,7 +293,7 @@ onMounted(async () => {
                 type="text"
                 id="location"
                 placeholder="請選擇照片拍攝地點"
-                class="pointer-events-none w-full border-b-2 border-dashed border-stone-500 bg-white p-2 text-center font-semibold tracking-wide text-stone-800 2xl:text-lg"
+                class="pointer-events-none w-full border-b-2 border-dashed border-stone-500 bg-white p-2 text-center font-semibold tracking-wide text-stone-800"
                 required
                 readonly
               />
@@ -307,12 +307,12 @@ onMounted(async () => {
               <label for="imgUpload" class="relative w-full cursor-pointer bg-stone-100">
                 <div
                   v-if="previewUrls.length > 0"
-                  class="relative aspect-video w-full cursor-pointer rounded-sm border-4 border-stone-500 bg-stone-100"
+                  class="relative aspect-[4/3] w-full cursor-pointer rounded-sm border-4 border-stone-500 bg-stone-100"
                 >
                   <img
                     :src="previewUrls[previewImg]"
                     alt=""
-                    class="aspect-video w-full object-cover"
+                    class="aspect-[4/3] w-full object-cover"
                   />
                   <!-- <EyeIcon
                   class="absolute top-2 right-2 w-8 z-10 text-stone-100 hover:scale-110"
@@ -329,7 +329,7 @@ onMounted(async () => {
                   >
                     <div
                       v-if="showPreview"
-                      class="absolute left-1/2 top-1/2 z-10 aspect-video w-full -translate-x-1/2 -translate-y-1/2 rounded-sm border-4 border-stone-500 2xl:w-[800px]"
+                      class="absolute left-1/2 top-1/2 z-10 aspect-[4/3] w-full -translate-x-1/2 -translate-y-1/2 rounded-sm border-4 border-stone-500 2xl:w-[800px]"
                     >
                       <img
                         :src="previewUrls[previewImg]"
@@ -345,7 +345,7 @@ onMounted(async () => {
                 </div>
                 <div
                   v-else
-                  class="flex aspect-video w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500"
+                  class="flex aspect-[4/3] w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -364,7 +364,7 @@ onMounted(async () => {
                 </div>
                 <span
                   type="button"
-                  class="mt-4 block w-full bg-stone-500 p-2 text-center text-lg font-bold text-stone-100 transition-all duration-300 hover:bg-stone-500 2xl:p-3 2xl:text-xl"
+                  class="mt-4 block w-full bg-stone-500 p-2 text-center text-lg font-bold text-stone-100 transition-all duration-300 hover:bg-stone-500"
                   >選擇圖片</span
                 >
                 <input
@@ -384,7 +384,7 @@ onMounted(async () => {
                 <div
                   v-for="(url, index) in previewUrls"
                   :key="index"
-                  class="aspect-video min-w-[70%] flex-1 rounded-sm border-4 sm:min-w-[calc(50%-.75rem)] lg:min-w-[calc(25%-.75rem)]"
+                  class="aspect-[4/3] min-w-[70%] flex-1 rounded-sm border-4 sm:min-w-[calc(50%-.75rem)] lg:min-w-[calc(25%-.75rem)]"
                   :class="previewImg === index ? 'border-lime-500' : 'border-stone-500 '"
                 >
                   <img
@@ -396,7 +396,7 @@ onMounted(async () => {
                 </div>
                 <div class="flex min-w-[calc(25%-.75rem)] flex-1 gap-3">
                   <div
-                    class="flex aspect-video w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-200"
+                    class="flex aspect-[4/3] w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-200"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -419,7 +419,7 @@ onMounted(async () => {
                 <div
                   v-for="index in 4"
                   :key="index"
-                  class="flex aspect-video min-w-[calc(25%-.75rem)] flex-1 items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-300"
+                  class="flex aspect-[4/3] min-w-[calc(25%-.75rem)] flex-1 items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -442,7 +442,7 @@ onMounted(async () => {
         </div>
         <button
           type="submit"
-          class="w-full basis-1 bg-stone-500 px-4 py-2 text-lg font-bold text-stone-100 transition-all duration-300 hover:text-white 2xl:text-xl"
+          class="w-full basis-1 bg-stone-500 px-4 py-2 text-lg font-bold text-stone-100 transition-all duration-300 hover:text-white"
         >
           發佈
         </button>

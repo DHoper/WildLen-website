@@ -64,9 +64,12 @@ function closePhoto() {
 
 <template>
   <div class="relative flex w-full flex-1 flex-col overflow-hidden">
-    <div v-if="galleryDataset" class="relative flex size-full flex-col-reverse overflow-hidden bg-stone-600 sm:flex-row">
+    <div
+      v-if="galleryDataset"
+      class="relative flex size-full flex-col-reverse overflow-hidden bg-stone-600 sm:flex-row"
+    >
       <div
-        class="flex h-full basis-[30%] flex-col items-center justify-center bg-gallery bg-cover bg-center bg-no-repeat py-4 text-white"
+        class="flex h-full basis-[30%] flex-col items-center justify-center bg-gallery bg-cover bg-center bg-no-repeat py-4 text-white 2xl:basis-1/4"
       >
         <span
           class="mt-auto text-4xl font-bold tracking-[1rem] [writing-mode:vertical-lr] sm:text-5xl 2xl:text-6xl"
@@ -79,7 +82,7 @@ function closePhoto() {
           <span>你未曾探尋之地</span>
         </div>
       </div>
-      <div class="h-full basis-[70%]">
+      <div class="h-full basis-[70%] 2xl:basis-3/4">
         <div
           ref="rightBlock"
           class="scrollbar-hide flex size-full flex-wrap content-start justify-start overflow-y-auto overflow-x-hidden"
@@ -87,10 +90,10 @@ function closePhoto() {
           <div
             v-for="(post, index) in galleryDataset"
             :key="index"
-            class="group relative m-0 flex-none basis-1/2 cursor-pointer p-0 hover:z-10 md:basis-1/2 lg:basis-1/3 xl:max-w-[25%] xl:basis-1/4 2xl:w-1/5"
+            class="group relative m-0 flex-none basis-1/2 cursor-pointer object-cover  p-0 hover:z-10 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
           >
             <img
-              class="aspect-video w-full scale-[101%] object-cover transition-all duration-700 ease-in group-hover:scale-105"
+              class="aspect-[4/3] w-full scale-[101%]  transition-all duration-700 ease-in group-hover:scale-105"
               :src="post.images![0].url"
             />
             <div

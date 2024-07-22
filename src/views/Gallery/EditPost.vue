@@ -346,12 +346,12 @@ onMounted(async () => {
               <label for="imgUpload" class="relative w-full cursor-pointer bg-stone-100">
                 <div
                   v-if="previewUrls.length > 0"
-                  class="relative aspect-video w-full cursor-pointer rounded-sm border-4 border-stone-500 bg-stone-100"
+                  class="relative aspect-[4/3] w-full cursor-pointer rounded-sm border-4 border-stone-500 bg-stone-100"
                 >
                   <img
                     :src="previewUrls[previewImgIndex]"
                     alt=""
-                    class="aspect-video w-full object-cover"
+                    class="aspect-[4/3] w-full object-cover"
                   />
                   <EyeIcon
                     class="absolute right-2 top-2 z-10 w-8 text-stone-100 hover:scale-110"
@@ -382,7 +382,7 @@ onMounted(async () => {
                   >
                     <div
                       v-if="showPreview"
-                      class="absolute left-1/2 top-1/2 z-10 aspect-video w-full -translate-x-1/2 -translate-y-1/2 rounded-sm border-4 border-stone-500 2xl:w-[800px]"
+                      class="absolute left-1/2 top-1/2 z-10 aspect-[4/3] w-full -translate-x-1/2 -translate-y-1/2 rounded-sm border-4 border-stone-500 2xl:w-[800px]"
                     >
                       <img
                         :src="previewUrls[previewImgIndex]"
@@ -403,7 +403,7 @@ onMounted(async () => {
                 </div>
                 <div
                   v-else
-                  class="flex aspect-video w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500"
+                  class="flex aspect-[4/3] w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -441,7 +441,7 @@ onMounted(async () => {
                 <div
                   v-for="(url, index) in previewUrls"
                   :key="index"
-                  class="aspect-video min-w-[70%] flex-1 rounded-sm border-4 sm:min-w-[calc(50%-.75rem)] lg:min-w-[calc(25%-.75rem)]"
+                  class="aspect-[4/3] min-w-[70%] flex-1 rounded-sm border-4 sm:min-w-[calc(50%-.75rem)] lg:min-w-[calc(25%-.75rem)]"
                   :class="previewImgIndex === index ? 'border-lime-500' : 'border-stone-500 '"
                 >
                   <img
@@ -453,7 +453,7 @@ onMounted(async () => {
                 </div>
                 <div class="flex min-w-[calc(25%-.75rem)] flex-1 gap-3">
                   <div
-                    class="flex aspect-video w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-200"
+                    class="flex aspect-[4/3] w-full items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-200"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -476,7 +476,7 @@ onMounted(async () => {
                 <div
                   v-for="index in 4"
                   :key="index"
-                  class="flex aspect-video min-w-[calc(25%-.75rem)] flex-1 items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-300"
+                  class="flex aspect-[4/3] min-w-[calc(25%-.75rem)] flex-1 items-center justify-center rounded-sm border-4 border-dashed border-stone-500 text-stone-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
