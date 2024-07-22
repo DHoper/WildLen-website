@@ -39,15 +39,12 @@ const fetchCommentData = async () => {
   const commentsResponseData = await getComments(props.id)
 
   if (commentsResponseData.value) {
-    articleComments.value = commentsResponseData.value
+    articleComments.value = commentsResponseData.value.reverse()
   }
 }
 
 const reloadCommentData = async () => {
-  await fetchArticleData()
-  if (article.value) {
-    await fetchCommentData()
-  }
+  await fetchCommentData()
 }
 
 const handleCreateComment = async (submitData: { authorId: number; content: String }) => {
@@ -75,7 +72,7 @@ const fetchArticleData = async () => {
     const articleResponseData = await getArticle(props.id)
     if (articleResponseData.value) {
       article.value = articleResponseData.value
-      articleComments.value = articleResponseData.value?.comments
+      articleComments.value = articleResponseData.value?.comments.reverse()
       incrementArticleViews(props.id)
     }
 
@@ -130,7 +127,7 @@ onMounted(async () => {
         >
           上一頁
         </button>
-        <div v-if="article" class="mb-20 mt-12 border-2 border-stone-800 p-8 xl:px-24 xl:py-16">
+        <div v-if="article" class="border-2 border-stone-800 p-8 xl:px-24 xl:py-16">
           <span class="text-sm font-bold text-stone-500">
             {{
               format(article.createdAt, 'yyyy-MM-dd', {
@@ -159,7 +156,7 @@ onMounted(async () => {
             <div class="flex gap-8">
               <span class="flex items-center gap-1">
                 <EyeIcon class="w-8 sm:w-6" />
-                <span class="text-lg sm:text-base ">{{ article.views }}</span></span
+                <span class="text-lg sm:text-base">{{ article.views }}</span></span
               >
             </div>
             <span
@@ -179,6 +176,8 @@ onMounted(async () => {
             </span>
           </div>
         </div>
+      </div>
+      <div class="mx-auto flex w-full bg-white px-2 pt-4 lg:w-[62rem] xl:px-5">
         <Comment
           :post-id="props.id"
           :comments-data="articleComments ? articleComments : []"

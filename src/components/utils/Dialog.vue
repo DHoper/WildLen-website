@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Dialog } from '@/types/Common';
+import type { Dialog } from '@/types/Common'
 import { onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
@@ -22,11 +22,9 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="fixed left-0 top-0 z-50 flex size-full items-center justify-center bg-stone-700 bg-opacity-80"
+    class="fixed left-0 top-0 z-50 flex w-screen h-screen items-center justify-center bg-stone-700/80 border-2 border-red-500"
   >
-    <div
-      class="-mt-20 w-80 p-1 2xl:w-96"
-    >
+    <div class="-mt-20 w-80 p-1 2xl:w-96">
       <div
         class="flex flex-col items-center justify-around gap-6 py-10 text-white 2xl:py-16"
         :class="props.dialogData.warringStyle ? 'bg-red-500/90' : 'bg-stone-600'"

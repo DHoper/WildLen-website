@@ -56,22 +56,9 @@ export const inputValidator = () => {
         value = ''
       }
 
-      let totalWeight = 0
-      function countCharacters(text: string) {
-        text = text.replace(/\u200B/g, '\n')
-        for (const char of text) {
-          if (/[\u4e00-\u9fa5\u3100-\u312F]/.test(char)) {
-            totalWeight += 2
-          } else if (/[\w\s\p{P}]+/u.test(char)) {
-            totalWeight += 1
-          } else if (/[\「\」\{\}\(\)\<\>\.,;:!?\-、\.\。\、；：！？_\、，"'：=]/.test(char)) {
-            totalWeight += 1
-          }
-        }
-        return totalWeight
-      }
+      const totalWeight = value.length * 2
       switch (fieldName) {
-        case 'email':
+        case 'email': {
           const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/gim
           if (!emailRegex.test(value)) {
             isValid = false
@@ -85,16 +72,15 @@ export const inputValidator = () => {
             emailRepeatCheck = false
           }
           break
-        case 'username':
-          countCharacters(value)
-
+        }
+        case 'username': {
           if (totalWeight < 4 || totalWeight > 15) {
             isValid = false
           }
           break
-
-        case 'password':
-          if (value.length < 6 || value.length > 15) {
+        }
+        case 'password': {
+          if (value.length < 6 || value.length > 20) {
             isValid = false
           }
           const passwordRegex =
@@ -105,25 +91,25 @@ export const inputValidator = () => {
             }
           }
           break
-
-        case 'passwordConfirm':
+        }
+        case 'passwordConfirm': {
           if (value !== formInput.password) {
             isValid = false
           }
           break
-        case 'title':
-          countCharacters(value)
+        }
+        case 'title': {
           if (totalWeight < 6 || totalWeight > 80) {
             isValid = false
           }
           break
-        case 'content':
-          countCharacters(value)
-
+        }
+        case 'content': {
           if (totalWeight < 20 || totalWeight > 4000) {
             isValid = false
           }
           break
+        }
         default:
           break
       }

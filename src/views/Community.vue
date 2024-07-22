@@ -87,6 +87,7 @@ const goToPage = (pageNumber: number) => {
 const sortPostsByTopic = () => {
   if (!communityPosts.value) return []
   const search = searchString.value.toLowerCase()
+
   return communityPosts.value.filter(
     (post) =>
       post.topicTags.some((tag) => tag.toLowerCase().includes(search)) ||
@@ -177,8 +178,10 @@ onMounted(async () => {
           發起新投票
         </button>
       </div>
-      <div class="overflow-x-auto ">
-        <div class="flex max-h-52 w-full flex-wrap gap-4 lg:max-h-36 lg:flex-nowrap">
+      <div class="">
+        <div
+          class="flex max-h-52 w-full flex-wrap gap-4 overflow-auto lg:max-h-36 lg:flex-nowrap"
+        >
           <div
             v-for="vote in filteredVotes"
             :key="vote.id"
@@ -257,7 +260,7 @@ onMounted(async () => {
         class="mt-8 flex flex-col justify-between gap-4"
       >
         <div
-          v-for="communityPost in communityPosts"
+          v-for="communityPost in sortPostsByTopic()"
           :key="communityPost.id"
           @click="
             router.push({

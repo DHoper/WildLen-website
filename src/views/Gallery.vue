@@ -82,7 +82,7 @@ function closePhoto() {
       <div class="h-full basis-[70%]">
         <div
           ref="rightBlock"
-          class="flex size-full flex-wrap content-start justify-start overflow-y-auto overflow-x-hidden"
+          class="scrollbar-hide flex size-full flex-wrap content-start justify-start overflow-y-auto overflow-x-hidden"
         >
           <div
             v-for="(post, index) in galleryDataset"

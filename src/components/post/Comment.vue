@@ -6,6 +6,7 @@ import { formatDateTime } from '../../utils/formator.js'
 import { getUserById } from '@/api/auth/auth'
 import type { User } from '@/types/User.js'
 import type { Dialog, PostComment } from '@/types/Common.js'
+import DialogComponent from '../utils/Dialog.vue'
 import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
@@ -169,7 +170,7 @@ onMounted(async () => {
     <ul v-if="commentsData && authors.length > 0" class="mt-12">
       <li v-for="(comment, index) in commentsData" :key="index">
         <div v-if="authors[index]">
-          <div class="flex items-center gap-4">
+          <div class="flex items-center justify-between gap-4">
             <router-link
               :to="{
                 name: 'PersonalInfo',
@@ -185,24 +186,24 @@ onMounted(async () => {
                     alt="avatar"
                   />
                 </div>
-                <span class="font-bold text-stone-700 2xl:text-lg">
-                  {{ authors[index].username }}
-                </span>
+                <div class="flex flex-col">
+                  <span class="font-bold text-stone-700 2xl:text-lg">
+                    {{ authors[index].username }}
+                  </span>
+                  <span class="text-center text-sm text-stone-500 2xl:text-base" e
+                    >{{ formatDateTime(comment.createdAt!, 'concise') }}
+                  </span>
+                </div>
               </div>
             </router-link>
-            <div class="flex flex-1 items-baseline justify-start gap-2">
-              <span class="text-center text-sm text-stone-500 2xl:text-base"
-                >{{ formatDateTime(comment.createdAt!, 'concise') }}
-              </span>
-              <TrashIcon
-                v-if="isLogin && userId === comment.authorId"
-                @click="handleDeleteComment(comment.id!)"
-                class="ml-auto w-6 cursor-pointer text-red-700"
-              />
-            </div>
+            <TrashIcon
+              v-if="isLogin && userId === comment.authorId"
+              @click="handleDeleteComment(comment.id!)"
+              class="w-6 cursor-pointer text-red-700"
+            />
           </div>
           <div>
-            <p class="mt-10 overflow-auto whitespace-pre-wrap text-stone-700 2xl:text-lg">
+            <p class="mt-10 overflow-auto whitespace-pre-wrap pl-2 text-stone-700 2xl:text-lg">
               {{ comment.content }}
             </p>
           </div>
@@ -224,7 +225,7 @@ onMounted(async () => {
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 translate-y-1"
     >
-      <Dialog
+      <DialogComponent
         v-if="showDialog"
         :dialogData="dialogData"
         @closePopup="(choice: boolean) => (userChoice = choice)"
@@ -232,5 +233,3 @@ onMounted(async () => {
     </Transition>
   </div>
 </template>
-import type { User } from '@/types/User.js'import type { PostComment } from '@/types/Article.js'
-import type { User } from '@/types/User.js'

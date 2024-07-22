@@ -47,7 +47,7 @@ const notifications = [
   { content: '#Molina123 為你的一則貼文點了讚' },
   { content: '#Fain64543 為你的一則貼文點了讚' },
   { content: '#Ol34i2 已經開始追蹤您' },
-  { content: '#Albert34442 為你的一則貼文點了讚', href: '#' }
+  { content: '#Albert34442 為你的一則貼文點了讚' }
 ]
 
 //----隱藏效果
@@ -88,16 +88,16 @@ const closeMenu = () => {
 
 <template>
   <nav
-    class="sticky top-0 z-40 flex w-full items-center justify-between bg-stone-600 px-6 py-4 font-Cormorant text-white lg:py-2 2xl:py-4"
+    class="sticky top-0 z-40 flex w-full items-center justify-between bg-stone-600 px-6 py-4 font-Cormorant text-white lg:py-2"
     id="invisible"
     :class="{ invisible: isHidden, visible: !isHidden }"
   >
     <div class="flex items-center">
-      <img src="/assets/img/deerIcon.png" alt="deerIcon" class="mr-0 w-8 2xl:w-12" />
-      <a class="ml-2 text-xl font-bold lg:text-2xl 2xl:text-3xl" href="/">WILDLENS</a>
+      <img src="/assets/img/deerIcon.png" alt="deerIcon" class="mr-0 w-8" />
+      <a class="ml-2 text-xl font-bold lg:text-2xl" href="/">WILDLENS</a>
     </div>
     <div class="flex items-center gap-4 transition-all">
-      <ul class="hidden gap-0 text-base font-thin sm:flex lg:gap-3 lg:text-lg 2xl:text-xl">
+      <ul class="hidden gap-0 text-base font-thin sm:flex lg:gap-3 lg:text-lg">
         <li
           class="border-2 border-transparent py-1 font-bold text-white transition-all duration-700 ease-in-out hover:border-white"
         >
@@ -148,7 +148,7 @@ const closeMenu = () => {
             <PopoverButton
               class="flex items-center gap-x-1 text-sm font-semibold leading-6 focus:outline-none"
             >
-              <BellIcon class="w-6 text-white 2xl:w-8" />
+              <BellIcon class="w-6 text-white" />
             </PopoverButton>
 
             <transition
@@ -160,7 +160,7 @@ const closeMenu = () => {
               leave-to-class="opacity-0 translate-y-1"
             >
               <PopoverPanel
-                class="absolute right-2 top-2/3 z-10 mt-3 flex w-72 flex-col items-center overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600 2xl:w-96"
+                class="absolute right-2 top-2/3 z-10 mt-3 flex w-72 flex-col items-center overflow-hidden rounded bg-white shadow-lg ring-1 ring-stone-600"
               >
                 <div class="w-full">
                   <span
@@ -171,7 +171,7 @@ const closeMenu = () => {
                     <div
                       v-for="(notification, index) in notifications"
                       :key="index"
-                      class="p-3 px-5 text-sm leading-6 text-stone-700 hover:bg-stone-100 2xl:p-5 2xl:text-base"
+                      class="p-3 px-5 text-sm leading-6 text-stone-700 hover:bg-stone-100"
                     >
                       <div class="flex-auto">
                         <a
@@ -216,7 +216,7 @@ const closeMenu = () => {
                     class="flex items-center gap-4 rounded rounded-b-none border border-b-0 border-white bg-stone-600 px-6 py-4"
                   >
                     <div
-                      class=" flex size-16 items-center justify-center rounded-full border border-stone-700 bg-white p-2"
+                      class="flex size-16 items-center justify-center rounded-full border border-stone-700 bg-white p-2"
                     >
                       <img
                         class="rounded-full"
@@ -233,18 +233,16 @@ const closeMenu = () => {
                     <div
                       v-for="(userAction, index) in userActions"
                       :key="index"
-                      class="w-full cursor-pointer text-lg leading-6 text-stone-700 hover:bg-stone-200 lg:text-base 2xl:text-sm"
+                      class="w-full cursor-pointer text-lg leading-6 text-stone-700 hover:bg-stone-200 lg:text-base"
                     >
                       <div
                         @click="userAction.action"
-                        class="flex flex-auto items-center gap-2 px-6 py-4  "
+                        class="flex flex-auto items-center gap-2 px-6 py-4"
                       >
                         <div class="flex flex-none items-center justify-center">
-                          <component :is="userAction.icon" class="w-4 " aria-hidden="true" />
+                          <component :is="userAction.icon" class="w-4" aria-hidden="true" />
                         </div>
-                        <span
-                          class="block whitespace-nowrap text-center tracking-widest"
-                        >
+                        <span class="block whitespace-nowrap text-center tracking-widest">
                           {{ userAction.actionName }}
                         </span>
                       </div>
@@ -258,7 +256,7 @@ const closeMenu = () => {
       </div>
       <button
         v-else
-        class="h-12 border-2 border-stone-600 bg-white px-2 py-1  text-2xl font-bold text-stone-700 transition-all duration-700 ease-in-out hover:border-white hover:bg-[#4b493ded] hover:text-white md:text-lg 2xl:text-xl"
+        class="h-12 border-2 border-stone-600 bg-white px-2 py-1 text-2xl font-bold text-stone-700 transition-all duration-700 ease-in-out hover:border-white hover:bg-[#4b493ded] hover:text-white md:text-lg"
       >
         <router-link :to="{ name: 'Login' }">Get started</router-link>
       </button>

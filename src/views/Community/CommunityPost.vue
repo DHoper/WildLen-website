@@ -26,7 +26,7 @@ const postComments = ref<CommunityComment[]>()
 const fetchPostData = async () => {
   const responseData = await getPost(props.id)
   post.value = responseData.value
-  postComments.value = responseData.value?.comments
+  postComments.value = responseData.value?.comments?.reverse()
 }
 
 //--留言區資料
@@ -34,7 +34,7 @@ const fetchCommentData = async () => {
   const commentsResponseData = await getComments(props.id)
 
   if (commentsResponseData.value) {
-    postComments.value = commentsResponseData.value
+    postComments.value = commentsResponseData.value.reverse()
   }
 }
 

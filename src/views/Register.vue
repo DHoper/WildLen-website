@@ -83,6 +83,12 @@ const nextStep = () => {
   if (formStep.value === 0) {
     validateInput('email')
     validateInput('username')
+    console.log(
+      formInputInvalid.value.email.valid,
+      formInputInvalid.value.email.registered,
+      formInputInvalid.value.username
+    )
+
     if (
       !formInputInvalid.value.email.valid ||
       formInputInvalid.value.email.registered ||
@@ -97,9 +103,11 @@ const nextStep = () => {
       return
     }
   }
+  if (formStep.value !== 1) showAvatarSelector.value = false
   formStep.value++
 }
 const previousStep = () => {
+  if (formStep.value !== 1) showAvatarSelector.value = false
   formStep.value--
 }
 
@@ -130,7 +138,7 @@ watch(activeTab, () => {
 <template>
   <div class="relative flex h-screen w-screen overflow-hidden">
     <div
-      class="flex w-full min-w-fit flex-col items-center justify-start gap-0 bg-stone-700  opacity-95 sm:w-3/5 sm:justify-center sm:gap-10 md:w-96 2xl:w-1/3 2xl:gap-0"
+      class="flex w-full min-w-fit flex-col items-center justify-start gap-0 bg-stone-700 opacity-95 sm:w-3/5 sm:justify-center sm:gap-10 md:w-96 2xl:w-1/3 2xl:gap-0"
     >
       <div class="mt-24 sm:mt-8">
         <div class="mx-auto flex w-fit flex-1 items-center border-4 border-white p-4">
@@ -337,7 +345,7 @@ watch(activeTab, () => {
             </div>
           </div>
         </div>
-        <div class=" flex w-full gap-4">
+        <div class="flex w-full gap-4">
           <button
             @click.prevent="previousStep()"
             v-if="formStep !== 0"
@@ -383,7 +391,7 @@ watch(activeTab, () => {
     <div
       class="flex h-screen grow flex-col items-center justify-start gap-10 bg-white bg-register bg-cover bg-center bg-no-repeat font-Raleway text-stone-100 shadow-inner sm:relative 2xl:justify-center"
     >
-      <div class=" hidden w-full flex-col items-center gap-10 px-4 py-16 md:flex">
+      <div class="hidden w-full flex-col items-center gap-10 px-4 py-16 md:flex">
         <div
           ref="nav"
           class="flex w-full items-center justify-center gap-16 text-2xl text-[#ffffff9e]"
@@ -471,10 +479,14 @@ watch(activeTab, () => {
           <div
             class="z-10 flex size-full flex-col items-center justify-around gap-4 overflow-auto bg-white px-16 pb-10 pt-4 2xl:pt-12"
           >
-            <p class="block text-2xl font-bold tracking-widest text-stone-700 sm:text-xl 2xl:text-3xl">
+            <p
+              class="block text-2xl font-bold tracking-widest text-stone-700 sm:text-xl 2xl:text-3xl"
+            >
               選擇頭像
             </p>
-            <div class="grid h-96 w-full grid-cols-3 gap-4 overflow-auto p-4 sm:w-auto sm:grid-cols-2 md:h-auto md:grid-cols-6">
+            <div
+              class="grid h-96 w-full grid-cols-3 gap-4 overflow-auto p-4 sm:w-auto sm:grid-cols-2 md:h-auto md:grid-cols-6"
+            >
               <div v-for="index in 12" :key="index">
                 <label class="cursor-pointer">
                   <input
@@ -501,7 +513,7 @@ watch(activeTab, () => {
               @click="showAvatarSelector = false"
               class="w-full bg-stone-600 px-4 py-3 font-bold tracking-widest text-white transition-all duration-500 hover:bg-stone-700 focus:outline-none 2xl:p-4 2xl:text-xl"
             >
-              完成
+              關閉
             </button>
           </div>
         </div>
