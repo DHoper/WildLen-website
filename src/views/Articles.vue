@@ -30,7 +30,6 @@ onMounted(async () => {
   loadingStore.setInRequest(false)
   loadingStore.setLoadingStatus(false)
 })
-
 </script>
 
 <template>
@@ -75,15 +74,15 @@ onMounted(async () => {
               <div class="my-4 border-b-[.0938rem] border-gray-300 2xl:border-b-2 2xl:py-2" />
               <div class="flex justify-between">
                 <div class="flex gap-8">
-                  <span class="2xl: flex gap-1">
-                    <EyeIcon class="w-4 2xl:w-8" />{{ article.views }}
+                  <span class="flex items-center gap-1 2xl:text-base">
+                    <EyeIcon class="w-4 2xl:w-6" />{{ article.views }}
                   </span>
-                  <span class="2xl: flex gap-1">
-                    <!-- <ChatBubbleBottomCenterIcon class="w-4 2xl:w-8" />{{ article.comments.length }} -->
+                  <span class="flex items-center gap-1 2xl:text-base">
+                    <ChatBubbleBottomCenterIcon class="w-4 2xl:w-6" />{{ article.comments.length }}
                   </span>
                 </div>
-                <span class="group flex gap-1 text-red-500" tabindex="0">
-                  <HeartIcon class="w-4 2xl:w-8" />{{ article.likes }}
+                <span class="group flex items-center gap-1 2xl:text-base" tabindex="0">
+                  <HeartIcon class="w-4 2xl:w-6" />{{ article.likes }}
                 </span>
               </div>
             </div>

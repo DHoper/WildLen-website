@@ -25,10 +25,7 @@ const router = createRouter({
       path: '/login',
       component: Login,
       name: 'Login',
-      beforeEnter: (to, from, next) => {
-        if (to || from) {
-          //--問題--build問題 待解決
-        }
+      beforeEnter: (_to, _from, next) => {
         const userStore = useUserStore() //無法在global scope中/Pinia被掛載前使用
         if (userStore.isLogin) {
           next({ name: 'Articles' })
@@ -41,9 +38,7 @@ const router = createRouter({
       path: '/register',
       component: Register,
       name: 'Register',
-      beforeEnter: (to, from, next) => {
-        // if (to || from) {
-        // }
+      beforeEnter: (_to, _from, next) => {
         const userStore = useUserStore()
         if (userStore.isLogin) {
           next({ name: 'Articles' })
@@ -89,7 +84,8 @@ const router = createRouter({
         {
           path: 'createPost',
           name: 'CreatePost',
-          component: () => import('@/views/Gallery/CreatePost.vue')
+          component: () => import('@/views/Gallery/CreatePost.vue'),
+          meta: { requiresAuth: true }
         },
         {
           path: 'photoPost/:id',
@@ -101,9 +97,11 @@ const router = createRouter({
           path: 'photoPost/edit/:id',
           name: 'EditPhotoPost',
           component: () => import('@/views/Gallery/EditPost.vue'),
-          props: true
+          props: true,
+          meta: { requiresAuth: true }
         }
       ]
+      // meta: { requiresAuth: true }
     },
     {
       path: '/community',
@@ -152,8 +150,9 @@ const router = createRouter({
           component: () => import('@/views/Community/CommunityVote.vue'),
           meta: { requiresAuth: true },
           props: true
-        },
-      ]
+        }
+      ],
+      meta: { requiresAuth: true }
     },
 
     {
@@ -172,7 +171,8 @@ const router = createRouter({
           component: () => import('@/views/User/PersonalPosts.vue'),
           meta: { requiresAuth: true }
         }
-      ]
+      ],
+      meta: { requiresAuth: true }
     },
     {
       path: '/error',
@@ -205,7 +205,6 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
-
 
 router.afterEach(() => {
   useLoadingStore().setIsCountingSeconds(false)

@@ -23,12 +23,12 @@ const properties = ref(props.properties)
       class="w-full rounded-sm rounded-r-none  xl:w-72 xl:shadow-xl"
     />
     <div
-      class="relative flex w-full flex-1 flex-col items-center justify-between rounded-r-sm border-l-0 p-4 xl:max-w-24"
+      class="relative flex w-full flex-1 flex-col items-center justify-between rounded-r-sm border-l-0 p-4 xl:max-w-24 xl:py-0"
     >
-      <div class="my-2 flex size-full flex-col items-center justify-between overflow-hidden">
-        <div class="flex size-full w-full flex-col items-center justify-around gap-2 xl:items-start xl:gap-0 ">
+      <div class="my-2  flex size-full flex-col items-center justify-between overflow-hidden">
+        <div class="flex size-full w-full flex-1 flex-col items-center justify-around gap-2 xl:items-start xl:gap-1 ">
           <p
-            class="line-clamp-2 max-h-20 overflow-hidden text-center text-3xl font-bold leading-6 xl:max-h-28 xl:text-xl xl:[writing-mode:vertical-lr]"
+            class="mx-auto  line-clamp-2 flex-1 overflow-hidden truncate text-center text-3xl font-bold leading-6 xl:text-xl xl:[writing-mode:vertical-lr]"
           >
             {{ properties.title }}
           </p>

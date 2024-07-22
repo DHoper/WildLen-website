@@ -6,8 +6,11 @@ import { formatDateTime } from '../../utils/formator.js'
 import { getUserById } from '@/api/auth/auth'
 import type { User } from '@/types/User.js'
 import type { Dialog, PostComment } from '@/types/Common.js'
+import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
+const user = userStore.getData()
+const router = useRouter()
 const props = defineProps({
   postId: {
     type: Number,
@@ -61,11 +64,14 @@ watchEffect(() => {
 })
 
 async function handleCommentSubmit() {
-  const userData: User = userStore.getData()!
+  if (!user) {
+    router.push({ name: 'Login' })
+    return
+  }
 
   if (commentPost.value) {
     const submitData: PostComment = {
-      authorId: userData.id,
+      authorId: user.id,
       postId: props.postId,
       content: commentPost.value
     }

@@ -18,6 +18,7 @@ import { getConvertedHtml } from '@/utils/convertor'
 import { deleteComment } from '@/api/photoPost/photoPostComment'
 import type { PostComment } from '@/types/Common'
 import { createComment, getComments } from '@/api/article/articleComment'
+import { useUserStore } from '@/stores/user'
 
 const props = defineProps({
   id: {
@@ -27,9 +28,10 @@ const props = defineProps({
 })
 
 const router = useRouter()
-
 const article = ref<Article>()
 const isLiked = ref<boolean>(false)
+const userStore = useUserStore()
+const user = userStore.getData()
 
 //--留言區資料
 const articleComments = ref<PostComment[]>()
@@ -49,6 +51,10 @@ const reloadCommentData = async () => {
 }
 
 const handleCreateComment = async (submitData: { authorId: number; content: String }) => {
+  if (!user) {
+    router.push({ name: 'Login' })
+    return
+  }
   await createComment(props.id, submitData).catch((err) => {
     console.error(`發布評論失敗: ${err}`)
   })
@@ -81,6 +87,10 @@ const fetchArticleData = async () => {
 }
 
 const toggleLike = async () => {
+  if (!user) {
+    router.push({ name: 'Login' })
+    return
+  }
   try {
     if (article.value) {
       if (!isLiked.value) {
@@ -148,8 +158,8 @@ onMounted(async () => {
           <div class="flex justify-between">
             <div class="flex gap-8">
               <span class="flex items-center gap-1">
-                <EyeIcon class="w-8 xl:w-4" />
-                <span class="text-xl lg:text-base">{{ article.views }}</span></span
+                <EyeIcon class="w-8" />
+                <span class="text-xl">{{ article.views }}</span></span
               >
             </div>
             <span
@@ -160,10 +170,10 @@ onMounted(async () => {
             >
               <component
                 :is="isLiked ? SolidHeartIcon : HeartIcon"
-                class="w-8 duration-300 group-focus:scale-[125%] xl:w-4"
+                class="w-8 duration-300 group-focus:scale-[125%]"
                 :class="{ 'scale-[125%]': isLiked }"
               />
-              <span class="text-xl lg:text-base">
+              <span class="text-xl">
                 {{ article.likes }}
               </span>
             </span>

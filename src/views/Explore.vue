@@ -151,15 +151,15 @@ onMounted(async () => {
     })
 
     map.addLayer({
-      //添加個體定位點
+      //添加定位點
       id: 'unclustered-point',
       type: 'circle',
       source: 'geoData',
       filter: ['!', ['has', 'point_count']],
       paint: {
         'circle-color': '#51bbd6',
-        'circle-radius': 5,
-        'circle-stroke-width': 1,
+        'circle-radius': 7.5,
+        'circle-stroke-width': 1.5,
         'circle-stroke-color': '#fff'
       }
     })
@@ -189,12 +189,9 @@ onMounted(async () => {
     map.on('click', 'unclustered-point', (e: { features: any }) => {
       const geometry = e.features![0].geometry
       if (geometry.type === 'Point' && Array.isArray(geometry.coordinates)) {
-        // 这是一个点类型的地理要素
         const coordinates = geometry.coordinates
         setPopup(coordinates as mapboxgl.LngLatLike, e.features![0].properties)
-      } else {
-        // 处理其他地理要素类型或错误情况
-      }
+      } 
     })
 
     map.on('mouseenter', 'clusters', () => {
