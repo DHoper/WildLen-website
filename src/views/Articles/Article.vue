@@ -130,7 +130,7 @@ onMounted(async () => {
         >
           上一頁
         </button>
-        <div v-if="article" class="mb-20 mt-12 border-2 border-stone-800 px-8 py-16 xl:px-24">
+        <div v-if="article" class="mb-20 mt-12 border-2 border-stone-800 p-8 xl:px-24 xl:py-16">
           <span class="text-sm font-bold text-stone-500">
             {{
               format(article.createdAt, 'yyyy-MM-dd', {
@@ -158,8 +158,8 @@ onMounted(async () => {
           <div class="flex justify-between">
             <div class="flex gap-8">
               <span class="flex items-center gap-1">
-                <EyeIcon class="w-8" />
-                <span class="text-xl">{{ article.views }}</span></span
+                <EyeIcon class="w-8 sm:w-6" />
+                <span class="text-lg sm:text-base ">{{ article.views }}</span></span
               >
             </div>
             <span
@@ -170,10 +170,10 @@ onMounted(async () => {
             >
               <component
                 :is="isLiked ? SolidHeartIcon : HeartIcon"
-                class="w-8 duration-300 group-focus:scale-[125%]"
+                class="w-8 duration-300 group-focus:scale-[125%] sm:w-6"
                 :class="{ 'scale-[125%]': isLiked }"
               />
-              <span class="text-xl">
+              <span class="text-lg sm:text-base">
                 {{ article.likes }}
               </span>
             </span>
