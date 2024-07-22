@@ -122,7 +122,7 @@ onMounted(async () => {
     </div>
     <div class="mt-[55vh] w-full bg-white px-4 py-12 xl:mt-[45vh]">
       <div
-        class="g:w-[62rem] mx-auto flex w-full -translate-y-28 flex-col bg-white px-2 pt-4 xl:px-5 xl:pt-28"
+        class="mx-auto flex w-full -translate-y-28 flex-col bg-white px-2 pt-4 lg:w-[62rem] xl:px-5 xl:pt-28"
       >
         <button
           @click="router.back()"
