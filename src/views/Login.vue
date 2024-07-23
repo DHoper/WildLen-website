@@ -6,8 +6,8 @@ import { useUserStore, LoginStatus } from '../stores/user'
 const userStore = useUserStore()
 const router = useRouter()
 
-const email = ref<string | null>(null)
-const password = ref<string | null>(null)
+const email = ref<string | null>("test123@gmail.com")
+const password = ref<string | null>("test123")
 const loginIsFailed = computed<LoginStatus | undefined>(() => userStore.loggingStatus)
 
 async function login() {
