@@ -114,9 +114,9 @@ function countCharacters(text: string) {
     if (/[\u4e00-\u9fa5\u3100-\u312F]/.test(char)) {
       totalWeight += 2
     } else if (/^[A-Za-z0-9]+$/.test(char)) {
-      totalWeight += 1
+      totalWeight += 2
     } else if (/[「」{}.,;:!?-、...。，；：！？_、，"'：]/.test(char)) {
-      totalWeight += 1
+      totalWeight += 2
     } else {
       totalWeight += 10000
     }
@@ -313,7 +313,7 @@ onMounted(async () => {
                 maxlength="100"
                 class="w-full resize-none border-2 p-2 text-stone-500 focus:border-stone-500 focus:outline-none"
                 :class="postInputInvalid.description ? 'border-stone-500' : 'border-red-500'"
-                placeholder="5~100字(中英 2:1)"
+                placeholder="5~100字"
                 required
               ></textarea>
               <div
