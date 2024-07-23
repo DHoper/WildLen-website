@@ -81,13 +81,15 @@ const formStep = ref<number>(0)
 const formInputInvalid = validator.formInputInvalid
 const nextStep = () => {
   if (formStep.value === 0) {
+    if (!formInput.value.email || !formInput.value.username) {
+      formInputInvalid.value.email = {
+        ...formInputInvalid.value.email,
+        valid: !!formInput.value.email
+      }
+      formInputInvalid.value.username = !!formInput.value.username
+    }
     validateInput('email')
     validateInput('username')
-    console.log(
-      formInputInvalid.value.email.valid,
-      formInputInvalid.value.email.registered,
-      formInputInvalid.value.username
-    )
 
     if (
       !formInputInvalid.value.email.valid ||
@@ -97,9 +99,18 @@ const nextStep = () => {
       return
     }
   } else if (formStep.value === 1) {
+    if (!formInput.value.password || !formInput.value.passwordConfirm) {
+      formInputInvalid.value.password = !!formInput.value.password
+      formInputInvalid.value.passwordConfirm = !!formInput.value.passwordConfirm
+    }
     validateInput('password')
     validateInput('passwordConfirm')
-    if (!formInputInvalid.value.password || !formInputInvalid.value.passwordConfirm) {
+    if (
+      !formInputInvalid.value.password ||
+      !formInputInvalid.value.passwordConfirm ||
+      !formInput.value.password ||
+      !formInput.value.passwordConfirm
+    ) {
       return
     }
   }

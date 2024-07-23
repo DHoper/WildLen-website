@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const logout = () => {
-    removeCookie("auth_token")
+    removeCookie('auth_token')
     user.value = null
     router.push({ name: 'Articles' })
   }
@@ -52,7 +52,7 @@ export const useUserStore = defineStore('user', () => {
       if (user.value) {
         const storedToken = await getCookie('auth_token')
         const responseData = await getCurrentUser(storedToken)
-        if (responseData.value) {
+        if (responseData?.value) {
           user.value = responseData.value
         }
       }
@@ -63,10 +63,14 @@ export const useUserStore = defineStore('user', () => {
 
   const checkLogin = async () => {
     const storedToken = await getCookie('auth_token')
+
     if (storedToken) {
       try {
         const userData = await getCurrentUser(storedToken)
-        if (!userData.value) throw Error
+        if (!userData || !userData?.value) {
+          isLoginCheck.value = true
+          return
+        }
         user.value = userData.value
       } catch (err) {
         console.error('獲取用戶資料失敗: ', err)

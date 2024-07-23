@@ -43,7 +43,7 @@ export async function getCurrentUser(token: string | undefined) {
       responseData.value = response.data.user
       return responseData
     } else {
-      throw new Error('未正確取得使用者資料')
+      return false
     }
   } catch (error) {
     console.error('獲取使用者資料時發生錯誤:', error)
