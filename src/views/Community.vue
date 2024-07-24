@@ -195,7 +195,7 @@ onMounted(async () => {
             ]"
           >
             <div class="mb-2 flex items-center gap-4">
-              <h2 class="text-xl">{{ vote.title }}</h2>
+              <h2 class="max-w-full overflow-hidden truncate text-xl">{{ vote.title }}</h2>
               <span class="flex h-fit items-center justify-center gap-1 text-red-500">
                 <FireIcon class="w-4" />
                 {{ vote.participantCount }}

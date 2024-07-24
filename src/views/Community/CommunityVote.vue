@@ -128,7 +128,7 @@ onMounted(async () => {
               </span>
             </div>
           </div>
-          <div class="mb-4 min-h-24 bg-white p-4">
+          <div class="mb-4 min-h-24 bg-white p-4 text-lg">
             <div class="text-stone-700">{{ vote.description }}</div>
           </div>
 

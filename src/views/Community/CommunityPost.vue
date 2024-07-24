@@ -118,7 +118,7 @@ onMounted(async () => {
               </span>
             </div>
           </div>
-          <h1 class="my-4 text-2xl font-bold text-stone-900 2xl:pt-4 2xl:text-4xl">
+          <h1 class="my-4 text-2xl font-bold text-stone-900">
             {{ post.title }}
           </h1>
           <div class="flex flex-wrap gap-2">
