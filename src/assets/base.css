@@ -51,12 +51,12 @@
 }
 
 body {
-  color: #000; 
+  color: #000 !important;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    color: #000; 
+    color: #000 !important;
   }
 }
 
