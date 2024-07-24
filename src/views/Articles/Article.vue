@@ -15,9 +15,8 @@ import { format, formatDistance } from 'date-fns'
 import { zhTW } from 'date-fns/locale'
 import { useLoadingStore } from '@/stores/loading'
 import { getConvertedHtml } from '@/utils/convertor'
-import { deleteComment } from '@/api/photoPost/photoPostComment'
 import type { PostComment } from '@/types/Common'
-import { createComment, getComments } from '@/api/article/articleComment'
+import { createComment, deleteComment, getComments } from '@/api/article/articleComment'
 import { useUserStore } from '@/stores/user'
 
 const props = defineProps({

@@ -120,7 +120,7 @@ onMounted(async () => {
     <div class="relative flex size-full flex-col-reverse lg:flex-row">
       <div
         ref="leftBlock"
-        class="scrollbar-hide h-full basis-[30%] animate-slideInLeft overflow-auto bg-white"
+        class="scrollbar-hide z-20 h-full basis-[30%] animate-slideInLeft overflow-x-visible bg-white"
       >
         <Comment
           :post-id="post.id!"
@@ -132,7 +132,7 @@ onMounted(async () => {
       </div>
       <div
         ref="rightBlock"
-        class="flex w-full basis-[70%] animate-slideInRight flex-col justify-around gap-2 overflow-auto bg-[#484538] px-4 pb-2 pt-8 sm:px-16 md:px-20 lg:pb-12 2xl:gap-4 2xl:py-8 2xl:pt-12"
+        class="flex basis-[70%] animate-slideInRight flex-col justify-around gap-2 overflow-auto bg-[#484538] px-4 pb-2 pt-8 sm:px-16 md:px-20 lg:pb-12 2xl:gap-4 2xl:py-8 2xl:pt-12"
       >
         <div class="relative z-0 flex-1">
           <div
@@ -261,7 +261,9 @@ onMounted(async () => {
                     </div>
                   </div>
 
-                  <div class="scrollbar-hide flex size-full overflow-auto sm:w-auto sm:items-center">
+                  <div
+                    class="scrollbar-hide flex size-full overflow-auto sm:w-auto sm:items-center"
+                  >
                     <div
                       class="scrollbar-hide h-fit w-full overflow-auto rounded-sm border-4 border-b-2 border-stone-600 sm:w-auto"
                     >
