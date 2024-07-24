@@ -52,7 +52,7 @@ export const useUserStore = defineStore('user', () => {
       if (user.value) {
         const storedToken = await getCookie('auth_token')
         const responseData = await getCurrentUser(storedToken)
-        if (responseData?.value) {
+        if (responseData && responseData?.value) {
           user.value = responseData.value
         }
       }
