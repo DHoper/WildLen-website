@@ -111,7 +111,7 @@ onMounted(async () => {
 <template>
   <div
     v-if="communityPosts && votes"
-    class="flex flex-1 flex-col items-center gap-12 overflow-auto bg-stone-100 p-4 sm:p-6 md:p-8 lg:p-10 2xl:px-8 2xl:py-16"
+    class="flex flex-1 flex-col items-center gap-12 overflow-auto bg-stone-100 p-4 sm:p-6 md:p-8 lg:p-10"
   >
     <div class="w-full">
       <h1 class="mb-4 text-2xl sm:text-3xl">話題投票</h1>
@@ -178,7 +178,7 @@ onMounted(async () => {
           發起新投票
         </button>
       </div>
-      <div class="">
+      <div class="mt-4">
         <div
           class="flex max-h-52 w-full flex-wrap gap-4 overflow-auto lg:max-h-36 lg:flex-nowrap"
         >
@@ -231,10 +231,10 @@ onMounted(async () => {
       <div class="flex flex-wrap items-center justify-between gap-4">
         <h1 class="text-2xl leading-none sm:text-3xl">社區討論</h1>
         <div class="flex items-center gap-4">
-          <div class="flex h-12 items-center">
+          <div class="flex h-10 items-center">
             <label
               for="searchByTopic"
-              class="flex h-full items-center justify-center border-2 border-r-0 border-stone-600 bg-stone-600 px-4 text-lg text-stone-100"
+              class="flex h-full items-center justify-center border-2 border-r-0 border-stone-600 bg-stone-600 px-4 text-stone-100"
             >
               <p>搜尋</p>
             </label>
@@ -243,14 +243,14 @@ onMounted(async () => {
               id="searchByTopic"
               v-model="searchString"
               @input="sortPostsByTopic"
-              class="m-0 h-full w-48 rounded-none border-2 border-stone-600 px-2 text-lg focus:outline-none"
+              class="m-0 h-full w-48 rounded-none border-2 border-stone-600 px-2 focus:outline-none"
             />
           </div>
           <div
             @click="router.push({ name: 'CommunityCreatePost' })"
-            class="flex h-12 cursor-pointer items-center border-2 border-stone-600 bg-stone-600 p-2 px-3 font-bold text-stone-100 transition-all duration-300 hover:bg-stone-100 hover:text-stone-600 2xl:p-2 2xl:px-4 2xl:text-lg"
+            class="flex h-10 cursor-pointer items-center border-2 border-green-700 bg-green-700 p-2 px-3 font-bold text-stone-100 transition-all duration-300 hover:bg-stone-100 hover:text-green-600"
           >
-            <PlusIcon class="w-6 font-bold" />
+            <PlusIcon class="size-6" />
           </div>
         </div>
       </div>
@@ -268,7 +268,7 @@ onMounted(async () => {
               params: { id: communityPost.id }
             })
           "
-          class="group w-full cursor-pointer border-2 border-stone-700 p-4 shadow transition-all duration-300 hover:border-stone-700 hover:bg-stone-700 hover:text-white 2xl:p-8 2xl:pb-4"
+          class="group w-full cursor-pointer border-2 border-stone-700 p-4 shadow transition-all duration-300 hover:border-stone-700 hover:bg-stone-700 hover:text-white"
         >
           <div class="flex justify-between">
             <div class="flex items-center justify-center gap-4">
@@ -290,30 +290,30 @@ onMounted(async () => {
             </div>
           </div>
           <div
-            class="my-2 overflow-hidden truncate text-stone-600 group-hover:text-stone-100 2xl:my-4 2xl:text-lg"
+            class="my-2 overflow-hidden truncate text-stone-600 group-hover:text-stone-100 2xl:my-4"
           >
             {{ getFirstLineWithEllipsis(communityPost.content) }}
           </div>
 
           <div class="mt-4 flex w-full justify-between gap-4">
             <div class="flex items-baseline gap-2">
-              <p class="text-sm font-bold text-stone-700 group-hover:text-stone-100 2xl:text-base">
+              <p class="text-sm font-bold text-stone-700 group-hover:text-stone-100">
                 #{{ communityPost.author?.username }}
               </p>
-              <p class="text-sm italic text-stone-500 group-hover:text-stone-100 2xl:text-base">
+              <p class="text-sm italic text-stone-500 group-hover:text-stone-100">
                 --{{ getTimeDifference(communityPost.createdAt!) }}&nbsp;前
               </p>
             </div>
 
             <div class="flex items-center gap-4">
               <span class="flex items-center gap-1 text-blue-900 group-hover:text-stone-100">
-                <EyeIcon class="w-6 2xl:w-7" />{{ communityPost.views }}
+                <EyeIcon class="w-6" />{{ communityPost.views }}
               </span>
               <span class="flex items-center gap-1 text-red-600 group-hover:text-stone-100">
-                <HeartIcon class="w-6 2xl:w-7" />{{ communityPost.likes }}
+                <HeartIcon class="w-6" />{{ communityPost.likes }}
               </span>
               <span class="flex items-center gap-1 text-stone-700 group-hover:text-stone-100">
-                <ChatBubbleBottomCenterIcon class="w-6 2xl:w-7" />{{
+                <ChatBubbleBottomCenterIcon class="w-6" />{{
                   communityPost.comments ? communityPost.comments.length : 0
                 }}
               </span>
@@ -328,7 +328,7 @@ onMounted(async () => {
         <button
           @click="changePage('prev')"
           :disabled="currentPage === 1"
-          class="ml-2 border-2 px-3 py-1 transition-all duration-300 2xl:px-6 2xl:py-2 2xl:text-lg"
+          class="ml-2 border-2 px-3 py-1 transition-all duration-300 "
           :class="
             currentPage === 1
               ? 'border-stone-500 text-stone-500'
@@ -342,7 +342,7 @@ onMounted(async () => {
             v-for="pageNumber in totalPages"
             :key="pageNumber"
             @click="goToPage(pageNumber)"
-            class="border-2 px-3 py-1 transition-all duration-300 2xl:px-5 2xl:py-2 2xl:text-lg"
+            class="border-2 px-3 py-1 transition-all duration-300"
             :class="
               pageNumber != currentPage
                 ? 'border-stone-800 text-stone-800 hover:bg-stone-800 hover:text-white'
@@ -355,7 +355,7 @@ onMounted(async () => {
         <button
           @click="changePage('next')"
           :disabled="currentPage === totalPages"
-          class="border-2 px-3 py-1 transition-all duration-300 2xl:px-6 2xl:py-2 2xl:text-lg"
+          class="border-2 px-3 py-1 transition-all duration-300 "
           :class="
             currentPage === totalPages
               ? 'border-stone-500 text-stone-500'
