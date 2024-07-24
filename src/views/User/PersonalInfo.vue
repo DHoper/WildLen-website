@@ -28,7 +28,9 @@ const fetchUserData = async () => {
   } else if (props.email) {
     const storedToken = await getCookie('auth_token')
     const responseData = await getCurrentUser(storedToken)
-    userData.value = responseData.value
+    if (responseData) {
+      userData.value = responseData.value
+    }
   }
 }
 
