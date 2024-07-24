@@ -1,6 +1,6 @@
 # WildLen-website
 
-此專案為 WildLen 網站。
+此專案為 WildLen 網站，以Vue3建置。
 
 後台系統 : [https://github.com/DHoper/Personal-Web/tree/master](https://github.com/DHoper/WildLen-admin)
 
