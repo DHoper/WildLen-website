@@ -50,6 +50,16 @@
   }
 }
 
+body {
+  color: #000; 
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #000; 
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -132,6 +142,6 @@ body {
 }
 
 .quill-content img {
-  width: 100%; 
+  width: 100%;
   height: auto;
 }
