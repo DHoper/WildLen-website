@@ -22,7 +22,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="fixed left-0 top-0 z-50 flex w-screen h-screen items-center justify-center bg-stone-700/80 border-2 border-red-500"
+    class="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-stone-700/80"
   >
     <div class="-mt-20 w-80 p-1 2xl:w-96">
       <div
