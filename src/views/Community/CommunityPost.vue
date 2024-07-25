@@ -59,7 +59,8 @@ const handleDeleteComment = async (commentId: number) => {
 let isLiked = false
 
 async function handleLikes() {
-  if (post.value && post.value && props.id && post.value.likes) {
+  
+  if (post.value && post.value && props.id && post.value.likes !== undefined) {
     if (!isLiked) {
       await setStats(props.id, 'like')
       post.value.likes++
